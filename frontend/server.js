@@ -22,7 +22,41 @@ app.use('/ws', createProxyMiddleware({
 }));
 
 // Health check endpoint
-app.get('/health', (req, res) => {
+app.get('/health', async (req, res) => {
+  let backendStatus = 'unknown';
+  let backendError = null;
+  
+  // Try to check backend health
+  try {
+    const http = require('http');
+    await new Promise((resolve, reject) => {
+      const req = http.get('http://scrum-poker.railway.internal:8080/health', (response) => {
+        if (response.statusCode === 200) {
+          backendStatus = 'healthy';
+          resolve();
+        } else {
+          backendStatus = 'unhealthy';
+          backendError = `Status code: ${response.statusCode}`;
+          resolve();
+        }
+      });
+      req.on('error', (err) => {
+        backendStatus = 'unreachable';
+        backendError = err.message;
+        resolve();
+      });
+      req.setTimeout(5000, () => {
+        backendStatus = 'timeout';
+        backendError = 'Backend health check timed out';
+        req.destroy();
+        resolve();
+      });
+    });
+  } catch (err) {
+    backendStatus = 'error';
+    backendError = err.message;
+  }
+  
   res.json({
     status: 'healthy',
     service: 'scrum-poker-frontend',
@@ -31,6 +65,11 @@ app.get('/health', (req, res) => {
     memory: {
       used: Math.round(process.memoryUsage().heapUsed / 1024 / 1024),
       total: Math.round(process.memoryUsage().heapTotal / 1024 / 1024)
+    },
+    backend: {
+      status: backendStatus,
+      error: backendError,
+      url: 'http://scrum-poker.railway.internal:8080'
     }
   });
 });
