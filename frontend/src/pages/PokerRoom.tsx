@@ -4,6 +4,7 @@ import { PokerCard } from '../components/PokerCard';
 import { UserTable } from '../components/UserTable';
 import { wsService } from '../services/websocket';
 import { MessageType, RoomState, FIBONACCI_VALUES, SPECIAL_VALUES } from '../types';
+import { getWebSocketUrl } from '../config';
 
 interface PokerRoomProps {
   userName: string;
@@ -20,7 +21,9 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({ userName, userId, setUserI
   useEffect(() => {
     const connectWebSocket = async () => {
       try {
-        const wsUrl = `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.host}/ws`;
+        // Use the configured WebSocket URL
+        const wsUrl = getWebSocketUrl();
+        
         await wsService.connect(wsUrl);
         setIsConnected(true);
 

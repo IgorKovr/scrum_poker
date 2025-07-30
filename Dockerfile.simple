@@ -1,0 +1,39 @@
+# Simple Dockerfile for Railway deployment
+FROM openjdk:17-jdk-slim
+
+WORKDIR /app
+
+# Install Node.js for building frontend
+RUN apt-get update && \
+    apt-get install -y curl && \
+    curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs && \
+    rm -rf /var/lib/apt/lists/*
+
+# Copy and build backend
+COPY backend/build.gradle.kts backend/settings.gradle.kts backend/gradle.properties ./backend/
+COPY backend/gradle ./backend/gradle
+COPY backend/gradlew ./backend/
+COPY backend/src ./backend/src
+
+WORKDIR /app/backend
+RUN chmod +x gradlew && ./gradlew build --no-daemon
+
+# Copy and build frontend
+WORKDIR /app
+COPY frontend/package*.json ./frontend/
+WORKDIR /app/frontend
+RUN npm ci
+
+COPY frontend/ ./
+RUN npm run build
+
+# Prepare runtime
+WORKDIR /app
+RUN cp backend/build/libs/*.jar app.jar
+
+# Expose port
+EXPOSE 8080
+
+# Start the application
+CMD ["java", "-jar", "app.jar"] 

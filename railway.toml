@@ -1,0 +1,9 @@
+[build]
+builder = "nixpacks"
+
+[deploy]
+startCommand = "cd backend && ./gradlew bootRun"
+
+[variables]
+JAVA_OPTS = "-Xmx512m"
+PORT = "8080" 

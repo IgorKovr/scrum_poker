@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: scrum-poker-backend
+    env: docker
+    plan: free
+    buildCommand: cd backend && ./gradlew build
+    startCommand: cd backend && java -jar build/libs/scrum-poker-backend-0.0.1-SNAPSHOT.jar
+    envVars:
+      - key: JAVA_OPTS
+        value: -Xmx512m
+      - key: PORT
+        value: 8080
+
+  - type: web
+    name: scrum-poker-frontend
+    env: static
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: frontend/dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html 

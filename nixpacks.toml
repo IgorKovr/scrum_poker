@@ -1,0 +1,8 @@
+[phases.setup]
+nixPkgs = ["jdk17", "gradle"]
+
+[phases.build]
+cmds = ["cd backend && ./gradlew build --no-daemon"]
+
+[start]
+cmd = "cd backend && java -jar build/libs/scrum-poker-backend-0.0.1-SNAPSHOT.jar" 

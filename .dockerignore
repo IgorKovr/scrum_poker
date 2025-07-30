@@ -1,0 +1,28 @@
+# Git
+.git
+.gitignore
+
+# Node
+node_modules
+npm-debug.log
+
+# Build outputs
+frontend/dist
+backend/build
+backend/.gradle
+
+# IDE
+.idea
+.vscode
+*.iml
+
+# OS
+.DS_Store
+
+# Documentation
+*.md
+!README.md
+
+# Scripts (except the one we need)
+*.sh
+!start.sh 
