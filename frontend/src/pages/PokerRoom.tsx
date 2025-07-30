@@ -23,9 +23,12 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({ userName, userId, setUserI
       try {
         // Use the configured WebSocket URL
         const wsUrl = getWebSocketUrl();
+        console.log('[PokerRoom] WebSocket URL:', wsUrl);
+        console.log('[PokerRoom] Connecting to room:', roomId);
         
         await wsService.connect(wsUrl);
         setIsConnected(true);
+        console.log('[PokerRoom] WebSocket connected successfully');
 
         // Set up message handlers
         wsService.on(MessageType.JOIN, (payload) => {
@@ -47,7 +50,9 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({ userName, userId, setUserI
           }
         });
       } catch (error) {
-        console.error('Failed to connect to WebSocket:', error);
+        console.error('[PokerRoom] Failed to connect to WebSocket:', error);
+        console.error('[PokerRoom] Room ID was:', roomId);
+        setIsConnected(false);
       }
     };
 

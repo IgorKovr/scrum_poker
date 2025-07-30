@@ -5,6 +5,7 @@
   "dependencies": {
     "@tanstack/react-query": "^5.12.2",
     "express": "^4.18.2",
+    "http-proxy-middleware": "^3.0.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.48.2",
@@ -37,4 +38,4 @@
     "test": "vitest",
     "test:ui": "vitest --ui"
   }
-} 
+}

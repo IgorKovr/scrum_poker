@@ -10,10 +10,12 @@ export class WebSocketService {
   connect(url: string): Promise<void> {
     return new Promise((resolve, reject) => {
       try {
+        console.log('[WebSocket] Attempting to connect to:', url);
+        console.log('[WebSocket] Current location:', window.location.href);
         this.ws = new WebSocket(url);
 
         this.ws.onopen = () => {
-          console.log('WebSocket connected');
+          console.log('[WebSocket] Connected successfully');
           this.reconnectAttempts = 0;
           resolve();
         };
@@ -31,12 +33,15 @@ export class WebSocketService {
         };
 
         this.ws.onerror = (error) => {
-          console.error('WebSocket error:', error);
+          console.error('[WebSocket] Connection error:', error);
+          console.error('[WebSocket] URL was:', url);
+          console.error('[WebSocket] ReadyState:', this.ws?.readyState);
           reject(error);
         };
 
-        this.ws.onclose = () => {
-          console.log('WebSocket disconnected');
+        this.ws.onclose = (event) => {
+          console.log('[WebSocket] Disconnected - Code:', event.code, 'Reason:', event.reason);
+          console.log('[WebSocket] Clean:', event.wasClean);
           this.attemptReconnect(url);
         };
       } catch (error) {

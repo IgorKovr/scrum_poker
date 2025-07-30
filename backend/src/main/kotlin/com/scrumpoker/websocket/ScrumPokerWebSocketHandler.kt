@@ -21,7 +21,9 @@ class ScrumPokerWebSocketHandler(
     
     override fun handleTextMessage(session: WebSocketSession, message: TextMessage) {
         try {
+            println("[WebSocket] Received message: ${message.payload}")
             val webSocketMessage = objectMapper.readValue(message.payload, WebSocketMessage::class.java)
+            println("[WebSocket] Message type: ${webSocketMessage.type}")
             
             when (webSocketMessage.type) {
                 MessageType.JOIN -> handleJoin(session, webSocketMessage.payload)
@@ -97,7 +99,14 @@ class ScrumPokerWebSocketHandler(
         }
     }
     
+    override fun afterConnectionEstablished(session: WebSocketSession) {
+        println("[WebSocket] New connection established: ${session.id}")
+        println("[WebSocket] Remote address: ${session.remoteAddress}")
+        super.afterConnectionEstablished(session)
+    }
+    
     override fun afterConnectionClosed(session: WebSocketSession, status: CloseStatus) {
+        println("[WebSocket] Connection closed: ${session.id}, Status: ${status.code} - ${status.reason}")
         sessionToUser[session.id]?.let { userId ->
             roomService.getUserById(userId)?.let { user ->
                 val roomId = user.roomId
