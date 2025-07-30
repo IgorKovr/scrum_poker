@@ -17,17 +17,31 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({ userName, userId, setUserI
   const [roomState, setRoomState] = useState<RoomState | null>(null);
   const [selectedCard, setSelectedCard] = useState<string | null>(null);
   const [isConnected, setIsConnected] = useState(false);
+  const [connectionError, setConnectionError] = useState<string | null>(null);
+  const [connectionAttempts, setConnectionAttempts] = useState(0);
 
   useEffect(() => {
     const connectWebSocket = async () => {
       try {
+        setConnectionError(null);
+        setConnectionAttempts(prev => prev + 1);
+        
+        // Set a timeout to show error if connection takes too long
+        const timeoutId = setTimeout(() => {
+          if (!wsService.isConnected()) {
+            setConnectionError('Connection timeout. The backend service might be down or starting up.');
+          }
+        }, 10000); // 10 seconds timeout
+        
         // Use the configured WebSocket URL
         const wsUrl = getWebSocketUrl();
         console.log('[PokerRoom] WebSocket URL:', wsUrl);
         console.log('[PokerRoom] Connecting to room:', roomId);
         
         await wsService.connect(wsUrl);
+        clearTimeout(timeoutId);
         setIsConnected(true);
+        setConnectionError(null);
         console.log('[PokerRoom] WebSocket connected successfully');
 
         // Set up message handlers
@@ -52,7 +66,9 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({ userName, userId, setUserI
       } catch (error) {
         console.error('[PokerRoom] Failed to connect to WebSocket:', error);
         console.error('[PokerRoom] Room ID was:', roomId);
+        console.error('[PokerRoom] Attempt number:', connectionAttempts);
         setIsConnected(false);
+        setConnectionError('Failed to connect to the backend service. The backend might be starting up or experiencing issues.');
       }
     };
 
@@ -107,9 +123,47 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({ userName, userId, setUserI
   if (!isConnected || !roomState) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Connecting to room...</p>
+        <div className="text-center max-w-md">
+          {connectionError ? (
+            <>
+              <div className="mb-4">
+                <svg className="mx-auto h-12 w-12 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Connection Error</h3>
+              <p className="text-gray-600 mb-4">{connectionError}</p>
+              <div className="space-y-3">
+                <button
+                  onClick={() => window.location.reload()}
+                  className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
+                >
+                  Retry Connection
+                </button>
+                <div className="text-sm text-gray-500">
+                  <p>If the problem persists:</p>
+                  <p>• Check the backend logs in Railway dashboard</p>
+                  <p>• Ensure the backend service is running</p>
+                  <p>• Wait a moment for the backend to start up</p>
+                </div>
+                {connectionAttempts > 1 && (
+                  <p className="text-xs text-gray-400">
+                    Connection attempts: {connectionAttempts}
+                  </p>
+                )}
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+              <p className="mt-4 text-gray-600">Connecting to room...</p>
+              {connectionAttempts > 1 && (
+                <p className="mt-2 text-sm text-gray-400">
+                  Attempt {connectionAttempts}...
+                </p>
+              )}
+            </>
+          )}
         </div>
       </div>
     );

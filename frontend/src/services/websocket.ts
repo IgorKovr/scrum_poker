@@ -82,6 +82,10 @@ export class WebSocketService {
   off(type: MessageType) {
     this.messageHandlers.delete(type);
   }
+  
+  isConnected(): boolean {
+    return this.ws !== null && this.ws.readyState === WebSocket.OPEN;
+  }
 }
 
 export const wsService = new WebSocketService(); 
