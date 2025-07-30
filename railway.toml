@@ -2,7 +2,7 @@
 builder = "nixpacks"
 
 [deploy]
-startCommand = "cd backend && ./gradlew bootRun"
+startCommand = "./gradlew bootRun"
 
 [variables]
 JAVA_OPTS = "-Xmx512m"
