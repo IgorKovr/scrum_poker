@@ -26,5 +26,5 @@ export interface WebSocketMessage {
   payload: any;
 }
 
-export const FIBONACCI_VALUES = ['0', '0.5', '1', '2', '3', '5', '8', '13', '20', '40', '100'];
+export const FIBONACCI_VALUES = ['0', '0.5', '1', '2', '3', '5', '8', '13', '20', '40'];
 export const SPECIAL_VALUES = ['?', '☕']; 
