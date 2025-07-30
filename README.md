@@ -1,125 +1,114 @@
 # Scrum Poker Application
 
-A real-time Scrum Poker application for distributed software engineering teams to estimate user story complexity.
+A real-time collaborative estimation tool for distributed software teams using the Planning Poker technique.
 
-## Features
+## 🚀 Features
 
-- Real-time collaboration using WebSockets
-- Fibonacci sequence cards (0, 0.5, 1, 2, 3, 5, 8, 13, 20, 40, 100) plus special cards (?, ☕)
-- Show/hide estimates functionality
-- Reset estimates feature
-- Responsive design with Tailwind CSS
+- Real-time WebSocket communication
+- Multiple concurrent rooms
+- Fibonacci sequence cards (0.5, 1, 2, 3, 5, 8)
+- Show/Hide estimates functionality
+- Clean, modern UI with Tailwind CSS
 
-## Tech Stack
+## 🛠️ Tech Stack
 
-### Backend
-- JVM + Kotlin
-- Spring Boot
-- WebSocket support
+- **Backend**: Kotlin, Spring Boot, WebSockets
+- **Frontend**: React, TypeScript, Vite, Tailwind CSS
+- **Deployment**: Railway
 
-### Frontend
-- React + TypeScript
-- Tailwind CSS
-- React Hook Form
-- React Query
-- Vite
+## 📋 Prerequisites
 
-## Prerequisites
-
-- JDK 17 or higher
+- Java 17 or higher
 - Node.js 18 or higher
 - npm or yarn
 
-## Setup and Running
+## 🏃‍♂️ Local Development
 
-### Backend
+### Quick Start
 
-1. Navigate to the backend directory:
+1. Clone the repository:
    ```bash
-   cd backend
+   git clone https://github.com/IgorKovr/scrum_poker.git
+   cd scrum_poker
    ```
 
-2. Build and run the Spring Boot application:
+2. Run the setup script:
    ```bash
-   ./gradlew bootRun
-   ```
-   
-   Or if you don't have Gradle installed:
-   ```bash
-   java -jar build/libs/scrum-poker-backend-0.0.1-SNAPSHOT.jar
+   ./setup-local.sh
    ```
 
-   The backend will start on http://localhost:8080
-
-### Frontend
-
-1. Navigate to the frontend directory:
+3. Start both services:
    ```bash
-   cd frontend
+   ./run-local.sh
    ```
 
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
+4. Open your browser:
+   - Frontend: http://localhost:3000
+   - Backend Health: http://localhost:8080/health
 
-3. Start the development server:
-   ```bash
-   npm run dev
-   ```
+### Manual Setup
 
-   The frontend will start on http://localhost:3000
-
-## Usage
-
-1. Open http://localhost:3000 in your browser
-2. Enter your name or pseudonym
-3. You'll automatically join the default room
-4. Select a card to submit your estimate
-5. Once all team members have voted, click "Show" to reveal estimates
-6. Click "Delete Estimates" to reset and start a new estimation round
-
-## Development
-
-### Backend Development
-- The backend uses Spring Boot with Kotlin
-- WebSocket endpoint is available at `/ws`
-- Main application class: `ScrumPokerApplication.kt`
-
-### Frontend Development
-- Uses Vite for fast development
-- TypeScript for type safety
-- Tailwind CSS for styling
-- React Hook Form for form handling
-- React Query for server state management
-
-## Project Structure
-
-```
-scrum_poker/
-├── backend/
-│   ├── src/main/kotlin/com/scrumpoker/
-│   │   ├── controller/
-│   │   ├── model/
-│   │   ├── service/
-│   │   └── websocket/
-│   └── build.gradle.kts
-└── frontend/
-    ├── src/
-    │   ├── components/
-    │   ├── pages/
-    │   ├── services/
-    │   └── types/
-    ├── package.json
-    └── vite.config.ts
+#### Backend
+```bash
+cd backend
+./gradlew bootRun
 ```
 
-## Future Enhancements
+#### Frontend
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-- Multiple room support with unique room IDs
-- Persistent storage for estimation history
-- User authentication
-- Export estimation results
-- Mobile app support
-- Storybook for component development
-- Comprehensive test suite with Vitest 
+## 📝 How to Use
+
+1. Enter your name on the welcome screen
+2. Enter a room name (e.g., "sprint-planning")
+3. Select your estimate card
+4. Wait for all team members to vote
+5. Click "Show" to reveal all estimates
+6. Click "Delete Estimates" to start a new round
+
+## 🔍 Troubleshooting
+
+### Backend Issues
+- Check Java version: `java -version`
+- Check logs: Look for "🚀 SCRUM POKER BACKEND IS READY!"
+- Verify port 8080 is free: `lsof -i :8080`
+
+### Frontend Issues
+- Check Node version: `node --version`
+- Clear node_modules: `rm -rf node_modules && npm install`
+- Check browser console for WebSocket errors
+
+### WebSocket Connection Issues
+- Ensure backend is running before frontend
+- Check browser console for connection errors
+- Verify WebSocket URL in browser logs
+
+## 🚀 Deployment
+
+The application is configured for Railway deployment:
+
+- Backend: Runs as a Spring Boot JAR
+- Frontend: Served via Express.js with WebSocket proxy
+
+## 📊 Monitoring
+
+### Health Endpoints
+- Frontend: `/health`
+- Backend: `/health` and `/heartbeat`
+
+### Logs
+- Backend logs show WebSocket connections and heartbeat info
+- Frontend logs show proxy activity
+- Browser console shows detailed connection logs
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Open a Pull Request 
