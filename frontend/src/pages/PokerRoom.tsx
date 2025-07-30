@@ -19,17 +19,30 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({ userName, userId, setUserI
   const [isConnected, setIsConnected] = useState(false);
   const [connectionError, setConnectionError] = useState<string | null>(null);
   const [connectionAttempts, setConnectionAttempts] = useState(0);
+  const [showError, setShowError] = useState(false);
 
   useEffect(() => {
     const connectWebSocket = async () => {
+      // Minimum loading time before showing error
+      const minLoadingTime = 2000; // 2 seconds
+      const startTime = Date.now();
+      
       try {
         setConnectionError(null);
+        setShowError(false);
         setConnectionAttempts(prev => prev + 1);
         
         // Set a timeout to show error if connection takes too long
         const timeoutId = setTimeout(() => {
           if (!wsService.isConnected()) {
             setConnectionError('Connection timeout. The backend service might be down or starting up.');
+            // Only show error after minimum loading time
+            const elapsed = Date.now() - startTime;
+            if (elapsed >= minLoadingTime) {
+              setShowError(true);
+            } else {
+              setTimeout(() => setShowError(true), minLoadingTime - elapsed);
+            }
           }
         }, 10000); // 10 seconds timeout
         
@@ -69,6 +82,14 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({ userName, userId, setUserI
         console.error('[PokerRoom] Attempt number:', connectionAttempts);
         setIsConnected(false);
         setConnectionError('Failed to connect to the backend service. The backend might be starting up or experiencing issues.');
+        
+        // Ensure minimum loading time before showing error
+        const elapsed = Date.now() - startTime;
+        if (elapsed >= minLoadingTime) {
+          setShowError(true);
+        } else {
+          setTimeout(() => setShowError(true), minLoadingTime - elapsed);
+        }
       }
     };
 
@@ -124,7 +145,7 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({ userName, userId, setUserI
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center max-w-md">
-          {connectionError ? (
+          {connectionError && showError ? (
             <>
               <div className="mb-4">
                 <svg className="mx-auto h-12 w-12 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
