@@ -83,4 +83,8 @@ class RoomService {
     fun getUsersByRoom(roomId: String): List<User> {
         return rooms[roomId]?.users ?: emptyList()
     }
+    
+    fun getAllRooms(): Map<String, Room> {
+        return rooms.toMap()
+    }
 } 
