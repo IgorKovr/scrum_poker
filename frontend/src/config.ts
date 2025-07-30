@@ -1,8 +1,9 @@
 // WebSocket configuration
 export const getWebSocketUrl = () => {
-  // In production, use the Railway backend URL
+  // In production, use Railway's internal backend URL
   if (window.location.hostname !== 'localhost') {
-    return 'wss://scrum-poker-production.up.railway.app/ws';
+    // Using Railway's internal networking (backend service can be accessed internally)
+    return 'ws://scrum-poker.railway.internal:8080/ws';
   }
   // In development, use local backend
   return `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.host}/ws`;
