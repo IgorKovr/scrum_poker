@@ -1,3 +1,41 @@
+/**
+ * index.css - Global Styles and Tailwind CSS Configuration
+ * 
+ * This file serves as the main stylesheet for the Scrum Poker application.
+ * It imports Tailwind CSS utilities which provide the entire styling framework
+ * used throughout the application.
+ * 
+ * Tailwind CSS Layers:
+ * 1. @tailwind base - Resets and base element styles
+ * 2. @tailwind components - Reusable component classes (none defined currently)
+ * 3. @tailwind utilities - All utility classes for styling
+ * 
+ * The application uses Tailwind's utility-first approach, meaning styles
+ * are applied directly in JSX using predefined utility classes rather than
+ * writing custom CSS. This provides:
+ * - Consistent design system
+ * - Responsive design utilities
+ * - Small bundle sizes (only used utilities are included)
+ * - No CSS naming conflicts
+ * 
+ * Color Scheme:
+ * The app primarily uses gray and blue color palettes:
+ * - Gray tones for backgrounds, borders, and text
+ * - Blue tones for interactive elements and selected states
+ * - Green for success states (voted indicators)
+ * - Red for error states (connection issues)
+ * 
+ * Layout Approach:
+ * - Uses Flexbox and CSS Grid utilities for layouts
+ * - Responsive design with mobile-first approach
+ * - Consistent spacing using Tailwind's spacing scale
+ */
+
+/* Tailwind CSS base styles - includes CSS reset and base element styling */
 @tailwind base;
+
+/* Tailwind CSS component styles - reusable component classes (none defined) */
 @tailwind components;
+
+/* Tailwind CSS utility classes - all atomic utility classes for styling */
 @tailwind utilities; 
