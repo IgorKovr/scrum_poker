@@ -198,8 +198,7 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({ userName, userId, setUserI
             Provide an effort estimate - choose one of the cards
           </h2>
           <p className="text-sm text-gray-600">
-            Each team member should estimate the complexity of the task (user story) to be completed.{' '}
-            <a href="#" className="text-blue-600 hover:underline">Read more...</a>
+            Each team member should estimate the complexity of the task (user story) to be completed.
           </p>
         </div>
 
@@ -218,8 +217,7 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({ userName, userId, setUserI
           <div className="mb-4">
             <h3 className="text-lg font-semibold text-gray-800 mb-2">Reveal the cards</h3>
             <p className="text-sm text-gray-600">
-              Once everyone has submitted their effort estimates, the organizer reveals the cards.{' '}
-              <a href="#" className="text-blue-600 hover:underline">Read more...</a>
+              Once everyone has submitted their effort estimates, the organizer reveals the cards.
             </p>
           </div>
 
