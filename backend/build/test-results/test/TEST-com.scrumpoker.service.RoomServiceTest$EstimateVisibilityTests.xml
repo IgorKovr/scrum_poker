@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="Estimate Visibility Tests" tests="3" skipped="0" failures="0" errors="0" timestamp="2025-07-31T20:29:37" hostname="MACM-MNVDQRXR92" time="0.002">
+<testsuite name="Estimate Visibility Tests" tests="3" skipped="0" failures="0" errors="0" timestamp="2025-07-31T21:14:10" hostname="MACM-MNVDQRXR92" time="0.002">
   <properties/>
-  <testcase name="Should show estimates when requested" classname="com.scrumpoker.service.RoomServiceTest$EstimateVisibilityTests" time="0.001"/>
-  <testcase name="Should hide estimates when requested" classname="com.scrumpoker.service.RoomServiceTest$EstimateVisibilityTests" time="0.0"/>
+  <testcase name="Should show estimates when requested" classname="com.scrumpoker.service.RoomServiceTest$EstimateVisibilityTests" time="0.0"/>
+  <testcase name="Should hide estimates when requested" classname="com.scrumpoker.service.RoomServiceTest$EstimateVisibilityTests" time="0.001"/>
   <testcase name="Should handle show estimates for non-existent room" classname="com.scrumpoker.service.RoomServiceTest$EstimateVisibilityTests" time="0.001"/>
-  <system-out><![CDATA[2025-07-31T22:29:37.858+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f4cb;<![CDATA[ New user joined with name 'Alice' in room 'test-room' (User ID: eeead005-358e-47de-acbc-aafbc9d9a76b)
-2025-07-31T22:29:37.858+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f3af;<![CDATA[ User 'Alice' selected card '5' in room 'test-room' (User ID: eeead005-358e-47de-acbc-aafbc9d9a76b)
-2025-07-31T22:29:37.858+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f441;<![CDATA[️ Show estimates triggered in room 'test-room'
-2025-07-31T22:29:37.858+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f4cb;<![CDATA[ New user joined with name 'Alice' in room 'test-room' (User ID: 17c121c4-f148-4d0b-b606-b914efcb8b75)
-2025-07-31T22:29:37.858+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f3af;<![CDATA[ User 'Alice' selected card '5' in room 'test-room' (User ID: 17c121c4-f148-4d0b-b606-b914efcb8b75)
-2025-07-31T22:29:37.858+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f441;<![CDATA[️ Show estimates triggered in room 'test-room'
-2025-07-31T22:29:37.859+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f441;<![CDATA[️ Show estimates triggered in room 'non-existent-room'
+  <system-out><![CDATA[2025-07-31T23:14:10.534+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f4cb;<![CDATA[ New user joined with name 'Alice' in room 'test-room' (User ID: 747d70ed-97a6-4307-9f2f-afe4190aec1f)
+2025-07-31T23:14:10.534+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f3af;<![CDATA[ User 'Alice' selected card '5' in room 'test-room' (User ID: 747d70ed-97a6-4307-9f2f-afe4190aec1f)
+2025-07-31T23:14:10.534+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f441;<![CDATA[️ Show estimates triggered in room 'test-room'
+2025-07-31T23:14:10.534+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f4cb;<![CDATA[ New user joined with name 'Alice' in room 'test-room' (User ID: 1b544628-96c4-4018-87bc-372f4d205658)
+2025-07-31T23:14:10.534+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f3af;<![CDATA[ User 'Alice' selected card '5' in room 'test-room' (User ID: 1b544628-96c4-4018-87bc-372f4d205658)
+2025-07-31T23:14:10.534+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f441;<![CDATA[️ Show estimates triggered in room 'test-room'
+2025-07-31T23:14:10.536+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f441;<![CDATA[️ Show estimates triggered in room 'non-existent-room'
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

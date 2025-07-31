@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="Health Endpoint Tests" tests="6" skipped="0" failures="0" errors="0" timestamp="2025-07-31T20:29:37" hostname="MACM-MNVDQRXR92" time="0.02">
+<testsuite name="Health Endpoint Tests" tests="6" skipped="0" failures="0" errors="0" timestamp="2025-07-31T21:14:10" hostname="MACM-MNVDQRXR92" time="0.042">
   <properties/>
-  <testcase name="Should return 200 OK for health endpoint" classname="com.scrumpoker.controller.HealthControllerTest$HealthEndpointTests" time="0.002"/>
-  <testcase name="Should return valid memory information" classname="com.scrumpoker.controller.HealthControllerTest$HealthEndpointTests" time="0.004"/>
-  <testcase name="Should return valid timestamp format" classname="com.scrumpoker.controller.HealthControllerTest$HealthEndpointTests" time="0.003"/>
+  <testcase name="Should return 200 OK for health endpoint" classname="com.scrumpoker.controller.HealthControllerTest$HealthEndpointTests" time="0.015"/>
+  <testcase name="Should return valid memory information" classname="com.scrumpoker.controller.HealthControllerTest$HealthEndpointTests" time="0.008"/>
+  <testcase name="Should return valid timestamp format" classname="com.scrumpoker.controller.HealthControllerTest$HealthEndpointTests" time="0.004"/>
   <testcase name="Should return correct health response structure" classname="com.scrumpoker.controller.HealthControllerTest$HealthEndpointTests" time="0.002"/>
-  <testcase name="Should return positive uptime" classname="com.scrumpoker.controller.HealthControllerTest$HealthEndpointTests" time="0.002"/>
+  <testcase name="Should return positive uptime" classname="com.scrumpoker.controller.HealthControllerTest$HealthEndpointTests" time="0.004"/>
   <testcase name="Should return valid JVM information" classname="com.scrumpoker.controller.HealthControllerTest$HealthEndpointTests" time="0.002"/>
-  <system-out><![CDATA[2025-07-31T22:29:37.588+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.scrumpoker.controller.HealthControllerTest$HealthEndpointTests]: HealthEndpointTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2025-07-31T22:29:37.592+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.scrumpoker.ScrumPokerApplication for test class com.scrumpoker.controller.HealthControllerTest$HealthEndpointTests
+  <system-out><![CDATA[2025-07-31T23:14:10.155+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.scrumpoker.controller.HealthControllerTest$HealthEndpointTests]: HealthEndpointTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-07-31T23:14:10.172+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.scrumpoker.ScrumPokerApplication for test class com.scrumpoker.controller.HealthControllerTest$HealthEndpointTests
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

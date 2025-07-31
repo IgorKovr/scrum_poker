@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.002s</div>
+<div class="counter">0.001s</div>
 <p>duration</p>
 </div>
 </td>
@@ -81,7 +81,7 @@
 <tr>
 <td class="success">Should handle leaving non-existent user gracefully</td>
 <td class="success">leaveRoom should handle non-existent user ID gracefully()</td>
-<td class="success">0.001s</td>
+<td class="success">0s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -107,16 +107,16 @@
 <div id="tab1" class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>2025-07-31T22:29:37.864+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f4cb; New user joined with name 'Alice' in room 'test-room' (User ID: 5788ed22-3bcf-4aa4-ad10-f00f350dc162)
-2025-07-31T22:29:37.864+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f44b; User 'Alice' left room 'test-room' (User ID: 5788ed22-3bcf-4aa4-ad10-f00f350dc162)
-2025-07-31T22:29:37.864+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f9f9; Cleaning up empty room 'test-room'
-2025-07-31T22:29:37.865+02:00  WARN 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ⚠️ Attempted to remove non-existent user with ID: non-existent-user
-2025-07-31T22:29:37.865+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f4cb; New user joined with name 'Alice' in room 'test-room' (User ID: 9b1579da-d4fa-482d-97a1-b702e6c2adf5)
-2025-07-31T22:29:37.865+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f44b; User 'Alice' left room 'test-room' (User ID: 9b1579da-d4fa-482d-97a1-b702e6c2adf5)
-2025-07-31T22:29:37.865+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f9f9; Cleaning up empty room 'test-room'
-2025-07-31T22:29:37.866+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f4cb; New user joined with name 'Alice' in room 'test-room' (User ID: d87aa4df-6dfe-499a-948f-5ffd7a494ae3)
-2025-07-31T22:29:37.866+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f4cb; New user joined with name 'Bob' in room 'test-room' (User ID: f50b3ded-8376-4004-9102-f882c00ad154)
-2025-07-31T22:29:37.866+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f44b; User 'Alice' left room 'test-room' (User ID: d87aa4df-6dfe-499a-948f-5ffd7a494ae3)
+<pre>2025-07-31T23:14:10.541+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f4cb; New user joined with name 'Alice' in room 'test-room' (User ID: 88ef7c79-ec6a-4f9b-a061-99677408c8c4)
+2025-07-31T23:14:10.541+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f44b; User 'Alice' left room 'test-room' (User ID: 88ef7c79-ec6a-4f9b-a061-99677408c8c4)
+2025-07-31T23:14:10.541+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f9f9; Cleaning up empty room 'test-room'
+2025-07-31T23:14:10.542+02:00  WARN 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ⚠️ Attempted to remove non-existent user with ID: non-existent-user
+2025-07-31T23:14:10.542+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f4cb; New user joined with name 'Alice' in room 'test-room' (User ID: 22175912-e73c-40be-9dfb-8ad8185f6ed8)
+2025-07-31T23:14:10.542+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f44b; User 'Alice' left room 'test-room' (User ID: 22175912-e73c-40be-9dfb-8ad8185f6ed8)
+2025-07-31T23:14:10.543+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f9f9; Cleaning up empty room 'test-room'
+2025-07-31T23:14:10.543+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f4cb; New user joined with name 'Alice' in room 'test-room' (User ID: 942c6cb5-26eb-4283-95da-7ed1770b2ceb)
+2025-07-31T23:14:10.543+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f4cb; New user joined with name 'Bob' in room 'test-room' (User ID: dcf23933-7569-4148-bde1-d32f2d590bd0)
+2025-07-31T23:14:10.543+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f44b; User 'Alice' left room 'test-room' (User ID: 942c6cb5-26eb-4283-95da-7ed1770b2ceb)
 </pre>
 </span>
 </div>
@@ -128,7 +128,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 8.5</a> at Jul 31, 2025, 10:29:38 PM</p>
+<a href="http://www.gradle.org">Gradle 8.5</a> at Jul 31, 2025, 11:14:10 PM</p>
 </div>
 </div>
 </body>

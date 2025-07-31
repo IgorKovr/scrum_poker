@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="Endpoint Consistency Tests" tests="2" skipped="0" failures="0" errors="0" timestamp="2025-07-31T20:29:37" hostname="MACM-MNVDQRXR92" time="0.015">
+<testsuite name="Endpoint Consistency Tests" tests="2" skipped="0" failures="0" errors="0" timestamp="2025-07-31T21:14:10" hostname="MACM-MNVDQRXR92" time="0.025">
   <properties/>
   <testcase name="Timestamps should be reasonable and close" classname="com.scrumpoker.controller.HealthControllerTest$EndpointConsistencyTests" time="0.008"/>
-  <testcase name="Both endpoints should return same service name" classname="com.scrumpoker.controller.HealthControllerTest$EndpointConsistencyTests" time="0.006"/>
-  <system-out><![CDATA[2025-07-31T22:29:37.567+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.scrumpoker.controller.HealthControllerTest$EndpointConsistencyTests]: EndpointConsistencyTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2025-07-31T22:29:37.571+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.scrumpoker.ScrumPokerApplication for test class com.scrumpoker.controller.HealthControllerTest$EndpointConsistencyTests
+  <testcase name="Both endpoints should return same service name" classname="com.scrumpoker.controller.HealthControllerTest$EndpointConsistencyTests" time="0.016"/>
+  <system-out><![CDATA[2025-07-31T23:14:10.118+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.scrumpoker.controller.HealthControllerTest$EndpointConsistencyTests]: EndpointConsistencyTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-07-31T23:14:10.121+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.scrumpoker.ScrumPokerApplication for test class com.scrumpoker.controller.HealthControllerTest$EndpointConsistencyTests
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

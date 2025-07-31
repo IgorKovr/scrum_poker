@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.010s</div>
+<div class="counter">0.012s</div>
 <p>duration</p>
 </div>
 </td>
@@ -89,12 +89,12 @@
 </tr>
 <tr>
 <td class="success">should log room cleanup when last user leaves()</td>
-<td class="success">0.001s</td>
+<td class="success">0.002s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">should log show estimates action with user()</td>
-<td class="success">0.001s</td>
+<td class="success">0.002s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -122,32 +122,32 @@
 <div id="tab1" class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>2025-07-31T22:29:37.839+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.scrumpoker.service.RoomServiceLoggingTest]: RoomServiceLoggingTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2025-07-31T22:29:37.840+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.scrumpoker.ScrumPokerApplication for test class com.scrumpoker.service.RoomServiceLoggingTest
-2025-07-31T22:29:37.842+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f4cb; New user joined with name 'Alice' in room 'test-room' (User ID: 4d7eccd2-b93e-4afd-95a1-07fd2eb16bd9)
-2025-07-31T22:29:37.844+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f4cb; New user joined with name 'Alice' in room 'journey-test' (User ID: f2a554d1-91f7-43d6-90a2-6fbafe370682)
-2025-07-31T22:29:37.844+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f4cb; New user joined with name 'Bob' in room 'journey-test' (User ID: 72d80ec7-4ec0-4350-abeb-5646935b7435)
-2025-07-31T22:29:37.844+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f3af; User 'Alice' selected card '3' in room 'journey-test' (User ID: f2a554d1-91f7-43d6-90a2-6fbafe370682)
-2025-07-31T22:29:37.844+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f3af; User 'Bob' selected card '5' in room 'journey-test' (User ID: 72d80ec7-4ec0-4350-abeb-5646935b7435)
-2025-07-31T22:29:37.844+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f441;️ User 'Alice' pressed Show estimates in room 'journey-test' (User ID: f2a554d1-91f7-43d6-90a2-6fbafe370682)
-2025-07-31T22:29:37.844+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f5d1;️ User 'Bob' pressed Delete Estimations in room 'journey-test' (User ID: 72d80ec7-4ec0-4350-abeb-5646935b7435)
-2025-07-31T22:29:37.844+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f44b; User 'Bob' left room 'journey-test' (User ID: 72d80ec7-4ec0-4350-abeb-5646935b7435)
-2025-07-31T22:29:37.844+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f44b; User 'Alice' left room 'journey-test' (User ID: f2a554d1-91f7-43d6-90a2-6fbafe370682)
-2025-07-31T22:29:37.844+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f9f9; Cleaning up empty room 'journey-test'
-2025-07-31T22:29:37.846+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f4cb; New user joined with name 'Frank' in room 'test-room' (User ID: ff389fd0-dce3-4e98-9fc6-558c8d8a525d)
-2025-07-31T22:29:37.846+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f4cb; New user joined with name 'Grace' in room 'test-room' (User ID: 4e72807d-5ac4-4a6b-bb8f-c234467e38a5)
-2025-07-31T22:29:37.846+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f44b; User 'Frank' left room 'test-room' (User ID: ff389fd0-dce3-4e98-9fc6-558c8d8a525d)
-2025-07-31T22:29:37.847+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f4cb; New user joined with name 'Eve' in room 'test-room' (User ID: 0ecf389b-dbe9-4f0f-9ac9-9fafb3ec74fd)
-2025-07-31T22:29:37.847+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f5d1;️ User 'Eve' pressed Delete Estimations in room 'test-room' (User ID: 0ecf389b-dbe9-4f0f-9ac9-9fafb3ec74fd)
-2025-07-31T22:29:37.848+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f4cb; New user joined with name 'Bob' in room 'test-room' (User ID: e349986a-23b6-4073-9748-3411e52848b1)
-2025-07-31T22:29:37.848+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f3af; User 'Bob' selected card '5' in room 'test-room' (User ID: e349986a-23b6-4073-9748-3411e52848b1)
-2025-07-31T22:29:37.849+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f4cb; New user joined with name 'Dave' in room 'test-room' (User ID: df557c4b-1854-48b6-8bb7-665f2142dcf9)
-2025-07-31T22:29:37.849+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f441;️ Show estimates triggered in room 'test-room'
-2025-07-31T22:29:37.850+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f4cb; New user joined with name 'Charlie' in room 'test-room' (User ID: 32ce1989-60d1-42b6-b0d5-5cea8f0458cf)
-2025-07-31T22:29:37.851+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f441;️ User 'Charlie' pressed Show estimates in room 'test-room' (User ID: 32ce1989-60d1-42b6-b0d5-5cea8f0458cf)
-2025-07-31T22:29:37.852+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f4cb; New user joined with name 'Grace' in room 'test-room' (User ID: 884638d6-3007-4144-be22-483d090a3325)
-2025-07-31T22:29:37.852+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f44b; User 'Grace' left room 'test-room' (User ID: 884638d6-3007-4144-be22-483d090a3325)
-2025-07-31T22:29:37.852+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f9f9; Cleaning up empty room 'test-room'
+<pre>2025-07-31T23:14:10.514+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.scrumpoker.service.RoomServiceLoggingTest]: RoomServiceLoggingTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-07-31T23:14:10.515+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.scrumpoker.ScrumPokerApplication for test class com.scrumpoker.service.RoomServiceLoggingTest
+2025-07-31T23:14:10.516+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f4cb; New user joined with name 'Alice' in room 'test-room' (User ID: 819e796c-c9fc-43c6-957e-581c573b8706)
+2025-07-31T23:14:10.518+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f4cb; New user joined with name 'Alice' in room 'journey-test' (User ID: b9a50f06-c7a5-4853-b790-e45bcc5abf45)
+2025-07-31T23:14:10.519+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f4cb; New user joined with name 'Bob' in room 'journey-test' (User ID: 9cc3de29-26a6-47dc-86e7-3615263ad79c)
+2025-07-31T23:14:10.519+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f3af; User 'Alice' selected card '3' in room 'journey-test' (User ID: b9a50f06-c7a5-4853-b790-e45bcc5abf45)
+2025-07-31T23:14:10.519+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f3af; User 'Bob' selected card '5' in room 'journey-test' (User ID: 9cc3de29-26a6-47dc-86e7-3615263ad79c)
+2025-07-31T23:14:10.519+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f441;️ User 'Alice' pressed Show estimates in room 'journey-test' (User ID: b9a50f06-c7a5-4853-b790-e45bcc5abf45)
+2025-07-31T23:14:10.519+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f5d1;️ User 'Bob' pressed Delete Estimations in room 'journey-test' (User ID: 9cc3de29-26a6-47dc-86e7-3615263ad79c)
+2025-07-31T23:14:10.519+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f44b; User 'Bob' left room 'journey-test' (User ID: 9cc3de29-26a6-47dc-86e7-3615263ad79c)
+2025-07-31T23:14:10.519+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f44b; User 'Alice' left room 'journey-test' (User ID: b9a50f06-c7a5-4853-b790-e45bcc5abf45)
+2025-07-31T23:14:10.519+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f9f9; Cleaning up empty room 'journey-test'
+2025-07-31T23:14:10.521+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f4cb; New user joined with name 'Frank' in room 'test-room' (User ID: 5d4d774a-19f4-46c0-ba4b-88e55ca3731b)
+2025-07-31T23:14:10.521+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f4cb; New user joined with name 'Grace' in room 'test-room' (User ID: e67b9bca-0bcc-490a-9835-db59449bdc5f)
+2025-07-31T23:14:10.521+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f44b; User 'Frank' left room 'test-room' (User ID: 5d4d774a-19f4-46c0-ba4b-88e55ca3731b)
+2025-07-31T23:14:10.522+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f4cb; New user joined with name 'Eve' in room 'test-room' (User ID: a115d910-2245-452d-9cea-97dbba5d0129)
+2025-07-31T23:14:10.522+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f5d1;️ User 'Eve' pressed Delete Estimations in room 'test-room' (User ID: a115d910-2245-452d-9cea-97dbba5d0129)
+2025-07-31T23:14:10.523+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f4cb; New user joined with name 'Bob' in room 'test-room' (User ID: 3ba2268e-f2b3-4d0b-8ee1-453994b54771)
+2025-07-31T23:14:10.523+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f3af; User 'Bob' selected card '5' in room 'test-room' (User ID: 3ba2268e-f2b3-4d0b-8ee1-453994b54771)
+2025-07-31T23:14:10.524+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f4cb; New user joined with name 'Dave' in room 'test-room' (User ID: d44602ad-4350-4da6-b374-9b8a299a1778)
+2025-07-31T23:14:10.524+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f441;️ Show estimates triggered in room 'test-room'
+2025-07-31T23:14:10.525+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f4cb; New user joined with name 'Charlie' in room 'test-room' (User ID: 38b926a1-1495-4c0c-aa10-6459cf5660fd)
+2025-07-31T23:14:10.525+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f441;️ User 'Charlie' pressed Show estimates in room 'test-room' (User ID: 38b926a1-1495-4c0c-aa10-6459cf5660fd)
+2025-07-31T23:14:10.528+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f4cb; New user joined with name 'Grace' in room 'test-room' (User ID: 293c39bb-81d9-4326-92cb-5a73ca35d4d1)
+2025-07-31T23:14:10.528+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f44b; User 'Grace' left room 'test-room' (User ID: 293c39bb-81d9-4326-92cb-5a73ca35d4d1)
+2025-07-31T23:14:10.528+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : &#x1f9f9; Cleaning up empty room 'test-room'
 </pre>
 </span>
 </div>
@@ -159,7 +159,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 8.5</a> at Jul 31, 2025, 10:29:38 PM</p>
+<a href="http://www.gradle.org">Gradle 8.5</a> at Jul 31, 2025, 11:14:10 PM</p>
 </div>
 </div>
 </body>

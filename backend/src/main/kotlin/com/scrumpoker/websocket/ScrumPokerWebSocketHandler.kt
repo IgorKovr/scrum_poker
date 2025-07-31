@@ -464,6 +464,10 @@ class ScrumPokerWebSocketHandler(
             // Broadcast updated room state if we know the room
             roomId?.let { broadcastRoomState(it) }
 
+            // Perform maintenance cleanup to ensure data consistency and prevent memory leaks
+            // This replaces the scheduled cleanup since we no longer use heartbeat service
+            roomService.performMaintenanceCleanup()
+
             logger.debug(
                     "🧹 Cleaned up WebSocket session for user {} (session {})",
                     userId,

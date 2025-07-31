@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.635s</div>
+<div class="counter">0.539s</div>
 <p>duration</p>
 </div>
 </td>
@@ -81,19 +81,19 @@
 <tr>
 <td class="success">Should return valid JSON even under load</td>
 <td class="success">endpoints should return valid JSON under repeated requests()</td>
-<td class="success">0.014s</td>
+<td class="success">0.019s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">Should handle concurrent requests to health endpoint</td>
 <td class="success">health endpoint should handle concurrent requests()</td>
-<td class="success">0.003s</td>
+<td class="success">0.005s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">Should handle concurrent requests to heartbeat endpoint</td>
 <td class="success">heartbeat endpoint should handle concurrent requests()</td>
-<td class="success">0.618s</td>
+<td class="success">0.515s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -101,8 +101,8 @@
 <div id="tab1" class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>22:29:36.151 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.scrumpoker.controller.HealthControllerTest$EdgeCaseTests]: EdgeCaseTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-22:29:36.156 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.scrumpoker.ScrumPokerApplication for test class com.scrumpoker.controller.HealthControllerTest$EdgeCaseTests
+<pre>23:14:09.115 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.scrumpoker.controller.HealthControllerTest$EdgeCaseTests]: EdgeCaseTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+23:14:09.119 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.scrumpoker.ScrumPokerApplication for test class com.scrumpoker.controller.HealthControllerTest$EdgeCaseTests
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -112,13 +112,13 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v3.2.0)
 
-2025-07-31T22:29:36.295+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] c.s.controller.HealthControllerTest      : Starting HealthControllerTest using Java 17.0.16 with PID 64935 (started by igor.kovryzhkin in /Users/igor.kovryzhkin/Documents/scrum_poker/backend)
-2025-07-31T22:29:36.296+02:00 DEBUG 64935 --- [scrum-poker-backend] [    Test worker] c.s.controller.HealthControllerTest      : Running with Spring Boot v3.2.0, Spring v6.1.1
-2025-07-31T22:29:36.296+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] c.s.controller.HealthControllerTest      : No active profile set, falling back to 1 default profile: &quot;default&quot;
-2025-07-31T22:29:36.684+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2025-07-31T22:29:36.684+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-07-31T22:29:36.688+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
-2025-07-31T22:29:36.912+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] c.s.controller.HealthControllerTest      : Started HealthControllerTest in 0.736 seconds (process running for 1.173)
+2025-07-31T23:14:09.270+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] c.s.controller.HealthControllerTest      : Starting HealthControllerTest using Java 17.0.16 with PID 81355 (started by igor.kovryzhkin in /Users/igor.kovryzhkin/Documents/scrum_poker/backend)
+2025-07-31T23:14:09.270+02:00 DEBUG 81355 --- [scrum-poker-backend] [    Test worker] c.s.controller.HealthControllerTest      : Running with Spring Boot v3.2.0, Spring v6.1.1
+2025-07-31T23:14:09.270+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] c.s.controller.HealthControllerTest      : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2025-07-31T23:14:09.559+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2025-07-31T23:14:09.559+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-07-31T23:14:09.560+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2025-07-31T23:14:09.567+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] c.s.controller.HealthControllerTest      : Started HealthControllerTest in 0.432 seconds (process running for 0.848)
 </pre>
 </span>
 </div>
@@ -130,7 +130,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 8.5</a> at Jul 31, 2025, 10:29:38 PM</p>
+<a href="http://www.gradle.org">Gradle 8.5</a> at Jul 31, 2025, 11:14:10 PM</p>
 </div>
 </div>
 </body>

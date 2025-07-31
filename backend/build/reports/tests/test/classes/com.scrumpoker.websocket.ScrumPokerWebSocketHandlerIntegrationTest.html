@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.011s</div>
+<div class="counter">0.016s</div>
 <p>duration</p>
 </div>
 </td>
@@ -81,19 +81,19 @@
 <tr>
 <td class="success">Should handle connection closure</td>
 <td class="success">afterConnectionClosed should clean up properly()</td>
-<td class="success">0.003s</td>
+<td class="success">0.002s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">Should handle connection establishment</td>
 <td class="success">afterConnectionEstablished should not throw exception()</td>
-<td class="success">0.004s</td>
+<td class="success">0.003s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">Should handle business logic integration</td>
 <td class="success">handler should integrate with room service()</td>
-<td class="success">0.004s</td>
+<td class="success">0.011s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -101,8 +101,8 @@
 <div id="tab1" class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>2025-07-31T22:29:37.872+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.scrumpoker.websocket.ScrumPokerWebSocketHandlerIntegrationTest]: ScrumPokerWebSocketHandlerIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2025-07-31T22:29:37.878+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.scrumpoker.ScrumPokerApplication for test class com.scrumpoker.websocket.ScrumPokerWebSocketHandlerIntegrationTest
+<pre>2025-07-31T23:14:10.549+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.scrumpoker.websocket.ScrumPokerWebSocketHandlerIntegrationTest]: ScrumPokerWebSocketHandlerIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-07-31T23:14:10.555+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.scrumpoker.ScrumPokerApplication for test class com.scrumpoker.websocket.ScrumPokerWebSocketHandlerIntegrationTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -112,10 +112,10 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v3.2.0)
 
-2025-07-31T22:29:37.890+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] crumPokerWebSocketHandlerIntegrationTest : Starting ScrumPokerWebSocketHandlerIntegrationTest using Java 17.0.16 with PID 64935 (started by igor.kovryzhkin in /Users/igor.kovryzhkin/Documents/scrum_poker/backend)
-2025-07-31T22:29:37.890+02:00 DEBUG 64935 --- [scrum-poker-backend] [    Test worker] crumPokerWebSocketHandlerIntegrationTest : Running with Spring Boot v3.2.0, Spring v6.1.1
-2025-07-31T22:29:37.890+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] crumPokerWebSocketHandlerIntegrationTest : No active profile set, falling back to 1 default profile: &quot;default&quot;
-2025-07-31T22:29:38.128+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] crumPokerWebSocketHandlerIntegrationTest : Started ScrumPokerWebSocketHandlerIntegrationTest in 0.246 seconds (process running for 2.389)
+2025-07-31T23:14:10.565+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] crumPokerWebSocketHandlerIntegrationTest : Starting ScrumPokerWebSocketHandlerIntegrationTest using Java 17.0.16 with PID 81355 (started by igor.kovryzhkin in /Users/igor.kovryzhkin/Documents/scrum_poker/backend)
+2025-07-31T23:14:10.565+02:00 DEBUG 81355 --- [scrum-poker-backend] [    Test worker] crumPokerWebSocketHandlerIntegrationTest : Running with Spring Boot v3.2.0, Spring v6.1.1
+2025-07-31T23:14:10.565+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] crumPokerWebSocketHandlerIntegrationTest : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2025-07-31T23:14:10.797+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] crumPokerWebSocketHandlerIntegrationTest : Started ScrumPokerWebSocketHandlerIntegrationTest in 0.239 seconds (process running for 2.078)
 
 ============================================================
 &#x1f680; SCRUM POKER BACKEND IS READY!
@@ -123,7 +123,6 @@
 ✅ Server is running at: http://localhost:8080
 ✅ WebSocket endpoint: ws://localhost:8080/ws
 ✅ Health check: http://localhost:8080/health
-✅ Heartbeat: http://localhost:8080/heartbeat
 ============================================================
 &#x1f4ca; System Information:
    - Java Version: 17.0.16
@@ -132,34 +131,19 @@
    - Available Processors: 11
 ============================================================
 &#x1f4be; Memory Information:
-   - Used Memory: 39 MB
-   - Free Memory: 15 MB
-   - Total Memory: 54 MB
+   - Used Memory: 49 MB
+   - Free Memory: 21 MB
+   - Total Memory: 70 MB
    - Max Memory: 512 MB
 ============================================================
 &#x1f517; Ready to accept WebSocket connections!
    Frontend can now connect to ws://localhost:8080/ws
 ============================================================
 
-2025-07-31T22:29:38.135+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] c.s.w.ScrumPokerWebSocketHandler         : &#x1f50c; New WebSocket connection established: test-session from null
-2025-07-31T22:29:38.136+02:00  INFO 64935 --- [scrum-poker-backend] [   scheduling-1] c.scrumpoker.service.HeartbeatService    : [HEARTBEAT #1] Active rooms: 0, Total users: 0
-2025-07-31T22:29:38.136+02:00  INFO 64935 --- [scrum-poker-backend] [   scheduling-1] c.scrumpoker.service.HeartbeatService    : &#x1f4be; MEMORY STATUS:
-   Used: 41 MB / 512 MB ({:.1f}%)
-   Free: 8.0078125 MB
-   Total Heap: 13 MB
-   
-&#x1f4ca; APPLICATION METRICS:
-   Active Rooms: 54
-   Total Users: 0
-   Avg Users/Room: {:.1f}
-   Active Threads: 0
-   
-⚡ PERFORMANCE:
-   Memory Utilization: {:.1f}%
-   Heartbeat Count: 0.0
-2025-07-31T22:29:38.141+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] c.s.w.ScrumPokerWebSocketHandler         : &#x1f50c; New WebSocket connection established: test-session from null
-2025-07-31T22:29:38.145+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] c.s.w.ScrumPokerWebSocketHandler         : &#x1f50c; WebSocket connection closed: test-session - Status: 1000 (No reason provided)
-2025-07-31T22:29:38.145+02:00 DEBUG 64935 --- [scrum-poker-backend] [    Test worker] c.s.w.ScrumPokerWebSocketHandler         : &#x1f50c; WebSocket session test-session closed without associated user
+2025-07-31T23:14:10.804+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] c.s.w.ScrumPokerWebSocketHandler         : &#x1f50c; New WebSocket connection established: test-session from null
+2025-07-31T23:14:10.816+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] c.s.w.ScrumPokerWebSocketHandler         : &#x1f50c; New WebSocket connection established: test-session from null
+2025-07-31T23:14:10.820+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] c.s.w.ScrumPokerWebSocketHandler         : &#x1f50c; WebSocket connection closed: test-session - Status: 1000 (No reason provided)
+2025-07-31T23:14:10.820+02:00 DEBUG 81355 --- [scrum-poker-backend] [    Test worker] c.s.w.ScrumPokerWebSocketHandler         : &#x1f50c; WebSocket session test-session closed without associated user
 </pre>
 </span>
 </div>
@@ -171,7 +155,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 8.5</a> at Jul 31, 2025, 10:29:38 PM</p>
+<a href="http://www.gradle.org">Gradle 8.5</a> at Jul 31, 2025, 11:14:10 PM</p>
 </div>
 </div>
 </body>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuite name="HealthController Endpoint Tests" tests="0" skipped="0" failures="0" errors="0" timestamp="1970-01-01T00:00:00" hostname="MACM-MNVDQRXR92" time="0.0">
   <properties/>
-  <system-out><![CDATA[22:29:36.087 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.scrumpoker.controller.HealthControllerTest]: HealthControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-22:29:36.139 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.scrumpoker.ScrumPokerApplication for test class com.scrumpoker.controller.HealthControllerTest
+  <system-out><![CDATA[23:14:09.054 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.scrumpoker.controller.HealthControllerTest]: HealthControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+23:14:09.106 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.scrumpoker.ScrumPokerApplication for test class com.scrumpoker.controller.HealthControllerTest
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

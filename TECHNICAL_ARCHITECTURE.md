@@ -25,7 +25,8 @@ Scrum Poker is a real-time collaborative estimation tool built with a modern web
 - **Scalable Architecture**: Stateless backend with in-memory session management
 - **Modern Frontend**: React with TypeScript for type safety
 - **Cloud-Native**: Designed for containerized deployment on platforms like Railway
-- **Memory-Optimized**: Built-in memory leak prevention and resource management
+- **Sleep-Mode Compatible**: No background tasks - allows cloud platforms to sleep when idle
+- **Event-Driven Cleanup**: Memory leak prevention triggered by user disconnections
 
 ---
 
@@ -150,8 +151,7 @@ src/main/kotlin/com/scrumpoker/
 ├── controller/          # REST API endpoints
 │   └── HealthController.kt
 ├── service/             # Business logic layer
-│   ├── RoomService.kt   # Core room management
-│   └── HeartbeatService.kt # System monitoring
+│   └── RoomService.kt   # Core room management & maintenance
 ├── websocket/           # WebSocket communication
 │   ├── ScrumPokerWebSocketHandler.kt
 │   └── WebSocketConfig.kt
@@ -347,22 +347,15 @@ RoomService: {
     "User session tracking",
     "Voting logic implementation",
     "Data consistency maintenance",
-    "Memory leak prevention"
+    "Memory leak prevention",
+    "Event-driven maintenance cleanup"
   ],
   patterns: ["Service", "Repository"],
   concurrency: "ConcurrentHashMap for thread safety"
 }
 
-HeartbeatService: {
-  responsibilities: [
-    "System health monitoring",
-    "Memory usage tracking",
-    "Automated maintenance",
-    "Performance metrics collection"
-  ],
-  scheduling: "@Scheduled annotations",
-  monitoring: "SLF4J structured logging"
-}
+// HeartbeatService removed to allow Railway sleep mode
+// Maintenance cleanup now happens during WebSocket disconnections
 ```
 
 #### **2. Communication Layer**
@@ -801,30 +794,15 @@ class WebSocketConfig {
 #### **System Health Monitoring**
 
 ```kotlin
-@Service
-class HeartbeatService {
+// HeartbeatService removed to enable Railway sleep mode
+// Maintenance cleanup now happens during WebSocket disconnections:
 
-    @Scheduled(fixedRate = 30000) // Every 30 seconds
-    fun heartbeat() {
-        val totalRooms = roomService.getAllRooms().size
-        val totalUsers = roomService.getAllRooms().values.sumOf { it.users.size }
+override fun afterConnectionClosed(session: WebSocketSession, status: CloseStatus) {
+    // ... user cleanup logic ...
 
-        logger.info("[HEARTBEAT] Active rooms: {}, Total users: {}",
-                   totalRooms, totalUsers)
-    }
-
-    @Scheduled(fixedRate = 300000) // Every 5 minutes
-    fun detailedStatus() {
-        val runtime = Runtime.getRuntime()
-        val usedMemory = (runtime.totalMemory() - runtime.freeMemory()) / (1024 * 1024)
-        val maxMemory = runtime.maxMemory() / (1024 * 1024)
-        val memoryUtilization = (usedMemory.toDouble() / maxMemory * 100)
-
-        logger.info("""
-            💾 MEMORY STATUS: Used: {} MB / {} MB ({:.1f}%)
-            📊 APPLICATION METRICS: Rooms: {}, Users: {}
-            """, usedMemory, maxMemory, memoryUtilization, totalRooms, totalUsers)
-    }
+    // Perform maintenance cleanup to ensure data consistency and prevent memory leaks
+    // This replaces the scheduled cleanup since we no longer use heartbeat service
+    roomService.performMaintenanceCleanup()
 }
 ```
 

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="Room Joining Tests" tests="4" skipped="0" failures="0" errors="0" timestamp="2025-07-31T20:29:37" hostname="MACM-MNVDQRXR92" time="0.001">
+<testsuite name="Room Joining Tests" tests="4" skipped="0" failures="0" errors="0" timestamp="2025-07-31T21:14:10" hostname="MACM-MNVDQRXR92" time="0.002">
   <properties/>
-  <testcase name="Should assign unique IDs to different users" classname="com.scrumpoker.service.RoomServiceTest$RoomJoiningTests" time="0.0"/>
+  <testcase name="Should assign unique IDs to different users" classname="com.scrumpoker.service.RoomServiceTest$RoomJoiningTests" time="0.001"/>
   <testcase name="Should create new user when joining room" classname="com.scrumpoker.service.RoomServiceTest$RoomJoiningTests" time="0.001"/>
   <testcase name="Should create room automatically when first user joins" classname="com.scrumpoker.service.RoomServiceTest$RoomJoiningTests" time="0.0"/>
   <testcase name="Should add user to existing room" classname="com.scrumpoker.service.RoomServiceTest$RoomJoiningTests" time="0.0"/>
-  <system-out><![CDATA[2025-07-31T22:29:37.860+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f4cb;<![CDATA[ New user joined with name 'Alice' in room 'test-room' (User ID: 31a81964-7a2d-4493-b8f5-c22473f87abd)
-2025-07-31T22:29:37.860+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f4cb;<![CDATA[ New user joined with name 'Bob' in room 'test-room' (User ID: 4416ee04-74bc-4f11-8542-2e51496cbb33)
-2025-07-31T22:29:37.861+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f4cb;<![CDATA[ New user joined with name 'Alice' in room 'test-room' (User ID: 1af3c738-839a-41bb-ac67-6dab15576baf)
-2025-07-31T22:29:37.861+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f4cb;<![CDATA[ New user joined with name 'Bob' in room 'new-room' (User ID: 12e6e1a6-af90-4764-b633-6798a1a25641)
-2025-07-31T22:29:37.861+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f4cb;<![CDATA[ New user joined with name 'Alice' in room 'existing-room' (User ID: 3eb7b2fb-5fff-4410-8cf4-96c3014afbec)
-2025-07-31T22:29:37.861+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f4cb;<![CDATA[ New user joined with name 'Bob' in room 'existing-room' (User ID: 89ef1b34-fcf5-4e43-81bf-8f951a2752f6)
+  <system-out><![CDATA[2025-07-31T23:14:10.537+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f4cb;<![CDATA[ New user joined with name 'Alice' in room 'test-room' (User ID: 9ee10ac7-4138-4d2a-9d44-f0807a1e31b1)
+2025-07-31T23:14:10.537+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f4cb;<![CDATA[ New user joined with name 'Bob' in room 'test-room' (User ID: a359d062-4982-4fba-9f6d-d9a6decf73cd)
+2025-07-31T23:14:10.538+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f4cb;<![CDATA[ New user joined with name 'Alice' in room 'test-room' (User ID: b6bacb2e-d781-4cf0-873d-0169e7111aa3)
+2025-07-31T23:14:10.539+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f4cb;<![CDATA[ New user joined with name 'Bob' in room 'new-room' (User ID: 52bd02b7-e030-40cd-9c28-e77c79daf7bf)
+2025-07-31T23:14:10.539+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f4cb;<![CDATA[ New user joined with name 'Alice' in room 'existing-room' (User ID: 678b8f98-f249-403a-af06-19b879a3a97b)
+2025-07-31T23:14:10.539+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f4cb;<![CDATA[ New user joined with name 'Bob' in room 'existing-room' (User ID: 19061ba4-8284-44a3-b7db-70212a785583)
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

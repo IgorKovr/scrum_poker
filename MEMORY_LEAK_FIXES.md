@@ -88,7 +88,7 @@ if (userId != null) {
 - **Orphaned room cleanup**: Removes empty rooms automatically
 - **Orphaned user cleanup**: Removes users not associated with any room
 - **Data consistency validation**: Detects and reports inconsistencies
-- **Scheduled maintenance**: Runs cleanup every 15 minutes via HeartbeatService
+- **Event-driven maintenance**: Runs cleanup when users disconnect from WebSocket
 - **Memory usage monitoring**: Regular logging of memory consumption
 
 ### **4. Enhanced Monitoring & Alerting**

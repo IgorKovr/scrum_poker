@@ -47,14 +47,16 @@
       "preLaunchTask": "frontend-install"
     },
     {
-      "name": "🧪 Debug Backend Tests",
-      "type": "java",
+      "name": "🧪 Run Backend Tests",
+      "type": "shell",
       "request": "launch",
-      "mainClass": "org.gradle.wrapper.GradleWrapperMain",
+      "command": "./gradlew",
       "args": ["test", "--info"],
       "cwd": "${workspaceFolder}/backend",
-      "console": "integratedTerminal"
+      "console": "integratedTerminal",
+      "group": "test"
     },
+
     {
       "name": "🔗 Attach to Backend Process",
       "type": "java",
@@ -67,8 +69,11 @@
   "compounds": [
     {
       "name": "🚀 Debug Full Stack",
-      "configurations": ["☕ Debug Backend (Spring Boot)", "⚛️ Debug Frontend (React/Vite)"],
+      "configurations": [
+        "☕ Debug Backend (Spring Boot)",
+        "⚛️ Debug Frontend (React/Vite)"
+      ],
       "stopAll": true
     }
   ]
-} 
+}

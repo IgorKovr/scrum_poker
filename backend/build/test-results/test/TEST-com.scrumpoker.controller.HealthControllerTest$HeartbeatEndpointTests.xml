@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="Heartbeat Endpoint Tests" tests="4" skipped="0" failures="0" errors="0" timestamp="2025-07-31T20:29:37" hostname="MACM-MNVDQRXR92" time="0.009">
+<testsuite name="Heartbeat Endpoint Tests" tests="4" skipped="0" failures="0" errors="0" timestamp="2025-07-31T21:14:10" hostname="MACM-MNVDQRXR92" time="0.01">
   <properties/>
-  <testcase name="Should return 200 OK for heartbeat endpoint" classname="com.scrumpoker.controller.HealthControllerTest$HeartbeatEndpointTests" time="0.001"/>
-  <testcase name="Should be faster than health endpoint" classname="com.scrumpoker.controller.HealthControllerTest$HeartbeatEndpointTests" time="0.001"/>
+  <testcase name="Should return 200 OK for heartbeat endpoint" classname="com.scrumpoker.controller.HealthControllerTest$HeartbeatEndpointTests" time="0.002"/>
+  <testcase name="Should be faster than health endpoint" classname="com.scrumpoker.controller.HealthControllerTest$HeartbeatEndpointTests" time="0.002"/>
   <testcase name="Should return valid timestamp format" classname="com.scrumpoker.controller.HealthControllerTest$HeartbeatEndpointTests" time="0.002"/>
   <testcase name="Should return correct heartbeat response structure" classname="com.scrumpoker.controller.HealthControllerTest$HeartbeatEndpointTests" time="0.002"/>
-  <system-out><![CDATA[2025-07-31T22:29:37.615+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.scrumpoker.controller.HealthControllerTest$HeartbeatEndpointTests]: HeartbeatEndpointTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2025-07-31T22:29:37.618+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.scrumpoker.ScrumPokerApplication for test class com.scrumpoker.controller.HealthControllerTest$HeartbeatEndpointTests
+  <system-out><![CDATA[2025-07-31T23:14:10.217+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.scrumpoker.controller.HealthControllerTest$HeartbeatEndpointTests]: HeartbeatEndpointTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-07-31T23:14:10.220+02:00  INFO 81355 --- [scrum-poker-backend] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.scrumpoker.ScrumPokerApplication for test class com.scrumpoker.controller.HealthControllerTest$HeartbeatEndpointTests
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
