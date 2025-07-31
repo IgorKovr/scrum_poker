@@ -2,14 +2,6 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "🚀 Launch Full App (Backend + Frontend)",
-      "type": "node",
-      "request": "launch",
-      "program": "${workspaceFolder}/run-local.sh",
-      "console": "integratedTerminal",
-      "preLaunchTask": "install-dependencies"
-    },
-    {
       "name": "☕ Debug Backend (Spring Boot)",
       "type": "java",
       "request": "launch",

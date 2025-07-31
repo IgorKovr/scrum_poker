@@ -59,13 +59,18 @@ This project includes comprehensive VS Code/Cursor configuration for optimal dev
 
 1. **Open the project in VS Code/Cursor**
 2. **Install recommended extensions** (VS Code will prompt you automatically)
-3. **Choose a launch configuration** from the debug panel:
+3. **Start the application using tasks or debug configurations**:
+
+**For Running the Full App** (recommended):
+- Press `Ctrl+Shift+P` → Type "🚀 Start Full App"
+- Or use `Ctrl+Shift+P` → "Tasks: Run Task" → "🚀 Start Full App"
+
+**For Debugging Individual Services**:
 
 ### 🚀 Available Launch Configurations
 
 | Configuration | Description | Use Case |
 |---------------|-------------|----------|
-| **🚀 Launch Full App** | Starts both backend + frontend | Complete development |
 | **☕ Debug Backend** | Spring Boot with debugging | Backend development |
 | **⚛️ Debug Frontend** | React/Vite with hot reload | Frontend development |
 | **🧪 Debug Tests** | Run tests with debugging | Test development |
@@ -99,7 +104,7 @@ The setup automatically recommends essential extensions:
 
 ### 🔥 Pro Tips
 
-1. **Use `Ctrl+Shift+P` → "🚀 Start Full App"** for instant startup
+1. **Use `Ctrl+Shift+P` → "Tasks: Run Task" → "🚀 Start Full App"** for instant startup
 2. **Press `F5`** to start debugging with your last selected configuration
 3. **Use the integrated terminal** with pre-configured paths
 4. **Enable auto-formatting on save** (already configured)

@@ -51,15 +51,7 @@
   },
   "launch": {
     "version": "0.2.0",
-    "configurations": [
-      {
-        "name": "🚀 Quick Start Full App",
-        "type": "node",
-        "request": "launch",
-        "program": "${workspaceFolder}/run-local.sh",
-        "console": "integratedTerminal"
-      }
-    ]
+    "configurations": []
   },
   "extensions": {
     "recommendations": [

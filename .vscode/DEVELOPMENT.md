@@ -6,7 +6,7 @@
 1. Open VS Code/Cursor
 2. File → Open Workspace → Select `.vscode/scrum-poker.code-workspace`
 3. Install recommended extensions when prompted
-4. Press `Ctrl+Shift+P` → Type "🚀 Start Full App"
+4. Press `Ctrl+Shift+P` → Type "Tasks: Run Task" → "🚀 Start Full App"
 
 ### Daily Development
 
@@ -64,10 +64,10 @@ Ctrl+Shift+P → "🧹 Clean All"
 
 ### 1. Starting a New Feature
 ```bash
-# Option A: Use VS Code tasks
-Ctrl+Shift+P → "🚀 Start Full App"
+# Option A: Use VS Code tasks (recommended for full app)
+Ctrl+Shift+P → "Tasks: Run Task" → "🚀 Start Full App"
 
-# Option B: Use debug configuration
+# Option B: Use debug configuration (for debugging)
 F5 → "🚀 Debug Full Stack"
 ```
 
