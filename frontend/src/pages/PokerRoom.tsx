@@ -30,6 +30,8 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({
   const [connectionAttempts, setConnectionAttempts] = useState(0);
   const [showError, setShowError] = useState(false);
   const [retryTrigger, setRetryTrigger] = useState(0);
+  const [autoRetryEnabled, setAutoRetryEnabled] = useState(true);
+  const [retryCountdown, setRetryCountdown] = useState(0);
 
   useEffect(() => {
     const connectWebSocket = async () => {
@@ -120,10 +122,44 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({
     setShowError(false);
     setIsConnected(false);
     setRoomState(null);
+    setRetryCountdown(0);
 
     // Trigger reconnection by updating the retry trigger
     setRetryTrigger((prev) => prev + 1);
   };
+
+  // Auto-retry functionality
+  useEffect(() => {
+    let countdownInterval: NodeJS.Timeout | null = null;
+    let retryTimeout: NodeJS.Timeout | null = null;
+
+    if (showError && autoRetryEnabled && connectionError) {
+      // Start 10-second countdown
+      setRetryCountdown(10);
+
+      countdownInterval = setInterval(() => {
+        setRetryCountdown((prev) => {
+          if (prev <= 1) {
+            // Time to retry
+            clearInterval(countdownInterval!);
+            retryTimeout = setTimeout(() => {
+              handleRetryConnection();
+            }, 100); // Small delay to ensure countdown shows 0
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    } else {
+      // Clear countdown when error is resolved or auto-retry disabled
+      setRetryCountdown(0);
+    }
+
+    return () => {
+      if (countdownInterval) clearInterval(countdownInterval);
+      if (retryTimeout) clearTimeout(retryTimeout);
+    };
+  }, [showError, autoRetryEnabled, connectionError]);
 
   const handleCardSelect = (value: string) => {
     if (!userId || !roomId) return;
@@ -193,13 +229,51 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({
               <p className="text-gray-600 dark:text-dark-text-secondary mb-4">
                 {connectionError}
               </p>
-              <div className="space-y-3">
+              <div className="space-y-4">
+                {/* Auto-retry status and countdown */}
+                {autoRetryEnabled && retryCountdown > 0 && (
+                  <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg p-3">
+                    <div className="flex items-center justify-center space-x-2 text-blue-600 dark:text-blue-400">
+                      <div className="animate-pulse">🔄</div>
+                      <span className="text-sm font-medium">
+                        Auto-retry in {retryCountdown} seconds...
+                      </span>
+                    </div>
+                    {/* Progress bar */}
+                    <div className="w-full bg-blue-100 dark:bg-blue-800 rounded-full h-1.5 mt-2">
+                      <div
+                        className="bg-blue-600 dark:bg-blue-400 h-1.5 rounded-full transition-all duration-1000 ease-linear"
+                        style={{
+                          width: `${((10 - retryCountdown) / 10) * 100}%`,
+                        }}
+                      ></div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Manual retry button */}
                 <button
                   onClick={handleRetryConnection}
                   className="bg-blue-600 dark:bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-700 dark:hover:bg-blue-800 transition-colors"
                 >
-                  Try Again
+                  {retryCountdown > 0 ? "Try Again Now" : "Try Again"}
                 </button>
+
+                {/* Auto-retry toggle */}
+                <div className="flex items-center justify-center space-x-2">
+                  <button
+                    onClick={() => setAutoRetryEnabled(!autoRetryEnabled)}
+                    className={`flex items-center space-x-2 text-xs px-3 py-1 rounded-full transition-colors ${
+                      autoRetryEnabled
+                        ? "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400"
+                        : "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400"
+                    }`}
+                  >
+                    <span>{autoRetryEnabled ? "✅" : "⏸️"}</span>
+                    <span>Auto-retry every 10s</span>
+                  </button>
+                </div>
+
                 <div className="text-sm text-gray-500 dark:text-dark-text-secondary">
                   <p>💤 The backend may be sleeping to save resources.</p>
                   <p>
