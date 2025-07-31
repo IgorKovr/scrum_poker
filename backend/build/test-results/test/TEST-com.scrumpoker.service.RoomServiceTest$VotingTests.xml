@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Voting Tests" tests="4" skipped="0" failures="0" errors="0" timestamp="2025-07-31T20:29:37" hostname="MACM-MNVDQRXR92" time="0.002">
+  <properties/>
+  <testcase name="Should record user vote correctly" classname="com.scrumpoker.service.RoomServiceTest$VotingTests" time="0.001"/>
+  <testcase name="Should accept any string as estimate" classname="com.scrumpoker.service.RoomServiceTest$VotingTests" time="0.0"/>
+  <testcase name="Should allow user to change vote" classname="com.scrumpoker.service.RoomServiceTest$VotingTests" time="0.001"/>
+  <testcase name="Should handle voting by non-existent user gracefully" classname="com.scrumpoker.service.RoomServiceTest$VotingTests" time="0.0"/>
+  <system-out><![CDATA[2025-07-31T22:29:37.869+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f4cb;<![CDATA[ New user joined with name 'Alice' in room 'test-room' (User ID: 23c1f810-ed56-47fb-b01a-bc02b4ba1376)
+2025-07-31T22:29:37.869+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f3af;<![CDATA[ User 'Alice' selected card '5' in room 'test-room' (User ID: 23c1f810-ed56-47fb-b01a-bc02b4ba1376)
+2025-07-31T22:29:37.869+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f4cb;<![CDATA[ New user joined with name 'Alice' in room 'test-room' (User ID: 59011c22-1702-423a-b238-fd88d5d4c153)
+2025-07-31T22:29:37.869+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f3af;<![CDATA[ User 'Alice' selected card '?' in room 'test-room' (User ID: 59011c22-1702-423a-b238-fd88d5d4c153)
+2025-07-31T22:29:37.870+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f4cb;<![CDATA[ New user joined with name 'Alice' in room 'test-room' (User ID: 4cbcd0c4-fb2e-4720-b032-9537a09b95f2)
+2025-07-31T22:29:37.870+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f3af;<![CDATA[ User 'Alice' selected card '3' in room 'test-room' (User ID: 4cbcd0c4-fb2e-4720-b032-9537a09b95f2)
+2025-07-31T22:29:37.870+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f3af;<![CDATA[ User 'Alice' selected card '8' in room 'test-room' (User ID: 4cbcd0c4-fb2e-4720-b032-9537a09b95f2)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

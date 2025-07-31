@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Concurrent Access Tests" tests="2" skipped="0" failures="0" errors="0" timestamp="2025-07-31T20:29:37" hostname="MACM-MNVDQRXR92" time="0.002">
+  <properties/>
+  <testcase name="Should handle multiple users joining same room concurrently" classname="com.scrumpoker.service.RoomServiceTest$ConcurrentAccessTests" time="0.001"/>
+  <testcase name="Should handle concurrent voting safely" classname="com.scrumpoker.service.RoomServiceTest$ConcurrentAccessTests" time="0.001"/>
+  <system-out><![CDATA[2025-07-31T22:29:37.854+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f4cb;<![CDATA[ New user joined with name 'Alice' in room 'concurrent-room' (User ID: 1aeca8c6-59ca-4b54-85d6-232160dd2711)
+2025-07-31T22:29:37.854+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f4cb;<![CDATA[ New user joined with name 'Bob' in room 'concurrent-room' (User ID: cf98c091-3790-4e1d-a9a5-dc075d3c3d81)
+2025-07-31T22:29:37.854+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f4cb;<![CDATA[ New user joined with name 'Charlie' in room 'concurrent-room' (User ID: 64ccd731-30c2-459d-9074-8466e26ebc34)
+2025-07-31T22:29:37.854+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f4cb;<![CDATA[ New user joined with name 'Diana' in room 'concurrent-room' (User ID: 46483f80-7541-482c-b3e4-ba8996aabdb7)
+2025-07-31T22:29:37.854+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f4cb;<![CDATA[ New user joined with name 'Alice' in room 'vote-room' (User ID: a1e28a8d-3013-4d7a-9cbd-cea5ac9ee154)
+2025-07-31T22:29:37.854+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f4cb;<![CDATA[ New user joined with name 'Bob' in room 'vote-room' (User ID: 087c80ab-6551-4741-bf1c-886f45fef786)
+2025-07-31T22:29:37.854+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f4cb;<![CDATA[ New user joined with name 'Charlie' in room 'vote-room' (User ID: 25344ce9-97d0-43a2-b378-cffd38c2b67d)
+2025-07-31T22:29:37.854+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f3af;<![CDATA[ User 'Alice' selected card '1' in room 'vote-room' (User ID: a1e28a8d-3013-4d7a-9cbd-cea5ac9ee154)
+2025-07-31T22:29:37.855+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f3af;<![CDATA[ User 'Bob' selected card '2' in room 'vote-room' (User ID: 087c80ab-6551-4741-bf1c-886f45fef786)
+2025-07-31T22:29:37.855+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f3af;<![CDATA[ User 'Charlie' selected card '3' in room 'vote-room' (User ID: 25344ce9-97d0-43a2-b378-cffd38c2b67d)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

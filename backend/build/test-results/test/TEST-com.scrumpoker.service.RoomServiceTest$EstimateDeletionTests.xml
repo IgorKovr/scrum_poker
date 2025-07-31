@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Estimate Deletion Tests" tests="2" skipped="0" failures="0" errors="0" timestamp="2025-07-31T20:29:37" hostname="MACM-MNVDQRXR92" time="0.002">
+  <properties/>
+  <testcase name="Should clear all estimates and reset voting status" classname="com.scrumpoker.service.RoomServiceTest$EstimateDeletionTests" time="0.001"/>
+  <testcase name="Should handle delete estimates for non-existent room" classname="com.scrumpoker.service.RoomServiceTest$EstimateDeletionTests" time="0.001"/>
+  <system-out><![CDATA[2025-07-31T22:29:37.856+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f4cb;<![CDATA[ New user joined with name 'Alice' in room 'test-room' (User ID: 67bd0512-60bd-42de-9f30-7436e2a36b3b)
+2025-07-31T22:29:37.856+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f4cb;<![CDATA[ New user joined with name 'Bob' in room 'test-room' (User ID: b2853871-eb2f-4d0b-9d47-e6ce5baea158)
+2025-07-31T22:29:37.856+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f3af;<![CDATA[ User 'Alice' selected card '5' in room 'test-room' (User ID: 67bd0512-60bd-42de-9f30-7436e2a36b3b)
+2025-07-31T22:29:37.856+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f3af;<![CDATA[ User 'Bob' selected card '8' in room 'test-room' (User ID: b2853871-eb2f-4d0b-9d47-e6ce5baea158)
+2025-07-31T22:29:37.856+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f441;<![CDATA[️ Show estimates triggered in room 'test-room'
+2025-07-31T22:29:37.856+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f5d1;<![CDATA[️ Delete Estimations triggered in room 'test-room'
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

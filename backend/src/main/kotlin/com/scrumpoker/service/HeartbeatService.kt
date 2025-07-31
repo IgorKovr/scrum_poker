@@ -1,148 +1,161 @@
 /**
- * HeartbeatService.kt - Scheduled Monitoring and Logging Service
- * 
- * This service provides automated monitoring and logging capabilities for the
- * Scrum Poker backend application. It runs scheduled tasks to provide visibility
- * into the application's operational state and resource usage.
- * 
- * Key Functions:
- * 1. Regular heartbeat logging with room and user statistics
- * 2. Detailed system status reporting at intervals
- * 3. Memory usage monitoring and reporting
- * 4. Application health tracking over time
- * 
- * The service uses Spring's @Scheduled annotation to run tasks at fixed intervals,
- * providing operational insights without requiring external monitoring tools.
- * This is particularly useful for:
- * - Debugging production issues
- * - Monitoring application performance
- * - Tracking resource usage trends
- * - Verifying application is processing requests
- * 
- * The logging output can be captured by log aggregation systems for
- * comprehensive application monitoring and alerting.
+ * HeartbeatService.kt - Scheduled Service for Application Monitoring
+ *
+ * This service provides regular system health monitoring and logging capabilities. It runs on a
+ * scheduled basis to provide insights into application performance, resource usage, and operational
+ * status.
+ *
+ * Key Responsibilities:
+ * 1. Memory usage monitoring and reporting
+ * 2. System resource tracking (threads, memory, etc.)
+ * 3. Application health status logging
+ * 4. Regular maintenance and cleanup operations
+ * 5. Performance metrics collection
+ *
+ * The service helps with operational monitoring and can alert administrators to potential issues
+ * through log analysis. It's particularly useful for identifying memory leaks, performance
+ * degradation, and system resource trends.
+ *
+ * Scheduling Configuration: The service uses Spring's @Scheduled annotation with fixed rate
+ * execution, ensuring consistent monitoring intervals regardless of execution time.
  */
-
 package com.scrumpoker.service
 
+import org.slf4j.LoggerFactory
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 /**
- * HeartbeatService - Scheduled Monitoring and Logging Service
- * 
- * This service provides automated health monitoring through scheduled tasks
- * that log application statistics and system information at regular intervals.
- * It helps operators understand the application's current load and health status.
- * 
- * The service integrates with the RoomService to provide business-level metrics
- * about active rooms and users, combined with system-level metrics about
- * memory usage and thread counts.
- * 
- * Dependencies:
- * - RoomService: To get current room and user statistics
- * - Spring Scheduling: For automated task execution
- * 
- * @param roomService Service for accessing room and user data
+ * HeartbeatService - Scheduled monitoring and maintenance service
+ *
+ * This service performs regular health checks and maintenance operations to ensure optimal
+ * application performance and resource usage.
+ *
+ * @param roomService Service for poker room business logic and memory management
  */
 @Service
-class HeartbeatService(
-    /** RoomService dependency for accessing current room statistics */
-    private val roomService: RoomService
-) {
-    
-    /** Date/time formatter for consistent timestamp formatting in logs */
-    private val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-    
-    /** Counter for tracking total number of heartbeats since startup */
-    private var heartbeatCount = 0L
-    
+class HeartbeatService(private val roomService: RoomService) {
+
     /**
-     * Regular Heartbeat Monitor
-     * 
-     * This method runs every 60 seconds and logs basic application statistics.
-     * It provides a regular "heartbeat" that shows the application is alive
-     * and processing requests, along with current load information.
-     * 
-     * The heartbeat includes:
-     * - Timestamp of the heartbeat
-     * - Number of active poker rooms
-     * - Total number of users across all rooms
-     * - Sequential heartbeat counter
-     * 
-     * This information helps operators:
-     * - Verify the application is running and responsive
-     * - Monitor current user load and room usage
-     * - Track application activity over time
-     * - Identify patterns in usage (peak times, etc.)
-     * 
-     * Example log output:
-     * [HEARTBEAT #42] 2023-12-07 14:30:15 - Active rooms: 3, Total users: 8
+     * Logger for heartbeat and system monitoring information
+     *
+     * Used to log regular system status updates, memory usage, and performance metrics for
+     * monitoring and alerting purposes.
      */
-    @Scheduled(fixedDelay = 60000) // Every 60 seconds
+    private val logger = LoggerFactory.getLogger(HeartbeatService::class.java)
+
+    /** Counter for heartbeat cycles to control cleanup frequency */
+    private var heartbeatCount = 0
+
+    /**
+     * Basic heartbeat logging
+     *
+     * This method runs every 30 seconds to provide basic application status. It logs active room
+     * and user counts to help monitor application usage.
+     *
+     * The quick heartbeat provides immediate feedback on application activity without the overhead
+     * of detailed system inspection.
+     */
+    @Scheduled(fixedRate = 30000) // Every 30 seconds
     fun heartbeat() {
-        // Increment heartbeat counter for tracking
         heartbeatCount++
-        
-        // Get current timestamp for logging
-        val timestamp = LocalDateTime.now().format(formatter)
-        
-        // Gather current application statistics
-        val rooms = roomService.getAllRooms()
-        val totalUsers = rooms.values.sumOf { it.users.size }  // Count users across all rooms
-        val activeRooms = rooms.size  // Number of rooms with at least one user
-        
-        // Log heartbeat with current statistics
-        println("[HEARTBEAT #$heartbeatCount] $timestamp - Active rooms: $activeRooms, Total users: $totalUsers")
+
+        // Get basic activity metrics
+        val totalRooms = roomService.getAllRooms().size
+        val totalUsers = roomService.getAllRooms().values.sumOf { it.users.size }
+
+        logger.info(
+                "[HEARTBEAT #{}] Active rooms: {}, Total users: {}",
+                heartbeatCount,
+                totalRooms,
+                totalUsers
+        )
     }
-    
+
     /**
-     * Detailed System Status Monitor
-     * 
-     * This method runs every 5 minutes and logs detailed system information
-     * including memory usage and thread counts. It provides deeper insight
-     * into the application's resource consumption and performance.
-     * 
-     * The detailed status includes:
-     * - Current memory usage in megabytes
-     * - Total allocated memory
-     * - Number of active threads
-     * - Formatted timestamp
-     * 
-     * This information helps with:
-     * - Memory leak detection and monitoring
-     * - Performance analysis and optimization
-     * - Resource usage trending
-     * - Capacity planning decisions
-     * - Troubleshooting performance issues
-     * 
-     * The 5-minute interval provides regular snapshots without generating
-     * excessive log volume, making it suitable for production monitoring.
-     * 
-     * Example log output:
-     * ==================================================
-     * [SYSTEM STATUS] 2023-12-07 14:35:00
-     * Memory: 128 MB / 512 MB
-     * Threads: 24
-     * ==================================================
+     * Detailed system status and maintenance
+     *
+     * This method runs every 5 minutes to provide comprehensive system monitoring:
+     * 1. Memory usage analysis (heap, non-heap, garbage collection)
+     * 2. Thread monitoring and resource tracking
+     * 3. Application-specific metrics (rooms, users, sessions)
+     * 4. Memory leak prevention through maintenance cleanup
+     *
+     * The detailed status helps identify performance trends and potential issues before they become
+     * critical problems.
      */
-    @Scheduled(fixedDelay = 300000) // Every 5 minutes
+    @Scheduled(fixedRate = 300000) // Every 5 minutes
     fun detailedStatus() {
-        // Get runtime instance for system information
+        // Memory monitoring
         val runtime = Runtime.getRuntime()
-        val mb = 1024 * 1024  // Conversion factor for bytes to megabytes
-        
-        // Calculate current memory usage
-        val usedMemory = (runtime.totalMemory() - runtime.freeMemory()) / mb
-        val totalMemory = runtime.totalMemory() / mb
-        
-        // Create formatted status report
-        println("=".repeat(50))
-        println("[SYSTEM STATUS] ${LocalDateTime.now().format(formatter)}")
-        println("Memory: $usedMemory MB / $totalMemory MB")
-        println("Threads: ${Thread.activeCount()}")
-        println("=".repeat(50))
+        val totalMemory = runtime.totalMemory() / (1024 * 1024) // MB
+        val freeMemory = runtime.freeMemory() / (1024 * 1024) // MB
+        val usedMemory = totalMemory - freeMemory
+        val maxMemory = runtime.maxMemory() / (1024 * 1024) // MB
+
+        // Thread monitoring
+        val threadCount = Thread.activeCount()
+
+        // Application metrics
+        val allRooms = roomService.getAllRooms()
+        val totalRooms = allRooms.size
+        val totalUsers = allRooms.values.sumOf { it.users.size }
+        val averageUsersPerRoom = if (totalRooms > 0) totalUsers.toDouble() / totalRooms else 0.0
+
+        // Calculate memory utilization percentage
+        val memoryUtilization = (usedMemory.toDouble() / maxMemory * 100)
+
+        logger.info(
+                """
+            💾 MEMORY STATUS:
+               Used: {} MB / {} MB ({:.1f}%)
+               Free: {} MB
+               Total Heap: {} MB
+               
+            📊 APPLICATION METRICS:
+               Active Rooms: {}
+               Total Users: {}
+               Avg Users/Room: {:.1f}
+               Active Threads: {}
+               
+            ⚡ PERFORMANCE:
+               Memory Utilization: {:.1f}%
+               Heartbeat Count: {}
+        """.trimIndent(),
+                usedMemory,
+                maxMemory,
+                memoryUtilization,
+                freeMemory,
+                totalMemory,
+                totalRooms,
+                totalUsers,
+                averageUsersPerRoom,
+                threadCount,
+                memoryUtilization,
+                heartbeatCount
+        )
+
+        // Memory leak prevention: Run cleanup every 3rd detailed status (15 minutes)
+        if (heartbeatCount % 3 == 0) {
+            logger.info("🧹 Running scheduled maintenance cleanup...")
+            roomService.performMaintenanceCleanup()
+        }
+
+        // Alert if memory usage is high
+        if (memoryUtilization > 80) {
+            logger.warn(
+                    "⚠️ HIGH MEMORY USAGE: {:.1f}% - Consider investigating memory leaks",
+                    memoryUtilization
+            )
+        }
+
+        // Alert if too many rooms/users (potential memory leak)
+        if (totalRooms > 100) {
+            logger.warn("⚠️ HIGH ROOM COUNT: {} rooms - Potential memory leak detected", totalRooms)
+        }
+
+        if (totalUsers > 500) {
+            logger.warn("⚠️ HIGH USER COUNT: {} users - Potential memory leak detected", totalUsers)
+        }
     }
-} 
+}

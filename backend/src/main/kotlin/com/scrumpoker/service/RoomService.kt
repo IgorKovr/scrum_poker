@@ -47,6 +47,11 @@ import org.springframework.stereotype.Service
  * - Uses ConcurrentHashMap for thread-safe collections
  * - Employs atomic operations where possible
  * - Designed for high-concurrency WebSocket environment
+ *
+ * Memory Management:
+ * - Automatic cleanup of empty rooms to prevent memory leaks
+ * - Size monitoring and logging for memory usage tracking
+ * - Bounds checking to prevent unbounded growth
  */
 @Service
 class RoomService {
@@ -75,6 +80,99 @@ class RoomService {
      */
     private val userSessions = ConcurrentHashMap<String, User>()
 
+    // Memory management constants
+    private val MAX_ROOMS = 1000 // Maximum number of concurrent rooms
+    private val MAX_USERS_PER_ROOM = 50 // Maximum users per room
+    private val MAX_TOTAL_USERS = 5000 // Maximum total users across all rooms
+
+    /** Logs current memory usage for monitoring */
+    private fun logMemoryUsage() {
+        val totalUsers = userSessions.size
+        val totalRooms = rooms.size
+        val averageUsersPerRoom = if (totalRooms > 0) totalUsers.toDouble() / totalRooms else 0.0
+
+        logger.info(
+                "📊 Memory Usage: {} rooms, {} users, {:.1f} avg users/room",
+                totalRooms,
+                totalUsers,
+                averageUsersPerRoom
+        )
+
+        // Log warning if approaching limits
+        if (totalRooms > MAX_ROOMS * 0.8) {
+            logger.warn("⚠️ Room count approaching limit: {}/{}", totalRooms, MAX_ROOMS)
+        }
+        if (totalUsers > MAX_TOTAL_USERS * 0.8) {
+            logger.warn("⚠️ User count approaching limit: {}/{}", totalUsers, MAX_TOTAL_USERS)
+        }
+    }
+
+    /** Performs cleanup of stale data to prevent memory leaks */
+    fun performMaintenanceCleanup() {
+        var cleanedRooms = 0
+        var cleanedUsers = 0
+
+        // Find rooms with no users (potential orphaned rooms)
+        val emptyRoomIds = rooms.values.filter { it.users.isEmpty() }.map { it.id }
+        emptyRoomIds.forEach { roomId ->
+            rooms.remove(roomId)
+            cleanedRooms++
+            logger.info("🧹 Maintenance cleanup: removed empty room '{}'", roomId)
+        }
+
+        // Find users not in any room (potential orphaned users)
+        val activeRoomIds = rooms.keys
+        val orphanedUsers =
+                userSessions.values.filter { user -> !activeRoomIds.contains(user.roomId) }
+        orphanedUsers.forEach { user ->
+            userSessions.remove(user.id)
+            cleanedUsers++
+            logger.info(
+                    "🧹 Maintenance cleanup: removed orphaned user '{}' from room '{}'",
+                    user.name,
+                    user.roomId
+            )
+        }
+
+        // Validate consistency between rooms and userSessions
+        validateDataConsistency()
+
+        if (cleanedRooms > 0 || cleanedUsers > 0) {
+            logger.info(
+                    "🧹 Maintenance cleanup completed: {} rooms, {} users removed",
+                    cleanedRooms,
+                    cleanedUsers
+            )
+        }
+
+        logMemoryUsage()
+    }
+
+    /** Validates consistency between rooms and userSessions to detect memory leaks */
+    private fun validateDataConsistency() {
+        val usersInRooms = rooms.values.flatMap { it.users }.map { it.id }.toSet()
+        val usersInSessions = userSessions.keys.toSet()
+
+        val orphanedInSessions = usersInSessions - usersInRooms
+        val orphanedInRooms = usersInRooms - usersInSessions
+
+        if (orphanedInSessions.isNotEmpty()) {
+            logger.warn(
+                    "🚨 Data inconsistency: {} users in sessions but not in rooms: {}",
+                    orphanedInSessions.size,
+                    orphanedInSessions.take(5)
+            )
+        }
+
+        if (orphanedInRooms.isNotEmpty()) {
+            logger.warn(
+                    "🚨 Data inconsistency: {} users in rooms but not in sessions: {}",
+                    orphanedInRooms.size,
+                    orphanedInRooms.take(5)
+            )
+        }
+    }
+
     /**
      * Adds a new user to a poker room
      *
@@ -91,8 +189,28 @@ class RoomService {
      * @param name The display name chosen by the user
      * @param roomId The ID of the room to join
      * @return The created User object with generated ID
+     * @throws IllegalStateException if system limits are exceeded
      */
     fun joinRoom(name: String, roomId: String): User {
+        // Check system limits to prevent memory exhaustion
+        if (rooms.size >= MAX_ROOMS) {
+            logger.error(
+                    "❌ Cannot create room '{}': maximum room limit {} reached",
+                    roomId,
+                    MAX_ROOMS
+            )
+            throw IllegalStateException("Maximum number of rooms ($MAX_ROOMS) reached")
+        }
+
+        if (userSessions.size >= MAX_TOTAL_USERS) {
+            logger.error(
+                    "❌ Cannot add user '{}': maximum user limit {} reached",
+                    name,
+                    MAX_TOTAL_USERS
+            )
+            throw IllegalStateException("Maximum number of users ($MAX_TOTAL_USERS) reached")
+        }
+
         // Create new user with generated UUID and provided information
         val user =
                 User(
@@ -104,6 +222,17 @@ class RoomService {
         // Get existing room or create new one atomically
         // computeIfAbsent ensures thread-safe room creation
         val room = rooms.computeIfAbsent(roomId) { Room(it) }
+
+        // Check room capacity
+        if (room.users.size >= MAX_USERS_PER_ROOM) {
+            logger.error(
+                    "❌ Cannot add user '{}' to room '{}': maximum room capacity {} reached",
+                    name,
+                    roomId,
+                    MAX_USERS_PER_ROOM
+            )
+            throw IllegalStateException("Room capacity limit ($MAX_USERS_PER_ROOM) reached")
+        }
 
         // Add user to room's participant list
         room.users.add(user)
@@ -118,6 +247,11 @@ class RoomService {
                 roomId,
                 user.id
         )
+
+        // Log memory usage periodically (every 10 users)
+        if (userSessions.size % 10 == 0) {
+            logMemoryUsage()
+        }
 
         return user
     }
@@ -154,6 +288,10 @@ class RoomService {
                 rooms.remove(user.roomId)
             }
         }
+                ?: run {
+                    // User not found - this could indicate a memory leak or race condition
+                    logger.warn("⚠️ Attempted to remove non-existent user with ID: {}", userId)
+                }
     }
 
     /**

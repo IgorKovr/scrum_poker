@@ -90,6 +90,38 @@ class ScrumPokerWebSocketHandler(
      */
     private val sessionToUser = ConcurrentHashMap<String, String>()
 
+    // Memory management constants for WebSocket sessions
+    private val MAX_CONCURRENT_SESSIONS = 10000 // Maximum concurrent WebSocket sessions
+
+    /** Logs WebSocket session memory usage for monitoring */
+    private fun logSessionMemoryUsage() {
+        val sessionCount = sessions.size
+        val sessionToUserCount = sessionToUser.size
+
+        logger.info(
+                "📊 WebSocket Memory: {} sessions, {} session mappings",
+                sessionCount,
+                sessionToUserCount
+        )
+
+        if (sessionCount > MAX_CONCURRENT_SESSIONS * 0.8) {
+            logger.warn(
+                    "⚠️ WebSocket session count approaching limit: {}/{}",
+                    sessionCount,
+                    MAX_CONCURRENT_SESSIONS
+            )
+        }
+
+        // Detect potential memory leaks in session mappings
+        if (Math.abs(sessionCount - sessionToUserCount) > 10) {
+            logger.warn(
+                    "🚨 WebSocket mapping inconsistency: {} sessions vs {} mappings",
+                    sessionCount,
+                    sessionToUserCount
+            )
+        }
+    }
+
     /**
      * Handles incoming text messages from WebSocket clients
      *
@@ -152,24 +184,57 @@ class ScrumPokerWebSocketHandler(
      * @param payload Join request data containing name and room ID
      */
     private fun handleJoin(session: WebSocketSession, payload: Any) {
+        // Check WebSocket session limits to prevent memory exhaustion
+        if (sessions.size >= MAX_CONCURRENT_SESSIONS) {
+            logger.error(
+                    "❌ Cannot accept WebSocket connection: maximum session limit {} reached",
+                    MAX_CONCURRENT_SESSIONS
+            )
+            session.close()
+            return
+        }
+
         // Convert payload to typed request object
         val joinRequest = objectMapper.convertValue(payload, JoinRoomRequest::class.java)
 
-        // Create user and add to room via business logic
-        val user = roomService.joinRoom(joinRequest.name, joinRequest.roomId)
+        try {
+            // Create user and add to room via business logic (may throw exception if limits
+            // exceeded)
+            val user = roomService.joinRoom(joinRequest.name, joinRequest.roomId)
 
-        // Register session for message delivery
-        sessions[user.id] = session
-        sessionToUser[session.id] = user.id
+            // Register session for message delivery
+            sessions[user.id] = session
+            sessionToUser[session.id] = user.id
 
-        // Send user ID back to the client for future message identification
-        sendMessage(
-                session,
-                WebSocketMessage(type = MessageType.JOIN, payload = mapOf("userId" to user.id))
-        )
+            // Send user ID back to the client for future message identification
+            sendMessage(
+                    session,
+                    WebSocketMessage(type = MessageType.JOIN, payload = mapOf("userId" to user.id))
+            )
 
-        // Broadcast room state to all users in the room
-        broadcastRoomState(joinRequest.roomId)
+            // Broadcast room state to all users in the room
+            broadcastRoomState(joinRequest.roomId)
+
+            // Log session memory usage periodically (every 50 sessions)
+            if (sessions.size % 50 == 0) {
+                logSessionMemoryUsage()
+            }
+        } catch (e: IllegalStateException) {
+            // Handle room/user limits exceeded
+            logger.warn("❌ Cannot join room: {}", e.message)
+            sendMessage(
+                    session,
+                    WebSocketMessage(
+                            type = MessageType.ERROR,
+                            payload =
+                                    mapOf(
+                                            "error" to
+                                                    "Server capacity limit reached. Please try again later."
+                                    )
+                    )
+            )
+            session.close()
+        }
     }
 
     /**
@@ -365,6 +430,8 @@ class ScrumPokerWebSocketHandler(
      * This cleanup ensures that disconnected users are properly removed from rooms and other
      * participants see the updated user list.
      *
+     * MEMORY LEAK FIX: Always clean up session maps even if user lookup fails
+     *
      * @param session The WebSocket session that was closed
      * @param status The close status indicating why the connection closed
      */
@@ -377,19 +444,34 @@ class ScrumPokerWebSocketHandler(
         )
 
         // Find the user associated with this session
-        sessionToUser[session.id]?.let { userId ->
-            roomService.getUserById(userId)?.let { user ->
-                val roomId = user.roomId
+        val userId = sessionToUser[session.id]
+        var roomId: String? = null
 
+        if (userId != null) {
+            // Try to get user and clean up room membership
+            roomService.getUserById(userId)?.let { user ->
+                roomId = user.roomId
                 // Remove user from room and clean up session tracking
                 // The leaveRoom call will trigger the "user left" logging in RoomService
                 roomService.leaveRoom(userId)
-                sessions.remove(userId)
-                sessionToUser.remove(session.id)
-
-                // Broadcast updated room state to remaining users
-                broadcastRoomState(roomId)
             }
+
+            // CRITICAL FIX: Always clean up WebSocket session maps even if user lookup fails
+            // This prevents memory leaks when RoomService cleanup happens before WebSocket cleanup
+            sessions.remove(userId)
+            sessionToUser.remove(session.id)
+
+            // Broadcast updated room state if we know the room
+            roomId?.let { broadcastRoomState(it) }
+
+            logger.debug(
+                    "🧹 Cleaned up WebSocket session for user {} (session {})",
+                    userId,
+                    session.id
+            )
+        } else {
+            // Session was never properly registered (connection closed before JOIN message)
+            logger.debug("🔌 WebSocket session {} closed without associated user", session.id)
         }
 
         super.afterConnectionClosed(session, status)

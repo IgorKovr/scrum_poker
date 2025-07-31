@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Room Joining Tests" tests="4" skipped="0" failures="0" errors="0" timestamp="2025-07-31T20:29:37" hostname="MACM-MNVDQRXR92" time="0.001">
+  <properties/>
+  <testcase name="Should assign unique IDs to different users" classname="com.scrumpoker.service.RoomServiceTest$RoomJoiningTests" time="0.0"/>
+  <testcase name="Should create new user when joining room" classname="com.scrumpoker.service.RoomServiceTest$RoomJoiningTests" time="0.001"/>
+  <testcase name="Should create room automatically when first user joins" classname="com.scrumpoker.service.RoomServiceTest$RoomJoiningTests" time="0.0"/>
+  <testcase name="Should add user to existing room" classname="com.scrumpoker.service.RoomServiceTest$RoomJoiningTests" time="0.0"/>
+  <system-out><![CDATA[2025-07-31T22:29:37.860+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f4cb;<![CDATA[ New user joined with name 'Alice' in room 'test-room' (User ID: 31a81964-7a2d-4493-b8f5-c22473f87abd)
+2025-07-31T22:29:37.860+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f4cb;<![CDATA[ New user joined with name 'Bob' in room 'test-room' (User ID: 4416ee04-74bc-4f11-8542-2e51496cbb33)
+2025-07-31T22:29:37.861+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f4cb;<![CDATA[ New user joined with name 'Alice' in room 'test-room' (User ID: 1af3c738-839a-41bb-ac67-6dab15576baf)
+2025-07-31T22:29:37.861+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f4cb;<![CDATA[ New user joined with name 'Bob' in room 'new-room' (User ID: 12e6e1a6-af90-4764-b633-6798a1a25641)
+2025-07-31T22:29:37.861+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f4cb;<![CDATA[ New user joined with name 'Alice' in room 'existing-room' (User ID: 3eb7b2fb-5fff-4410-8cf4-96c3014afbec)
+2025-07-31T22:29:37.861+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f4cb;<![CDATA[ New user joined with name 'Bob' in room 'existing-room' (User ID: 89ef1b34-fcf5-4e43-81bf-8f951a2752f6)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

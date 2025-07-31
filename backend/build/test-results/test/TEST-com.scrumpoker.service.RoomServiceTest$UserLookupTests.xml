@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="User Lookup Tests" tests="4" skipped="0" failures="0" errors="0" timestamp="2025-07-31T20:29:37" hostname="MACM-MNVDQRXR92" time="0.002">
+  <properties/>
+  <testcase name="Should return users by room" classname="com.scrumpoker.service.RoomServiceTest$UserLookupTests" time="0.001"/>
+  <testcase name="Should find user by ID" classname="com.scrumpoker.service.RoomServiceTest$UserLookupTests" time="0.0"/>
+  <testcase name="Should return empty list for non-existent room" classname="com.scrumpoker.service.RoomServiceTest$UserLookupTests" time="0.001"/>
+  <testcase name="Should return null for non-existent user ID" classname="com.scrumpoker.service.RoomServiceTest$UserLookupTests" time="0.0"/>
+  <system-out><![CDATA[2025-07-31T22:29:37.867+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f4cb;<![CDATA[ New user joined with name 'Alice' in room 'test-room' (User ID: aa960b76-1689-4edf-a0b8-6b8bc5f0c30d)
+2025-07-31T22:29:37.867+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f4cb;<![CDATA[ New user joined with name 'Bob' in room 'test-room' (User ID: b41952cb-b45a-409b-b3e0-5dfeb5c51c77)
+2025-07-31T22:29:37.867+02:00  INFO 64935 --- [scrum-poker-backend] [    Test worker] com.scrumpoker.service.RoomService       : ]]>&#x1f4cb;<![CDATA[ New user joined with name 'Alice' in room 'test-room' (User ID: 132d89be-bed7-49a3-99c3-743e2b302d5d)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
