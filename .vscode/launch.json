@@ -46,16 +46,6 @@
       "console": "integratedTerminal",
       "preLaunchTask": "frontend-install"
     },
-    {
-      "name": "🧪 Run Backend Tests",
-      "type": "shell",
-      "request": "launch",
-      "command": "./gradlew",
-      "args": ["test", "--info"],
-      "cwd": "${workspaceFolder}/backend",
-      "console": "integratedTerminal",
-      "group": "test"
-    },
 
     {
       "name": "🔗 Attach to Backend Process",

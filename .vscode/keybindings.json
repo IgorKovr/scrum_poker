@@ -1,5 +1,23 @@
 [
   {
+    "key": "cmd+shift+t",
+    "command": "workbench.action.tasks.runTask",
+    "args": "🧪 Run All Tests",
+    "when": "!inDebugMode"
+  },
+  {
+    "key": "cmd+shift+f",
+    "command": "workbench.action.tasks.runTask",
+    "args": "🧪 Run Frontend Tests",
+    "when": "!inDebugMode"
+  },
+  {
+    "key": "cmd+shift+b",
+    "command": "workbench.action.tasks.runTask",
+    "args": "🧪 Run Backend Tests",
+    "when": "!inDebugMode"
+  },
+  {
     "key": "ctrl+shift+o",
     "command": "simpleBrowser.show",
     "args": {

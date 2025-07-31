@@ -35,29 +35,31 @@
 
 ## 🧪 Testing Workflows
 
-### Run All Tests
+### ⚡ Quick Test Shortcuts (Non-Debugging)
+
+- **All Tests**: `Cmd+Shift+T` ⚡
+- **Frontend Tests**: `Cmd+Shift+F` ⚡
+- **Backend Tests**: `Cmd+Shift+B` ⚡
+
+### Run Tests (Alternative Method)
 
 ```
-Ctrl+Shift+P → "🧪 Run All Tests"
+Ctrl+Shift+P → "🧪 Run All Tests"      (Frontend + Backend in parallel)
+Ctrl+Shift+P → "🧪 Run Frontend Tests" (React/Vitest)
+Ctrl+Shift+P → "🧪 Run Backend Tests"  (Kotlin/JUnit)
 ```
 
-### Frontend Tests Only
+### Debug Tests (With Breakpoints)
 
-```
-Ctrl+Shift+P → "🧪 Run Frontend Tests"
-```
-
-### Backend Tests Only
-
-```
-Ctrl+Shift+P → "🧪 Run Backend Tests"
-```
-
-### Debug Tests
-
-- **Press `F5`** → Select "🧪 Debug Frontend Tests" or "🧪 Debug Backend Tests"
+- **Press `F5`** → Select "🧪 Debug Frontend Tests"
 - Set breakpoints in your test files
 - Step through test execution
+- **Note**: Backend test debugging uses standard Spring Boot debugging
+
+### 💡 Tasks vs Launch Configurations
+
+- **Tasks** = Run tests quickly without debugging (use shortcuts above)
+- **Launch Configs** = Debug with breakpoints (use `F5` or Run sidebar)
 
 ## 🏗️ Build & Clean
 
@@ -155,6 +157,11 @@ The workspace is organized into logical folders:
 | ` Ctrl+Shift+``  ` | New terminal                    |
 | `Ctrl+B`           | Toggle sidebar                  |
 | `Ctrl+J`           | Toggle panel                    |
+| **Testing**        |                                 |
+| `Cmd+Shift+T`      | ⚡ Run all tests                |
+| `Cmd+Shift+F`      | ⚡ Run frontend tests           |
+| `Cmd+Shift+B`      | ⚡ Run backend tests            |
+| **Browser**        |                                 |
 | `Ctrl+Shift+O`     | Open app in Simple Browser      |
 | `Ctrl+Alt+O`       | Open app in external browser    |
 | `Ctrl+Shift+H`     | Open health in Simple Browser   |
