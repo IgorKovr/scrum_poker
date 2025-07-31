@@ -29,6 +29,7 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({
   const [connectionError, setConnectionError] = useState<string | null>(null);
   const [connectionAttempts, setConnectionAttempts] = useState(0);
   const [showError, setShowError] = useState(false);
+  const [retryTrigger, setRetryTrigger] = useState(0);
 
   useEffect(() => {
     const connectWebSocket = async () => {
@@ -111,7 +112,18 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({
     return () => {
       wsService.disconnect();
     };
-  }, [roomId, userName, setUserId]);
+  }, [roomId, userName, setUserId, retryTrigger]);
+
+  const handleRetryConnection = () => {
+    // Reset error states
+    setConnectionError(null);
+    setShowError(false);
+    setIsConnected(false);
+    setRoomState(null);
+
+    // Trigger reconnection by updating the retry trigger
+    setRetryTrigger((prev) => prev + 1);
+  };
 
   const handleCardSelect = (value: string) => {
     if (!userId || !roomId) return;
@@ -183,16 +195,20 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({
               </p>
               <div className="space-y-3">
                 <button
-                  onClick={() => window.location.reload()}
+                  onClick={handleRetryConnection}
                   className="bg-blue-600 dark:bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-700 dark:hover:bg-blue-800 transition-colors"
                 >
-                  Retry Connection
+                  Try Again
                 </button>
                 <div className="text-sm text-gray-500 dark:text-dark-text-secondary">
-                  <p>If the problem persists:</p>
-                  <p>• Check the backend logs in Railway dashboard</p>
-                  <p>• Ensure the backend service is running</p>
-                  <p>• Wait a moment for the backend to start up</p>
+                  <p>💤 The backend may be sleeping to save resources.</p>
+                  <p>
+                    🚀 It will wake up automatically when you retry (may take
+                    15-30 seconds).
+                  </p>
+                  <p>
+                    ⏱️ Your name "{userName}" will be preserved during retry.
+                  </p>
                 </div>
                 {connectionAttempts > 1 && (
                   <p className="text-xs text-gray-400 dark:text-dark-text-secondary">
