@@ -87,7 +87,7 @@ export const NameEntry: React.FC<NameEntryProps> = ({ onNameSubmit }) => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4">
+    <div className="min-h-[100dvh] min-h-screen flex items-center justify-center px-4">
       <div className="max-w-md w-full space-y-8">
         {/* Header section with title and instructions */}
         <div className="text-center">

@@ -405,7 +405,7 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-dark-bg p-4 transition-colors duration-200">
+    <div className="min-h-[100dvh] min-h-screen bg-gray-50 dark:bg-dark-bg p-4 transition-colors duration-200">
       <div className="max-w-6xl mx-auto space-y-6">
         <div className="text-center">
           <h2 className="text-2xl font-semibold text-gray-800 dark:text-dark-text mb-2">

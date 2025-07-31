@@ -48,7 +48,7 @@ function App() {
   return (
     <Router>
       {/* Main application container with full height and consistent background */}
-      <div className="min-h-screen bg-gray-50 dark:bg-dark-bg transition-colors duration-200">
+      <div className="min-h-[100dvh] min-h-screen bg-gray-50 dark:bg-dark-bg transition-colors duration-200">
         <Routes>
           {/* Home Route - Name Entry Page */}
           <Route
