@@ -51,6 +51,60 @@ GitHub Actions automatically runs all tests on:
 - Pull requests
 - Manual workflow dispatch
 
+## 💻 VS Code (Cursor) Setup
+
+This project includes comprehensive VS Code/Cursor configuration for optimal development experience.
+
+### 🛠️ Quick Setup
+
+1. **Open the project in VS Code/Cursor**
+2. **Install recommended extensions** (VS Code will prompt you automatically)
+3. **Choose a launch configuration** from the debug panel:
+
+### 🚀 Available Launch Configurations
+
+| Configuration | Description | Use Case |
+|---------------|-------------|----------|
+| **🚀 Launch Full App** | Starts both backend + frontend | Complete development |
+| **☕ Debug Backend** | Spring Boot with debugging | Backend development |
+| **⚛️ Debug Frontend** | React/Vite with hot reload | Frontend development |
+| **🧪 Debug Tests** | Run tests with debugging | Test development |
+| **🚀 Debug Full Stack** | Both services with debugging | Full-stack debugging |
+
+### ⚡ Available Tasks (Ctrl+Shift+P → "Tasks: Run Task")
+
+| Task | Description |
+|------|-------------|
+| **🚀 Start Full App** | Runs `run-local.sh` script |
+| **☕ Start Backend Only** | Starts Spring Boot server |
+| **⚛️ Start Frontend Only** | Starts Vite dev server |
+| **🧪 Run All Tests** | Executes frontend + backend tests |
+| **🏗️ Build All** | Builds both applications |
+| **🧹 Clean All** | Cleans and reinstalls dependencies |
+
+### 📁 Configuration Files
+
+- **`.vscode/launch.json`** - Debug configurations
+- **`.vscode/tasks.json`** - Build and run tasks  
+- **`.vscode/settings.json`** - Workspace settings
+- **`.vscode/extensions.json`** - Recommended extensions
+
+### 🎯 Recommended Extensions
+
+The setup automatically recommends essential extensions:
+- **Frontend**: Prettier, ESLint, Tailwind CSS, React snippets
+- **Backend**: Kotlin, Java Extension Pack, Spring Boot tools
+- **Testing**: Vitest Explorer, Test adapters
+- **General**: GitLens, REST Client, Live Share
+
+### 🔥 Pro Tips
+
+1. **Use `Ctrl+Shift+P` → "🚀 Start Full App"** for instant startup
+2. **Press `F5`** to start debugging with your last selected configuration
+3. **Use the integrated terminal** with pre-configured paths
+4. **Enable auto-formatting on save** (already configured)
+5. **Use GitLens** for enhanced git visualization
+
 ## 📋 Prerequisites
 
 - Java 17 or higher

@@ -1,0 +1,74 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "🚀 Launch Full App (Backend + Frontend)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/run-local.sh",
+      "console": "integratedTerminal",
+      "preLaunchTask": "install-dependencies"
+    },
+    {
+      "name": "☕ Debug Backend (Spring Boot)",
+      "type": "java",
+      "request": "launch",
+      "mainClass": "com.scrumpoker.ScrumPokerApplicationKt",
+      "projectName": "scrum_poker",
+      "cwd": "${workspaceFolder}/backend",
+      "console": "integratedTerminal",
+      "env": {
+        "SPRING_PROFILES_ACTIVE": "dev"
+      },
+      "vmArgs": "-Dspring.devtools.restart.enabled=true",
+      "preLaunchTask": "backend-build"
+    },
+    {
+      "name": "⚛️ Debug Frontend (React/Vite)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/frontend/node_modules/.bin/vite",
+      "args": ["--mode", "development"],
+      "cwd": "${workspaceFolder}/frontend",
+      "console": "integratedTerminal",
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "preLaunchTask": "frontend-install"
+    },
+    {
+      "name": "🧪 Debug Frontend Tests",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/frontend/node_modules/.bin/vitest",
+      "args": ["--run"],
+      "cwd": "${workspaceFolder}/frontend",
+      "console": "integratedTerminal",
+      "preLaunchTask": "frontend-install"
+    },
+    {
+      "name": "🧪 Debug Backend Tests",
+      "type": "java",
+      "request": "launch",
+      "mainClass": "org.gradle.wrapper.GradleWrapperMain",
+      "args": ["test", "--info"],
+      "cwd": "${workspaceFolder}/backend",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "🔗 Attach to Backend Process",
+      "type": "java",
+      "request": "attach",
+      "hostName": "localhost",
+      "port": 5005,
+      "timeout": 30000
+    }
+  ],
+  "compounds": [
+    {
+      "name": "🚀 Debug Full Stack",
+      "configurations": ["☕ Debug Backend (Spring Boot)", "⚛️ Debug Frontend (React/Vite)"],
+      "stopAll": true
+    }
+  ]
+} 

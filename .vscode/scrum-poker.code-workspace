@@ -1,0 +1,76 @@
+{
+  "folders": [
+    {
+      "name": "🎯 Scrum Poker (Root)",
+      "path": ".."
+    },
+    {
+      "name": "⚛️ Frontend",
+      "path": "../frontend"
+    },
+    {
+      "name": "☕ Backend", 
+      "path": "../backend"
+    }
+  ],
+  "settings": {
+    "java.configuration.workspaces": ["backend"],
+    "typescript.preferences.includePackageJsonAutoImports": "auto",
+    "editor.formatOnSave": true,
+    "files.exclude": {
+      "**/.gradle": true,
+      "**/build": true,
+      "**/node_modules": true,
+      "**/dist": true
+    }
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "🚀 Quick Start",
+        "type": "shell",
+        "command": "bash",
+        "args": ["run-local.sh"],
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        },
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": true,
+          "panel": "new"
+        },
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": []
+      }
+    ]
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "🚀 Quick Start Full App",
+        "type": "node",
+        "request": "launch",
+        "program": "${workspaceFolder}/run-local.sh",
+        "console": "integratedTerminal"
+      }
+    ]
+  },
+  "extensions": {
+    "recommendations": [
+      "esbenp.prettier-vscode",
+      "dbaeumer.vscode-eslint",
+      "bradlc.vscode-tailwindcss",
+      "fwcd.kotlin",
+      "vscjava.vscode-java-pack",
+      "pivotal.vscode-spring-boot",
+      "vitest.explorer",
+      "eamodio.gitlens"
+    ]
+  }
+} 
