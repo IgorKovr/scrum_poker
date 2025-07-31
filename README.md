@@ -1,5 +1,7 @@
 # Scrum Poker Application
 
+[![🧪 Test Suite](https://github.com/IgorKovr/scrum_poker/actions/workflows/test.yml/badge.svg)](https://github.com/IgorKovr/scrum_poker/actions/workflows/test.yml)
+
 A real-time collaborative estimation tool for distributed software teams using the Planning Poker technique.
 
 ## 🚀 Features
@@ -14,7 +16,40 @@ A real-time collaborative estimation tool for distributed software teams using t
 
 - **Backend**: Kotlin, Spring Boot, WebSockets
 - **Frontend**: React, TypeScript, Vite, Tailwind CSS
+- **Testing**: JUnit 5, Mockito, Vitest, React Testing Library
+- **CI/CD**: GitHub Actions
 - **Deployment**: Railway
+
+## 🧪 Testing
+
+Comprehensive test suite with ~100 tests covering all business logic:
+
+### Backend Tests (Kotlin/Spring Boot)
+```bash
+cd backend
+./gradlew test
+```
+
+- **RoomServiceTest**: 26 tests covering room management, voting, user lifecycle
+- **HealthControllerTest**: 13 tests for REST API endpoints
+- **WebSocketHandlerIntegrationTest**: 3 integration tests for real-time communication
+
+### Frontend Tests (TypeScript/React)
+```bash
+cd frontend
+npm test
+```
+
+- **Component Tests**: 24 tests for React components (rendering, interactions, accessibility)
+- **Service Tests**: 11 tests for WebSocket service and API contracts  
+- **Utility Tests**: 23 tests for configuration and environment detection
+
+### Continuous Integration
+
+GitHub Actions automatically runs all tests on:
+- Push to main branch
+- Pull requests
+- Manual workflow dispatch
 
 ## 📋 Prerequisites
 
