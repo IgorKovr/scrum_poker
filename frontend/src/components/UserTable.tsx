@@ -175,7 +175,7 @@ export const UserTable: React.FC<UserTableProps> = ({
                 <td className="px-6 py-4 whitespace-nowrap">
                   {/* Logic for displaying estimate vs voting status */}
                   {showEstimates && user.estimate ? (
-                    <div className="inline-flex items-center justify-center w-12 h-12 text-lg font-bold text-blue-600 dark:text-blue-300 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
+                    <div className="inline-flex items-center justify-center w-12 h-12 text-lg font-bold text-white dark:text-gray-900 bg-blue-600 dark:bg-blue-300 rounded-lg shadow-sm border border-blue-700 dark:border-blue-400">
                       {user.estimate}
                     </div>
                   ) : user.hasVoted ? (
