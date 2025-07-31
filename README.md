@@ -128,6 +128,15 @@ This project includes comprehensive VS Code/Cursor configuration for optimal dev
 
 All logs include user names, room IDs, user IDs, and timestamps for complete audit trails.
 
+## 📖 Documentation
+
+### 🏗️ Architecture & Technical Documentation
+
+- **[TECHNICAL_ARCHITECTURE.md](TECHNICAL_ARCHITECTURE.md)** - Comprehensive technical documentation covering system architecture, modules, technologies, and their interactions
+- **[LOGGING.md](LOGGING.md)** - Detailed user action logging system documentation
+- **[MEMORY_LEAK_FIXES.md](MEMORY_LEAK_FIXES.md)** - Memory leak prevention and fixes documentation
+- **[DARK_MODE.md](DARK_MODE.md)** - Dark mode implementation guide
+
 ### 📁 Configuration Files
 
 - **`.vscode/launch.json`** - Debug configurations
