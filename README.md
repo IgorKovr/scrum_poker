@@ -12,6 +12,7 @@ A real-time collaborative estimation tool for distributed software teams using t
 - Show/Hide estimates functionality
 - Clean, modern UI with Tailwind CSS
 - **Dark mode support** - automatically responds to system/browser preferences
+- **Comprehensive user action logging** - complete audit trail of all user interactions
 
 ## 🛠️ Tech Stack
 
@@ -114,6 +115,18 @@ This project includes comprehensive VS Code/Cursor configuration for optimal dev
 - `Ctrl+Shift+P` → "🏥 Open Backend Health"
 
 **Dark Mode:** The app automatically detects and responds to your system's dark mode preference. No manual toggle needed!
+
+**User Action Logging:** All user interactions are automatically logged with detailed information:
+
+- 📋 User joining: "New user joined with name 'Alice' in room 'room-123'"
+- 🎯 Card selection: "User 'Bob' selected card '5' in room 'room-123'"
+- 👁️ Show estimates: "User 'Charlie' pressed Show estimates in room 'room-123'"
+- 🗑️ Delete estimates: "User 'Dave' pressed Delete Estimations in room 'room-123'"
+- 👋 User leaving: "User 'Eve' left room 'room-123'"
+- 🔌 Connection events: WebSocket connections and disconnections with remote addresses
+- 🧹 Room cleanup: Automatic cleanup when rooms become empty
+
+All logs include user names, room IDs, user IDs, and timestamps for complete audit trails.
 
 ### 📁 Configuration Files
 
