@@ -123,23 +123,14 @@ export const NameEntry: React.FC<NameEntryProps> = ({ onNameSubmit }) => {
             )}
           </div>
 
-          {/* Action buttons section */}
-          <div className="space-y-3">
+          {/* Action button */}
+          <div>
             {/* Primary submit button */}
             <button
               type="submit"
               className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-dark-bg focus:ring-blue-500 transition-colors duration-200"
             >
               ENTER ROOM
-            </button>
-
-            {/* Secondary cancel button */}
-            <button
-              type="button"
-              onClick={() => window.history.back()}
-              className="group relative w-full flex justify-center py-3 px-4 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-            >
-              CANCEL
             </button>
           </div>
         </form>
