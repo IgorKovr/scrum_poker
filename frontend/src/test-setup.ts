@@ -7,8 +7,8 @@
 
 import '@testing-library/jest-dom';
 
-// Setup global vi function
-import { vi } from 'vitest';
+// Setup global test functions
+import { vi, beforeEach } from 'vitest';
 
 // Global test setup
 beforeEach(() => {
@@ -37,7 +37,4 @@ Object.defineProperty(window, 'location', {
     hash: '',
   },
   writable: true,
-});
-
-// Setup global vi function
-import { vi } from 'vitest'; 
+}); 
