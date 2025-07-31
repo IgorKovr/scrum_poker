@@ -25,6 +25,7 @@ A real-time collaborative estimation tool for distributed software teams using t
 Comprehensive test suite with ~100 tests covering all business logic:
 
 ### Backend Tests (Kotlin/Spring Boot)
+
 ```bash
 cd backend
 ./gradlew test
@@ -35,18 +36,20 @@ cd backend
 - **WebSocketHandlerIntegrationTest**: 3 integration tests for real-time communication
 
 ### Frontend Tests (TypeScript/React)
+
 ```bash
 cd frontend
 npm test
 ```
 
 - **Component Tests**: 24 tests for React components (rendering, interactions, accessibility)
-- **Service Tests**: 11 tests for WebSocket service and API contracts  
+- **Service Tests**: 11 tests for WebSocket service and API contracts
 - **Utility Tests**: 23 tests for configuration and environment detection
 
 ### Continuous Integration
 
 GitHub Actions automatically runs all tests on:
+
 - Push to main branch
 - Pull requests
 - Manual workflow dispatch
@@ -61,42 +64,47 @@ This project includes comprehensive VS Code/Cursor configuration for optimal dev
 2. **Install recommended extensions** (VS Code will prompt you automatically)
 3. **Start the application using tasks or debug configurations**:
 
-**For Running the Full App** (recommended):
-- Press `Ctrl+Shift+P` → Type "🚀 Start Full App"
-- Or use `Ctrl+Shift+P` → "Tasks: Run Task" → "🚀 Start Full App"
+**For Running the Full App** (multiple easy options):
+
+- **Option 1**: Press `F5` → Select "🚀 Run Full App" (easiest!)
+- **Option 2**: Press `Ctrl+Shift+P` → "Tasks: Run Task" → "🚀 Start Full App"
+- **Option 3**: Open `run.js` and click the ▶️ "Run" button in Cursor
+- **Option 4**: Terminal: `npm start` or `node run.js`
 
 **For Debugging Individual Services**:
 
 ### 🚀 Available Launch Configurations
 
-| Configuration | Description | Use Case |
-|---------------|-------------|----------|
-| **☕ Debug Backend** | Spring Boot with debugging | Backend development |
-| **⚛️ Debug Frontend** | React/Vite with hot reload | Frontend development |
-| **🧪 Debug Tests** | Run tests with debugging | Test development |
-| **🚀 Debug Full Stack** | Both services with debugging | Full-stack debugging |
+| Configuration           | Description                        | Use Case             |
+| ----------------------- | ---------------------------------- | -------------------- |
+| **🚀 Run Full App**     | Start both services (no debugging) | Quick development    |
+| **☕ Debug Backend**    | Spring Boot with debugging         | Backend development  |
+| **⚛️ Debug Frontend**   | React/Vite with hot reload         | Frontend development |
+| **🧪 Debug Tests**      | Run tests with debugging           | Test development     |
+| **🚀 Debug Full Stack** | Both services with debugging       | Full-stack debugging |
 
 ### ⚡ Available Tasks (Ctrl+Shift+P → "Tasks: Run Task")
 
-| Task | Description |
-|------|-------------|
-| **🚀 Start Full App** | Runs `run-local.sh` script |
-| **☕ Start Backend Only** | Starts Spring Boot server |
-| **⚛️ Start Frontend Only** | Starts Vite dev server |
-| **🧪 Run All Tests** | Executes frontend + backend tests |
-| **🏗️ Build All** | Builds both applications |
-| **🧹 Clean All** | Cleans and reinstalls dependencies |
+| Task                       | Description                        |
+| -------------------------- | ---------------------------------- |
+| **🚀 Start Full App**      | Runs `run-local.sh` script         |
+| **☕ Start Backend Only**  | Starts Spring Boot server          |
+| **⚛️ Start Frontend Only** | Starts Vite dev server             |
+| **🧪 Run All Tests**       | Executes frontend + backend tests  |
+| **🏗️ Build All**           | Builds both applications           |
+| **🧹 Clean All**           | Cleans and reinstalls dependencies |
 
 ### 📁 Configuration Files
 
 - **`.vscode/launch.json`** - Debug configurations
-- **`.vscode/tasks.json`** - Build and run tasks  
+- **`.vscode/tasks.json`** - Build and run tasks
 - **`.vscode/settings.json`** - Workspace settings
 - **`.vscode/extensions.json`** - Recommended extensions
 
 ### 🎯 Recommended Extensions
 
 The setup automatically recommends essential extensions:
+
 - **Frontend**: Prettier, ESLint, Tailwind CSS, React snippets
 - **Backend**: Kotlin, Java Extension Pack, Spring Boot tools
 - **Testing**: Vitest Explorer, Test adapters
@@ -121,17 +129,20 @@ The setup automatically recommends essential extensions:
 ### Quick Start
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/IgorKovr/scrum_poker.git
    cd scrum_poker
    ```
 
 2. Run the setup script:
+
    ```bash
    ./setup-local.sh
    ```
 
 3. Start both services:
+
    ```bash
    ./run-local.sh
    ```
@@ -143,12 +154,14 @@ The setup automatically recommends essential extensions:
 ### Manual Setup
 
 #### Backend
+
 ```bash
 cd backend
 ./gradlew bootRun
 ```
 
 #### Frontend
+
 ```bash
 cd frontend
 npm install
@@ -167,16 +180,19 @@ npm run dev
 ## 🔍 Troubleshooting
 
 ### Backend Issues
+
 - Check Java version: `java -version`
 - Check logs: Look for "🚀 SCRUM POKER BACKEND IS READY!"
 - Verify port 8080 is free: `lsof -i :8080`
 
 ### Frontend Issues
+
 - Check Node version: `node --version`
 - Clear node_modules: `rm -rf node_modules && npm install`
 - Check browser console for WebSocket errors
 
 ### WebSocket Connection Issues
+
 - Ensure backend is running before frontend
 - Check browser console for connection errors
 - Verify WebSocket URL in browser logs
@@ -191,10 +207,12 @@ The application is configured for Railway deployment:
 ## 📊 Monitoring
 
 ### Health Endpoints
+
 - Frontend: `/health`
 - Backend: `/health` and `/heartbeat`
 
 ### Logs
+
 - Backend logs show WebSocket connections and heartbeat info
 - Frontend logs show proxy activity
 - Browser console shows detailed connection logs
@@ -205,4 +223,4 @@ The application is configured for Railway deployment:
 2. Create your feature branch
 3. Commit your changes
 4. Push to the branch
-5. Open a Pull Request 
+5. Open a Pull Request

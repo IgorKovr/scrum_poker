@@ -2,6 +2,14 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "🚀 Run Full App",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/run.js",
+      "console": "integratedTerminal",
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
       "name": "☕ Debug Backend (Spring Boot)",
       "type": "java",
       "request": "launch",
