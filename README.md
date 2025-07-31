@@ -8,9 +8,10 @@ A real-time collaborative estimation tool for distributed software teams using t
 
 - Real-time WebSocket communication
 - Multiple concurrent rooms
-- Fibonacci sequence cards (0.5, 1, 2, 3, 5, 8)
+- Fibonacci sequence cards (0.5, 1, 2, 3, 5, 8, 13, 20, 40)
 - Show/Hide estimates functionality
 - Clean, modern UI with Tailwind CSS
+- **Dark mode support** - automatically responds to system/browser preferences
 
 ## 🛠️ Tech Stack
 
@@ -111,6 +112,8 @@ This project includes comprehensive VS Code/Cursor configuration for optimal dev
 - `Ctrl+Shift+P` → "Simple Browser: Show" → Enter URL
 - `Ctrl+Shift+P` → "🌐 Open App in Browser"
 - `Ctrl+Shift+P` → "🏥 Open Backend Health"
+
+**Dark Mode:** The app automatically detects and responds to your system's dark mode preference. No manual toggle needed!
 
 ### 📁 Configuration Files
 

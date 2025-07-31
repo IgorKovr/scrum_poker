@@ -181,6 +181,7 @@ Ctrl+Shift+P → "🏥 Open Backend Health"
 - **Side-by-side development** - Code and preview together
 - **No context switching** - Stay in VS Code
 - **Debugging integration** - Debug both frontend and browser
+- **Dark mode testing** - Automatically matches your VS Code theme for consistent experience
 
 ## 🔍 Troubleshooting
 

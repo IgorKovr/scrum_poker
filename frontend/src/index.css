@@ -19,11 +19,19 @@
  * - No CSS naming conflicts
  * 
  * Color Scheme:
- * The app primarily uses gray and blue color palettes:
+ * The app supports both light and dark themes via system preference detection:
+ * 
+ * Light Mode:
  * - Gray tones for backgrounds, borders, and text
  * - Blue tones for interactive elements and selected states
  * - Green for success states (voted indicators)
  * - Red for error states (connection issues)
+ * 
+ * Dark Mode:
+ * - Dark backgrounds (#1a202c, #2d3748) for reduced eye strain
+ * - Light text (#e2e8f0, #a0aec0) for readability
+ * - Adjusted blue tones that work well on dark backgrounds
+ * - Consistent visual hierarchy across themes
  * 
  * Layout Approach:
  * - Uses Flexbox and CSS Grid utilities for layouts
@@ -38,4 +46,4 @@
 @tailwind components;
 
 /* Tailwind CSS utility classes - all atomic utility classes for styling */
-@tailwind utilities; 
+@tailwind utilities;
