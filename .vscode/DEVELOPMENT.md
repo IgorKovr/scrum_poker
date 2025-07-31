@@ -8,9 +8,11 @@
 2. File → Open Workspace → Select `.vscode/scrum-poker.code-workspace`
 3. Install recommended extensions when prompted
 4. **Start the app** (choose any option):
-   - Press `F5` → Select "🚀 Run Full App" (quickest!)
+   - Press `F5` → Select "🚀 Run Full App" (full stack, no debug)
+   - Press `F5` → Select "☕ Run Backend Only" (backend only, no debug)
+   - Press `F5` → Select "⚛️ Run Frontend Only" (frontend only, no debug)
    - Open `run.js` → Click ▶️ "Run" button
-   - Terminal: `npm start`
+   - Terminal: `npm start` (full app), `npm run backend` (BE only), `npm run frontend` (FE only)
 
 ### Daily Development
 
@@ -23,15 +25,31 @@
 
 #### Option 2: Frontend Only
 
+**For Development (with debugging):**
+
 - **Press `F5`** → Select "⚛️ Debug Frontend"
-- Only starts React/Vite dev server
+- Only starts React/Vite dev server with debugging enabled
 - Assumes backend is running elsewhere
+
+**For Running (no debugging):**
+
+- **Press `F5`** → Select "⚛️ Run Frontend Only"
+- Only starts React/Vite dev server without debugging
+- Terminal: `npm run frontend`
 
 #### Option 3: Backend Only
 
+**For Development (with debugging):**
+
 - **Press `F5`** → Select "☕ Debug Backend"
-- Only starts Spring Boot server
+- Only starts Spring Boot server with debugging enabled
 - Assumes frontend is running elsewhere
+
+**For Running (no debugging):**
+
+- **Press `F5`** → Select "☕ Run Backend Only"
+- Only starts Spring Boot server without debugging
+- Terminal: `npm run backend`
 
 ## 🧪 Testing Workflows
 

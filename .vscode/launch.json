@@ -10,6 +10,22 @@
       "skipFiles": ["<node_internals>/**"]
     },
     {
+      "name": "☕ Run Backend Only",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/run-backend.js",
+      "console": "integratedTerminal",
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      "name": "⚛️ Run Frontend Only",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/run-frontend.js",
+      "console": "integratedTerminal",
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
       "name": "☕ Debug Backend (Spring Boot)",
       "type": "java",
       "request": "launch",
