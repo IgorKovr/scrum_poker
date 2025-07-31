@@ -32,6 +32,7 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({
   const [retryTrigger, setRetryTrigger] = useState(0);
   const [autoRetryEnabled, setAutoRetryEnabled] = useState(true);
   const [retryCountdown, setRetryCountdown] = useState(0);
+  const [totalRetryAttempts, setTotalRetryAttempts] = useState(0);
 
   useEffect(() => {
     const connectWebSocket = async () => {
@@ -116,6 +117,30 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({
     };
   }, [roomId, userName, setUserId, retryTrigger]);
 
+  const getRetryDelay = (attemptNumber: number): number | null => {
+    if (attemptNumber < 10) {
+      return 10; // First 10 attempts: 10 seconds
+    } else if (attemptNumber < 20) {
+      return 30; // Next 10 attempts: 30 seconds
+    } else if (attemptNumber < 30) {
+      return 60; // Next 10 attempts: 60 seconds
+    } else {
+      return null; // Stop retrying after 30 attempts
+    }
+  };
+
+  const getRetryPhaseInfo = (attemptNumber: number) => {
+    if (attemptNumber < 10) {
+      return { phase: 1, remaining: 10 - attemptNumber, delay: 10 };
+    } else if (attemptNumber < 20) {
+      return { phase: 2, remaining: 20 - attemptNumber, delay: 30 };
+    } else if (attemptNumber < 30) {
+      return { phase: 3, remaining: 30 - attemptNumber, delay: 60 };
+    } else {
+      return { phase: 4, remaining: 0, delay: 0 };
+    }
+  };
+
   const handleRetryConnection = () => {
     // Reset error states
     setConnectionError(null);
@@ -128,28 +153,42 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({
     setRetryTrigger((prev) => prev + 1);
   };
 
+  const handleManualRetry = () => {
+    // Reset total retry attempts on manual retry
+    setTotalRetryAttempts(0);
+    handleRetryConnection();
+  };
+
   // Auto-retry functionality
   useEffect(() => {
     let countdownInterval: NodeJS.Timeout | null = null;
     let retryTimeout: NodeJS.Timeout | null = null;
 
     if (showError && autoRetryEnabled && connectionError) {
-      // Start 10-second countdown
-      setRetryCountdown(10);
+      const retryDelay = getRetryDelay(totalRetryAttempts);
 
-      countdownInterval = setInterval(() => {
-        setRetryCountdown((prev) => {
-          if (prev <= 1) {
-            // Time to retry
-            clearInterval(countdownInterval!);
-            retryTimeout = setTimeout(() => {
-              handleRetryConnection();
-            }, 100); // Small delay to ensure countdown shows 0
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
+      if (retryDelay !== null) {
+        // Start countdown with appropriate delay
+        setRetryCountdown(retryDelay);
+
+        countdownInterval = setInterval(() => {
+          setRetryCountdown((prev) => {
+            if (prev <= 1) {
+              // Time to retry
+              clearInterval(countdownInterval!);
+              retryTimeout = setTimeout(() => {
+                setTotalRetryAttempts((prev) => prev + 1);
+                handleRetryConnection();
+              }, 100); // Small delay to ensure countdown shows 0
+              return 0;
+            }
+            return prev - 1;
+          });
+        }, 1000);
+      } else {
+        // Maximum attempts reached, stop retrying
+        setRetryCountdown(0);
+      }
     } else {
       // Clear countdown when error is resolved or auto-retry disabled
       setRetryCountdown(0);
@@ -159,7 +198,14 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({
       if (countdownInterval) clearInterval(countdownInterval);
       if (retryTimeout) clearTimeout(retryTimeout);
     };
-  }, [showError, autoRetryEnabled, connectionError]);
+  }, [showError, autoRetryEnabled, connectionError, totalRetryAttempts]);
+
+  // Reset retry attempts when connection succeeds
+  useEffect(() => {
+    if (isConnected && roomState) {
+      setTotalRetryAttempts(0);
+    }
+  }, [isConnected, roomState]);
 
   const handleCardSelect = (value: string) => {
     if (!userId || !roomId) return;
@@ -231,32 +277,73 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({
               </p>
               <div className="space-y-4">
                 {/* Auto-retry status and countdown */}
-                {autoRetryEnabled && retryCountdown > 0 && (
-                  <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg p-3">
-                    <div className="flex items-center justify-center space-x-2 text-blue-600 dark:text-blue-400">
-                      <div className="animate-pulse">🔄</div>
-                      <span className="text-sm font-medium">
-                        Auto-retry in {retryCountdown} seconds...
-                      </span>
-                    </div>
-                    {/* Progress bar */}
-                    <div className="w-full bg-blue-100 dark:bg-blue-800 rounded-full h-1.5 mt-2">
-                      <div
-                        className="bg-blue-600 dark:bg-blue-400 h-1.5 rounded-full transition-all duration-1000 ease-linear"
-                        style={{
-                          width: `${((10 - retryCountdown) / 10) * 100}%`,
-                        }}
-                      ></div>
-                    </div>
-                  </div>
+                {autoRetryEnabled && (
+                  <>
+                    {retryCountdown > 0 ? (
+                      <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg p-3">
+                        <div className="flex items-center justify-center space-x-2 text-blue-600 dark:text-blue-400">
+                          <div className="animate-pulse">🔄</div>
+                          <span className="text-sm font-medium">
+                            Auto-retry in {retryCountdown} seconds...
+                          </span>
+                        </div>
+
+                        {/* Retry phase information */}
+                        {(() => {
+                          const phaseInfo =
+                            getRetryPhaseInfo(totalRetryAttempts);
+                          const currentDelay =
+                            getRetryDelay(totalRetryAttempts);
+                          return (
+                            <div className="text-xs text-blue-500 dark:text-blue-300 text-center mt-1">
+                              Phase {phaseInfo.phase}/3: {phaseInfo.remaining}{" "}
+                              attempts remaining at {currentDelay}s intervals
+                            </div>
+                          );
+                        })()}
+
+                        {/* Progress bar */}
+                        <div className="w-full bg-blue-100 dark:bg-blue-800 rounded-full h-1.5 mt-2">
+                          <div
+                            className="bg-blue-600 dark:bg-blue-400 h-1.5 rounded-full transition-all duration-1000 ease-linear"
+                            style={{
+                              width: `${
+                                (((getRetryDelay(totalRetryAttempts) || 10) -
+                                  retryCountdown) /
+                                  (getRetryDelay(totalRetryAttempts) || 10)) *
+                                100
+                              }%`,
+                            }}
+                          ></div>
+                        </div>
+                      </div>
+                    ) : getRetryDelay(totalRetryAttempts) === null ? (
+                      <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg p-3">
+                        <div className="flex items-center justify-center space-x-2 text-red-600 dark:text-red-400">
+                          <span>⛔</span>
+                          <span className="text-sm font-medium">
+                            Auto-retry stopped after 30 attempts
+                          </span>
+                        </div>
+                        <div className="text-xs text-red-500 dark:text-red-300 text-center mt-1">
+                          Manual retry available - this will reset the retry
+                          counter
+                        </div>
+                      </div>
+                    ) : null}
+                  </>
                 )}
 
                 {/* Manual retry button */}
                 <button
-                  onClick={handleRetryConnection}
+                  onClick={handleManualRetry}
                   className="bg-blue-600 dark:bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-700 dark:hover:bg-blue-800 transition-colors"
                 >
-                  {retryCountdown > 0 ? "Try Again Now" : "Try Again"}
+                  {retryCountdown > 0
+                    ? "Try Again Now"
+                    : getRetryDelay(totalRetryAttempts) === null
+                    ? "Try Again (Reset Counter)"
+                    : "Try Again"}
                 </button>
 
                 {/* Auto-retry toggle */}
@@ -270,9 +357,17 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({
                     }`}
                   >
                     <span>{autoRetryEnabled ? "✅" : "⏸️"}</span>
-                    <span>Auto-retry every 10s</span>
+                    <span>Auto-retry (10s→30s→60s)</span>
                   </button>
                 </div>
+
+                {/* Retry strategy explanation */}
+                {autoRetryEnabled && (
+                  <div className="text-xs text-gray-400 dark:text-gray-500 text-center">
+                    Strategy: 10×10s, then 10×30s, then 10×60s (30 total
+                    attempts)
+                  </div>
+                )}
 
                 <div className="text-sm text-gray-500 dark:text-dark-text-secondary">
                   <p>💤 The backend may be sleeping to save resources.</p>
