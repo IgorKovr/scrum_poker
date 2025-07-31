@@ -196,7 +196,7 @@
     },
     {
       "label": "🏗️ Build All",
-      "dependsOrder": "parallel", 
+      "dependsOrder": "parallel",
       "dependsOn": ["🏗️ Build Frontend", "🏗️ Build Backend"],
       "group": "build",
       "presentation": {
@@ -210,7 +210,10 @@
       "label": "🧹 Clean All",
       "type": "shell",
       "command": "bash",
-      "args": ["-c", "cd backend && ./gradlew clean && cd ../frontend && rm -rf dist node_modules && npm install"],
+      "args": [
+        "-c",
+        "cd backend && ./gradlew clean && cd ../frontend && rm -rf dist node_modules && npm install"
+      ],
       "options": {
         "cwd": "${workspaceFolder}"
       },
@@ -222,6 +225,48 @@
         "panel": "new"
       },
       "problemMatcher": []
+    },
+    {
+      "label": "🌐 Open App in Browser",
+      "type": "shell",
+      "command": "open",
+      "args": ["http://localhost:3000"],
+      "group": "test",
+      "presentation": {
+        "echo": true,
+        "reveal": "silent",
+        "focus": false,
+        "panel": "shared"
+      },
+      "detail": "Opens http://localhost:3000 in default browser"
+    },
+    {
+      "label": "🏥 Open Backend Health",
+      "type": "shell",
+      "command": "open",
+      "args": ["http://localhost:8080/health"],
+      "group": "test",
+      "presentation": {
+        "echo": true,
+        "reveal": "silent",
+        "focus": false,
+        "panel": "shared"
+      },
+      "detail": "Opens http://localhost:8080/health in default browser"
+    },
+    {
+      "label": "🌐 Open in Simple Browser",
+      "type": "shell",
+      "command": "echo",
+      "args": ["'Opening app in Simple Browser...'"],
+      "group": "test",
+      "presentation": {
+        "echo": false,
+        "reveal": "never",
+        "focus": false,
+        "panel": "shared"
+      },
+      "detail": "Opens http://localhost:3000 in VS Code's Simple Browser"
     }
   ]
-} 
+}

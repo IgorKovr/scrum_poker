@@ -85,14 +85,32 @@ This project includes comprehensive VS Code/Cursor configuration for optimal dev
 
 ### ⚡ Available Tasks (Ctrl+Shift+P → "Tasks: Run Task")
 
-| Task                       | Description                        |
-| -------------------------- | ---------------------------------- |
-| **🚀 Start Full App**      | Runs `run-local.sh` script         |
-| **☕ Start Backend Only**  | Starts Spring Boot server          |
-| **⚛️ Start Frontend Only** | Starts Vite dev server             |
-| **🧪 Run All Tests**       | Executes frontend + backend tests  |
-| **🏗️ Build All**           | Builds both applications           |
-| **🧹 Clean All**           | Cleans and reinstalls dependencies |
+| Task                          | Description                         |
+| ----------------------------- | ----------------------------------- |
+| **🚀 Start Full App**         | Runs `run-local.sh` script          |
+| **☕ Start Backend Only**     | Starts Spring Boot server           |
+| **⚛️ Start Frontend Only**    | Starts Vite dev server              |
+| **🧪 Run All Tests**          | Executes frontend + backend tests   |
+| **🏗️ Build All**              | Builds both applications            |
+| **🧹 Clean All**              | Cleans and reinstalls dependencies  |
+| **🌐 Open App in Browser**    | Opens app in default browser        |
+| **🏥 Open Backend Health**    | Opens health endpoint in browser    |
+| **🌐 Open in Simple Browser** | Opens app in VS Code Simple Browser |
+
+### 🌐 Browser Options & Hotkeys
+
+| Hotkey         | Action                        | Description                      |
+| -------------- | ----------------------------- | -------------------------------- |
+| `Ctrl+Shift+O` | **Simple Browser (App)**      | Opens app inside VS Code/Cursor  |
+| `Ctrl+Alt+O`   | **External Browser (App)**    | Opens app in default browser     |
+| `Ctrl+Shift+H` | **Simple Browser (Health)**   | Opens health check inside editor |
+| `Ctrl+Alt+H`   | **External Browser (Health)** | Opens health check in browser    |
+
+**Command Palette Options:**
+
+- `Ctrl+Shift+P` → "Simple Browser: Show" → Enter URL
+- `Ctrl+Shift+P` → "🌐 Open App in Browser"
+- `Ctrl+Shift+P` → "🏥 Open Backend Health"
 
 ### 📁 Configuration Files
 
@@ -115,8 +133,10 @@ The setup automatically recommends essential extensions:
 1. **Use `Ctrl+Shift+P` → "Tasks: Run Task" → "🚀 Start Full App"** for instant startup
 2. **Press `F5`** to start debugging with your last selected configuration
 3. **Use the integrated terminal** with pre-configured paths
-4. **Enable auto-formatting on save** (already configured)
-5. **Use GitLens** for enhanced git visualization
+4. **Browser shortcuts**: `Ctrl+Shift+O` (Simple Browser), `Ctrl+Alt+O` (External Browser)
+5. **Health check**: `Ctrl+Shift+H` (Simple Browser), `Ctrl+Alt+H` (External Browser)
+6. **Enable auto-formatting on save** (already configured)
+7. **Use GitLens** for enhanced git visualization
 
 ## 📋 Prerequisites
 

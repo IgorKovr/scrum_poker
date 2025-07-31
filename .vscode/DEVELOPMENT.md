@@ -146,15 +146,41 @@ The workspace is organized into logical folders:
 
 ## 🎯 Keyboard Shortcuts
 
-| Shortcut           | Action                |
-| ------------------ | --------------------- |
-| `F5`               | Start debugging       |
-| `Ctrl+F5`          | Run without debugging |
-| `Ctrl+Shift+P`     | Command palette       |
-| ` Ctrl+``  `       | Toggle terminal       |
-| ` Ctrl+Shift+``  ` | New terminal          |
-| `Ctrl+B`           | Toggle sidebar        |
-| `Ctrl+J`           | Toggle panel          |
+| Shortcut           | Action                          |
+| ------------------ | ------------------------------- |
+| `F5`               | Start debugging                 |
+| `Ctrl+F5`          | Run without debugging           |
+| `Ctrl+Shift+P`     | Command palette                 |
+| ` Ctrl+``  `       | Toggle terminal                 |
+| ` Ctrl+Shift+``  ` | New terminal                    |
+| `Ctrl+B`           | Toggle sidebar                  |
+| `Ctrl+J`           | Toggle panel                    |
+| `Ctrl+Shift+O`     | Open app in Simple Browser      |
+| `Ctrl+Alt+O`       | Open app in external browser    |
+| `Ctrl+Shift+H`     | Open health in Simple Browser   |
+| `Ctrl+Alt+H`       | Open health in external browser |
+
+## 🌐 Browser Integration
+
+### Quick Browser Access
+
+- **Inside VS Code**: `Ctrl+Shift+O` opens the app in Simple Browser
+- **External Browser**: `Ctrl+Alt+O` opens in your default browser
+- **Health Checks**: `Ctrl+Shift+H` or `Ctrl+Alt+H`
+
+### Command Palette Browser Commands
+
+```
+Ctrl+Shift+P → "Simple Browser: Show"
+Ctrl+Shift+P → "🌐 Open App in Browser"
+Ctrl+Shift+P → "🏥 Open Backend Health"
+```
+
+### Benefits of Simple Browser
+
+- **Side-by-side development** - Code and preview together
+- **No context switching** - Stay in VS Code
+- **Debugging integration** - Debug both frontend and browser
 
 ## 🔍 Troubleshooting
 

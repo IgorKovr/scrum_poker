@@ -2,17 +2,17 @@
   "recommendations": [
     // Frontend Development
     "esbenp.prettier-vscode",
-    "dbaeumer.vscode-eslint", 
+    "dbaeumer.vscode-eslint",
     "bradlc.vscode-tailwindcss",
     "ms-vscode.vscode-typescript-next",
     "formulahendry.auto-rename-tag",
     "christian-kohler.path-intellisense",
     "ms-vscode.vscode-json",
-    
+
     // React/Vite specific
     "dsznajder.es7-react-js-snippets",
     "burkeholland.simple-react-snippets",
-    
+
     // Backend Development (Kotlin/Java)
     "fwcd.kotlin",
     "vscjava.vscode-java-pack",
@@ -20,17 +20,17 @@
     "vscjava.vscode-spring-boot-dashboard",
     "pivotal.vscode-spring-boot",
     "vscjava.vscode-gradle",
-    
+
     // Testing
     "vitest.explorer",
     "ms-vscode.test-adapter-converter",
-    
+
     // Git & Version Control
     "eamodio.gitlens",
     "github.vscode-pull-request-github",
     "github.copilot",
     "github.copilot-chat",
-    
+
     // General Development
     "ms-vscode.vscode-terminal-themes",
     "streetsidesoftware.code-spell-checker",
@@ -38,24 +38,25 @@
     "aaron-bond.better-comments",
     "christian-kohler.npm-intellisense",
     "ms-vscode.vscode-yaml",
-    
+
     // REST Client (for API testing)
     "humao.rest-client",
-    
+
+    // Browser & Preview
+    "ms-vscode.live-server",
+    "auchenberg.vscode-browser-preview",
+
     // Live Share (for collaboration)
     "ms-vsliveshare.vsliveshare",
-    
+
     // Markdown
     "yzhang.markdown-all-in-one",
-    
+
     // Theme & Icons
     "pkief.material-icon-theme",
-    
+
     // Docker (if needed)
     "ms-azuretools.vscode-docker"
   ],
-  "unwantedRecommendations": [
-    "ms-vscode.vscode-typescript",
-    "hookyqr.beautify"
-  ]
-} 
+  "unwantedRecommendations": ["ms-vscode.vscode-typescript", "hookyqr.beautify"]
+}

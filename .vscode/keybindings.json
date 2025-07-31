@@ -1,0 +1,28 @@
+[
+  {
+    "key": "ctrl+shift+o",
+    "command": "simpleBrowser.show",
+    "args": {
+      "url": "http://localhost:3000",
+      "title": "🎯 Scrum Poker App"
+    }
+  },
+  {
+    "key": "ctrl+alt+o",
+    "command": "vscode.open",
+    "args": "http://localhost:3000"
+  },
+  {
+    "key": "ctrl+shift+h",
+    "command": "simpleBrowser.show",
+    "args": {
+      "url": "http://localhost:8080/health",
+      "title": "🏥 Backend Health"
+    }
+  },
+  {
+    "key": "ctrl+alt+h",
+    "command": "vscode.open",
+    "args": "http://localhost:8080/health"
+  }
+]
