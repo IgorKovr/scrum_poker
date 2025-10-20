@@ -31,13 +31,19 @@ package com.scrumpoker.model
  *
  * The class uses a mix of immutable and mutable properties:
  * - Immutable: id, name, roomId (these don't change after creation)
- * - Mutable: estimate, hasVoted (these change during the estimation process)
+ * - Mutable: estimate, hasVoted, disconnectedAt (these change during the estimation process)
+ *
+ * Grace Period Feature:
+ * When a user disconnects (closes tab, switches browser, etc.), they are marked with disconnectedAt
+ * timestamp instead of being immediately removed. This allows them to reconnect within a grace period
+ * (default 5 minutes) and resume their session without losing their vote or room state.
  *
  * @property id Unique identifier for the user (UUID)
  * @property name Display name chosen by the user
  * @property roomId Identifier of the room the user belongs to
  * @property estimate The user's story point estimate (null if not voted)
  * @property hasVoted Boolean flag indicating if user has submitted an estimate
+ * @property disconnectedAt Timestamp when user disconnected (null if connected)
  */
 data class User(
         /** Unique identifier for the user, generated when joining a room */
@@ -53,7 +59,10 @@ data class User(
         var estimate: String? = null,
 
         /** Whether the user has submitted an estimate for the current round */
-        var hasVoted: Boolean = false
+        var hasVoted: Boolean = false,
+
+        /** Timestamp (in milliseconds) when user disconnected, null if currently connected */
+        var disconnectedAt: Long? = null
 )
 
 /**

@@ -24,6 +24,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.event.ApplicationReadyEvent
 import org.springframework.boot.runApplication
 import org.springframework.context.event.EventListener
+import org.springframework.scheduling.annotation.EnableScheduling
 import org.springframework.stereotype.Component
 
 /**
@@ -34,11 +35,14 @@ import org.springframework.stereotype.Component
  *
  * Annotations:
  * - @SpringBootApplication: Enables auto-configuration, component scanning, and configuration
+ * - @EnableScheduling: Enables scheduled task execution for grace period cleanup
  *
  * The application automatically scans for components in the com.scrumpoker package and sets up all
  * necessary beans for dependency injection.
  */
-@SpringBootApplication class ScrumPokerApplication
+@SpringBootApplication 
+@EnableScheduling
+class ScrumPokerApplication
 
 /**
  * Main function - Application entry point

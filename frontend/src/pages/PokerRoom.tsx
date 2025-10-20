@@ -34,6 +34,43 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({
   const [retryCountdown, setRetryCountdown] = useState(0);
   const [totalRetryAttempts, setTotalRetryAttempts] = useState(0);
   const [showCopiedNotification, setShowCopiedNotification] = useState(false);
+  const [showReconnectingBanner, setShowReconnectingBanner] = useState(false);
+
+  // Store room context in localStorage for recovery after disconnection
+  useEffect(() => {
+    if (roomId && userName) {
+      localStorage.setItem(
+        "scrumPokerSession",
+        JSON.stringify({ roomId, userName })
+      );
+    }
+  }, [roomId, userName]);
+
+  // Page Visibility API - Auto-reconnect when tab becomes visible
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        console.log("[PokerRoom] Tab became visible");
+        
+        // Check if we're disconnected
+        if (!wsService.isConnected()) {
+          console.log("[PokerRoom] Detected disconnection, attempting to reconnect...");
+          setShowReconnectingBanner(true);
+          
+          // Attempt to reconnect after a short delay
+          setTimeout(() => {
+            handleRetryConnection();
+          }, 500);
+        }
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
 
   useEffect(() => {
     const connectWebSocket = async () => {
@@ -71,6 +108,7 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({
         clearTimeout(timeoutId);
         setIsConnected(true);
         setConnectionError(null);
+        setShowReconnectingBanner(false);
         console.log("[PokerRoom] WebSocket connected successfully");
 
         // Set up message handlers
@@ -422,6 +460,18 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-dark-bg p-4 transition-colors duration-200">
       <div className="max-w-6xl mx-auto space-y-6">
+        {/* Reconnecting Banner */}
+        {showReconnectingBanner && (
+          <div className="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-700 rounded-lg p-3 shadow-sm">
+            <div className="flex items-center justify-center space-x-2">
+              <div className="animate-spin rounded-full h-4 w-4 border-2 border-blue-600 dark:border-blue-400 border-t-transparent"></div>
+              <span className="text-sm font-medium text-blue-600 dark:text-blue-400">
+                Reconnecting to room...
+              </span>
+            </div>
+          </div>
+        )}
+
         <div className="text-center">
           <div className="mb-4">
             <span className="text-sm text-gray-500 dark:text-dark-text-secondary">
