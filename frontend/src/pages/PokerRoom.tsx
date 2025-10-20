@@ -46,20 +46,50 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({
     }
   }, [roomId, userName]);
 
-  // Sync selected card with room state (for multi-tab support)
+  // Load selected card from localStorage on mount
+  useEffect(() => {
+    if (roomId && userName) {
+      const voteKey = `scrumPokerVote_${roomId}_${userName}`;
+      const storedVote = localStorage.getItem(voteKey);
+      if (storedVote) {
+        setSelectedCard(storedVote);
+      }
+    }
+  }, [roomId, userName]);
+
+  // Sync selected card across tabs using localStorage events
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (roomId && userName) {
+        const voteKey = `scrumPokerVote_${roomId}_${userName}`;
+        if (e.key === voteKey) {
+          setSelectedCard(e.newValue);
+        }
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, [roomId, userName]);
+
+  // Sync selected card with room state (clear when estimates deleted)
   useEffect(() => {
     if (userId && roomState?.users) {
       const currentUser = roomState.users.find((u) => u.id === userId);
       if (currentUser) {
-        // Sync card selection across tabs
-        if (currentUser.hasVoted && currentUser.estimate) {
-          setSelectedCard(currentUser.estimate);
-        } else if (!currentUser.hasVoted) {
+        // Clear selection if user hasn't voted (estimates were deleted)
+        if (!currentUser.hasVoted) {
           setSelectedCard(null);
+          const voteKey = `scrumPokerVote_${roomId}_${userName}`;
+          localStorage.removeItem(voteKey);
+        }
+        // If estimates are shown and user voted, sync from backend
+        else if (currentUser.estimate && roomState.showEstimates) {
+          setSelectedCard(currentUser.estimate);
         }
       }
     }
-  }, [userId, roomState]);
+  }, [userId, roomState, roomId, userName]);
 
   // Page Visibility API - Auto-reconnect when tab becomes visible
   useEffect(() => {
@@ -140,20 +170,6 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({
 
         wsService.on(MessageType.ROOM_UPDATE, (payload) => {
           setRoomState(payload);
-          
-          // Sync selected card across tabs: find current user's vote
-          if (userId && payload.users) {
-            const currentUser = payload.users.find((u: any) => u.id === userId);
-            if (currentUser) {
-              // If user has voted, update the selected card to match
-              if (currentUser.hasVoted && currentUser.estimate) {
-                setSelectedCard(currentUser.estimate);
-              } else if (!currentUser.hasVoted) {
-                // If estimates were deleted, clear selection
-                setSelectedCard(null);
-              }
-            }
-          }
         });
 
         // Check for existing userId for this room+user combination
@@ -303,6 +319,11 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({
     if (!userId || !roomId) return;
 
     setSelectedCard(value);
+    
+    // Store selection in localStorage for cross-tab sync
+    const voteKey = `scrumPokerVote_${roomId}_${userName}`;
+    localStorage.setItem(voteKey, value);
+    
     wsService.send({
       type: MessageType.VOTE,
       payload: {
