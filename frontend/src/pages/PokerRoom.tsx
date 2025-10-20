@@ -405,9 +405,18 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({
   }
 
   return (
-    <div className="min-h-[100dvh] min-h-screen bg-gray-50 dark:bg-dark-bg p-4 transition-colors duration-200">
+    <div className="min-h-screen bg-gray-50 dark:bg-dark-bg p-4 transition-colors duration-200">
       <div className="max-w-6xl mx-auto space-y-6">
         <div className="text-center">
+          <div className="mb-4">
+            <span className="text-sm text-gray-500 dark:text-dark-text-secondary">Room Code</span>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-dark-text font-mono">
+              {roomId}
+            </h1>
+            <p className="text-xs text-gray-500 dark:text-dark-text-secondary mt-1">
+              Share this code with your team
+            </p>
+          </div>
           <h2 className="text-2xl font-semibold text-gray-800 dark:text-dark-text mb-2">
             Provide an effort estimate - choose one of the cards
           </h2>

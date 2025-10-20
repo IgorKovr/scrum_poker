@@ -1,34 +1,28 @@
 /**
- * NameEntry.tsx - User Name Entry Page Component
+ * NameEntry.tsx - Landing Page with Room Management
  *
- * This component provides the initial landing page where users enter their display name
- * before joining a Scrum Poker room. It serves as a gateway to ensure all users
- * have identifiable names in the poker session.
+ * This component provides the initial landing page where users can:
+ * 1. Create a new room with a unique 6-digit code
+ * 2. Join an existing room by entering its code
  *
  * Key Features:
- * 1. Form validation using React Hook Form for robust input handling
- * 2. Clean, centered layout with clear instructions
- * 3. Input validation with error messages
- * 4. Automatic navigation to poker room after name submission
- * 5. Cancel functionality for navigation flexibility
+ * 1. Two primary actions: Create Room and Join Room
+ * 2. Form validation using React Hook Form
+ * 3. Modal dialog for joining existing rooms
+ * 4. Automatic 6-digit room code generation
+ * 5. Clean, intuitive user interface
  *
- * User Flow:
- * 1. User enters their display name in the text input
- * 2. Form validates the input (required, minimum length)
- * 3. On submission, the name is passed to parent component
- * 4. User is automatically navigated to the default poker room
- *
- * The component uses a fixed room ID ('default-room') for simplicity,
- * but could be enhanced to allow custom room selection.
+ * User Flows:
+ * - Create Room: Enter name → Click Create → Navigate to new room
+ * - Join Room: Enter name → Click Join → Enter room code → Navigate to room
  */
 
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 /**
  * Props interface for the NameEntry component
- * Defines the callback function for when a user submits their name
  */
 interface NameEntryProps {
   /** Callback function called when user successfully submits their name */
@@ -36,105 +30,234 @@ interface NameEntryProps {
 }
 
 /**
- * Form data interface for type-safe form handling
- * Ensures TypeScript knows the structure of form data
+ * Form data interfaces for type-safe form handling
  */
-interface FormData {
+interface NameFormData {
   /** The user's display name input */
   name: string;
 }
 
+interface JoinRoomFormData {
+  /** The room code to join */
+  roomCode: string;
+}
+
 /**
- * NameEntry Component - Landing page for user name collection
- *
- * This functional component renders a form where users enter their display name
- * before joining a poker room. It uses React Hook Form for validation and
- * React Router for navigation.
- *
- * @param {NameEntryProps} props - Component props containing name submission callback
- * @returns {JSX.Element} The name entry form with validation and navigation
+ * Generates a unique 6-digit room code
+ * @returns A string containing 6 random digits
+ */
+const generateRoomCode = (): string => {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+};
+
+/**
+ * NameEntry Component - Landing page with room management options
  */
 export const NameEntry: React.FC<NameEntryProps> = ({ onNameSubmit }) => {
-  // React Hook Form setup for form state management and validation
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>();
+  // State for showing/hiding the join room modal
+  const [showJoinModal, setShowJoinModal] = useState(false);
 
-  // React Router navigation hook for programmatic routing
+  // React Hook Form for name input
+  const {
+    register: registerName,
+    handleSubmit: handleNameSubmit,
+    formState: { errors: nameErrors },
+    watch,
+  } = useForm<NameFormData>();
+
+  // React Hook Form for join room modal
+  const {
+    register: registerJoin,
+    handleSubmit: handleJoinSubmit,
+    formState: { errors: joinErrors },
+    reset: resetJoinForm,
+  } = useForm<JoinRoomFormData>();
+
+  // React Router navigation
   const navigate = useNavigate();
 
+  // Watch the name field to enable/disable buttons
+  const watchedName = watch("name");
+
   /**
-   * Form submission handler
-   *
-   * Called when the form is successfully submitted (passes validation).
-   * Updates the parent component with the user's name and navigates
-   * to the poker room.
-   *
-   * @param {FormData} data - The validated form data containing user's name
+   * Handles creating a new room
    */
-  const onSubmit = (data: FormData) => {
-    // Pass the name to parent component (App.tsx) to update global state
+  const handleCreateRoom = (data: NameFormData) => {
     onNameSubmit(data.name);
+    const roomCode = generateRoomCode();
+    navigate(`/room/${roomCode}`);
+  };
 
-    // Generate a random room ID or use a predefined one
-    // TODO: Could be enhanced to allow user-specified room names
-    const roomId = "default-room";
+  /**
+   * Opens the join room modal
+   */
+  const handleJoinRoomClick = (data: NameFormData) => {
+    onNameSubmit(data.name);
+    setShowJoinModal(true);
+  };
 
-    // Navigate to the poker room with the specified room ID
-    navigate(`/room/${roomId}`);
+  /**
+   * Handles joining an existing room
+   */
+  const handleJoinRoom = (data: JoinRoomFormData) => {
+    navigate(`/room/${data.roomCode}`);
+  };
+
+  /**
+   * Closes the join room modal
+   */
+  const handleCloseModal = () => {
+    setShowJoinModal(false);
+    resetJoinForm();
   };
 
   return (
-    <div className="min-h-[100dvh] min-h-screen flex items-center justify-center px-4">
-      <div className="max-w-md w-full space-y-8">
-        {/* Header section with title and instructions */}
-        <div className="text-center">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-dark-text">
-            Enter Room
-          </h1>
-          <p className="mt-2 text-sm text-gray-600 dark:text-dark-text-secondary">
-            Provide your name or any pseudonym to enter the scrum poker room
-          </p>
+    <>
+      <div className="min-h-screen flex items-center justify-center px-4">
+        <div className="max-w-md w-full space-y-8">
+          {/* Header section */}
+          <div className="text-center">
+            <h1 className="text-4xl font-bold text-gray-900 dark:text-dark-text mb-2">
+              Scrum Poker
+            </h1>
+            <p className="text-lg text-gray-600 dark:text-dark-text-secondary">
+              Start or join a planning session
+            </p>
+          </div>
+
+          {/* Name input form */}
+          <div className="mt-8 space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-dark-text mb-2">
+                Your Name
+              </label>
+              <input
+                {...registerName("name", {
+                  required: "Name is required",
+                  minLength: {
+                    value: 1,
+                    message: "Name must be at least 1 character",
+                  },
+                })}
+                type="text"
+                placeholder="Enter your display name"
+                className="appearance-none relative block w-full px-3 py-3 border border-gray-300 dark:border-dark-border placeholder-gray-500 dark:placeholder-dark-text-secondary text-gray-900 dark:text-dark-text bg-white dark:bg-dark-surface rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm transition-colors duration-200"
+              />
+              {nameErrors.name && (
+                <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                  {nameErrors.name.message}
+                </p>
+              )}
+            </div>
+
+            {/* Action buttons */}
+            <div className="space-y-3">
+              {/* Create Room button */}
+              <button
+                onClick={handleNameSubmit(handleCreateRoom)}
+                disabled={!watchedName}
+                className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-dark-bg focus:ring-blue-500 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <svg
+                  className="w-5 h-5 mr-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 4v16m8-8H4"
+                  />
+                </svg>
+                Create New Room
+              </button>
+
+              {/* Join Room button */}
+              <button
+                onClick={handleNameSubmit(handleJoinRoomClick)}
+                disabled={!watchedName}
+                className="group relative w-full flex justify-center py-3 px-4 border border-gray-300 dark:border-dark-border text-sm font-medium rounded-md text-gray-700 dark:text-dark-text bg-white dark:bg-dark-surface hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-dark-bg focus:ring-blue-500 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <svg
+                  className="w-5 h-5 mr-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                  />
+                </svg>
+                Join Existing Room
+              </button>
+            </div>
+          </div>
         </div>
-
-        {/* Main form with validation and submission handling */}
-        <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-6">
-          <div>
-            {/* Name input field with validation */}
-            <input
-              {...register("name", {
-                required: "Name is required",
-                minLength: {
-                  value: 1,
-                  message: "Name must be at least 1 character",
-                },
-              })}
-              type="text"
-              placeholder="Display Name*"
-              className="appearance-none relative block w-full px-3 py-3 border border-gray-300 dark:border-dark-border placeholder-gray-500 dark:placeholder-dark-text-secondary text-gray-900 dark:text-dark-text bg-white dark:bg-dark-surface rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm transition-colors duration-200"
-            />
-            {/* Error message display for validation failures */}
-            {errors.name && (
-              <p className="mt-1 text-sm text-red-600 dark:text-red-400">
-                {errors.name.message}
-              </p>
-            )}
-          </div>
-
-          {/* Action button */}
-          <div>
-            {/* Primary submit button */}
-            <button
-              type="submit"
-              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-dark-bg focus:ring-blue-500 transition-colors duration-200"
-            >
-              ENTER ROOM
-            </button>
-          </div>
-        </form>
       </div>
-    </div>
+
+      {/* Join Room Modal */}
+      {showJoinModal && (
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 dark:bg-opacity-90 transition-opacity z-50">
+          <div className="fixed inset-0 z-50 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+              <div className="relative transform overflow-hidden rounded-lg bg-white dark:bg-dark-surface text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm">
+                <form onSubmit={handleJoinSubmit(handleJoinRoom)}>
+                  <div className="bg-white dark:bg-dark-surface px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                    <div className="text-center">
+                      <h3 className="text-lg font-semibold leading-6 text-gray-900 dark:text-dark-text">
+                        Join Room
+                      </h3>
+                      <div className="mt-4">
+                        <label className="block text-sm font-medium text-gray-700 dark:text-dark-text-secondary mb-2">
+                          Enter 6-digit room code
+                        </label>
+                        <input
+                          {...registerJoin("roomCode", {
+                            required: "Room code is required",
+                            pattern: {
+                              value: /^\d{6}$/,
+                              message: "Room code must be exactly 6 digits",
+                            },
+                          })}
+                          type="text"
+                          placeholder="123456"
+                          maxLength={6}
+                          className="appearance-none relative block w-full px-3 py-3 border border-gray-300 dark:border-dark-border placeholder-gray-500 dark:placeholder-dark-text-secondary text-gray-900 dark:text-dark-text bg-white dark:bg-dark-surface rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 text-center text-lg font-mono transition-colors duration-200"
+                        />
+                        {joinErrors.roomCode && (
+                          <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                            {joinErrors.roomCode.message}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-gray-50 dark:bg-gray-700 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                    <button
+                      type="submit"
+                      className="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 sm:ml-3 sm:w-auto transition-colors duration-200"
+                    >
+                      Join
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleCloseModal}
+                      className="mt-3 inline-flex w-full justify-center rounded-md bg-white dark:bg-dark-surface px-3 py-2 text-sm font-semibold text-gray-900 dark:text-dark-text shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-dark-border hover:bg-gray-50 dark:hover:bg-gray-600 sm:mt-0 sm:w-auto transition-colors duration-200"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 };

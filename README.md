@@ -7,6 +7,8 @@ A real-time collaborative estimation tool for distributed software teams using t
 ## 🚀 Features
 
 - Real-time WebSocket communication
+- **Room-based sessions** - Create rooms with unique 6-digit codes
+- **Easy room sharing** - Share room codes with your team for quick access
 - Multiple concurrent rooms
 - Fibonacci sequence cards (0.5, 1, 2, 3, 5, 8, 13, 20, 40)
 - Show/Hide estimates functionality
@@ -215,12 +217,26 @@ npm run dev
 
 ## 📝 How to Use
 
+### Creating a New Room
+
 1. Enter your name on the welcome screen
-2. Enter a room name (e.g., "sprint-planning")
-3. Select your estimate card
-4. Wait for all team members to vote
-5. Click "Show" to reveal all estimates
-6. Click "Delete Estimates" to start a new round
+2. Click "Create New Room"
+3. A unique 6-digit room code will be generated (e.g., "524601")
+4. Share this code with your team members
+
+### Joining an Existing Room
+
+1. Enter your name on the welcome screen
+2. Click "Join Existing Room"
+3. Enter the 6-digit room code shared by your team
+4. Click "Join"
+
+### During the Session
+
+1. Select your estimate card
+2. Wait for all team members to vote
+3. Click "Show" to reveal all estimates
+4. Click "Delete Estimates" to start a new round
 
 ## 🔍 Troubleshooting
 
