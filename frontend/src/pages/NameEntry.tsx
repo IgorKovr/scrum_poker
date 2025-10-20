@@ -19,7 +19,7 @@
 
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 /**
  * Props interface for the NameEntry component
@@ -46,17 +46,73 @@ interface JoinRoomFormData {
  * Lists of adjectives and animals for generating room names
  */
 const adjectives = [
-  "happy", "brave", "clever", "gentle", "swift", "mighty", "calm", "bright",
-  "wise", "jolly", "proud", "fierce", "noble", "quiet", "wild", "bold",
-  "quick", "strong", "agile", "graceful", "loyal", "keen", "cheerful", "daring",
-  "eager", "fearless", "friendly", "generous", "honest", "kind", "lively", "merry"
+  "happy",
+  "brave",
+  "clever",
+  "gentle",
+  "swift",
+  "mighty",
+  "calm",
+  "bright",
+  "wise",
+  "jolly",
+  "proud",
+  "fierce",
+  "noble",
+  "quiet",
+  "wild",
+  "bold",
+  "quick",
+  "strong",
+  "agile",
+  "graceful",
+  "loyal",
+  "keen",
+  "cheerful",
+  "daring",
+  "eager",
+  "fearless",
+  "friendly",
+  "generous",
+  "honest",
+  "kind",
+  "lively",
+  "merry",
 ];
 
 const animals = [
-  "panda", "tiger", "lion", "elephant", "giraffe", "zebra", "koala", "kangaroo",
-  "dolphin", "whale", "eagle", "hawk", "owl", "penguin", "fox", "wolf",
-  "bear", "deer", "rabbit", "otter", "seal", "turtle", "falcon", "raven",
-  "leopard", "cheetah", "jaguar", "lynx", "bison", "moose", "badger", "raccoon"
+  "panda",
+  "tiger",
+  "lion",
+  "elephant",
+  "giraffe",
+  "zebra",
+  "koala",
+  "kangaroo",
+  "dolphin",
+  "whale",
+  "eagle",
+  "hawk",
+  "owl",
+  "penguin",
+  "fox",
+  "wolf",
+  "bear",
+  "deer",
+  "rabbit",
+  "otter",
+  "seal",
+  "turtle",
+  "falcon",
+  "raven",
+  "leopard",
+  "cheetah",
+  "jaguar",
+  "lynx",
+  "bison",
+  "moose",
+  "badger",
+  "raccoon",
 ];
 
 /**
@@ -193,7 +249,9 @@ export const NameEntry: React.FC<NameEntryProps> = ({ onNameSubmit }) => {
                   <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg p-3 mb-3">
                     <p className="text-sm text-blue-800 dark:text-blue-300 text-center">
                       You've been invited to room{" "}
-                      <span className="font-mono font-bold">{redirectRoomId}</span>
+                      <span className="font-mono font-bold">
+                        {redirectRoomId}
+                      </span>
                     </p>
                   </div>
                   <button
@@ -291,7 +349,8 @@ export const NameEntry: React.FC<NameEntryProps> = ({ onNameSubmit }) => {
                             required: "Room name is required",
                             pattern: {
                               value: /^[a-z]+-[a-z]+$/,
-                              message: "Room name must be in format: word-word (e.g., happy-panda)",
+                              message:
+                                "Room name must be in format: word-word (e.g., happy-panda)",
                             },
                           })}
                           type="text"
