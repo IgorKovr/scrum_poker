@@ -46,6 +46,21 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({
     }
   }, [roomId, userName]);
 
+  // Sync selected card with room state (for multi-tab support)
+  useEffect(() => {
+    if (userId && roomState?.users) {
+      const currentUser = roomState.users.find((u) => u.id === userId);
+      if (currentUser) {
+        // Sync card selection across tabs
+        if (currentUser.hasVoted && currentUser.estimate) {
+          setSelectedCard(currentUser.estimate);
+        } else if (!currentUser.hasVoted) {
+          setSelectedCard(null);
+        }
+      }
+    }
+  }, [userId, roomState]);
+
   // Page Visibility API - Auto-reconnect when tab becomes visible
   useEffect(() => {
     const handleVisibilityChange = () => {
@@ -125,6 +140,20 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({
 
         wsService.on(MessageType.ROOM_UPDATE, (payload) => {
           setRoomState(payload);
+          
+          // Sync selected card across tabs: find current user's vote
+          if (userId && payload.users) {
+            const currentUser = payload.users.find((u: any) => u.id === userId);
+            if (currentUser) {
+              // If user has voted, update the selected card to match
+              if (currentUser.hasVoted && currentUser.estimate) {
+                setSelectedCard(currentUser.estimate);
+              } else if (!currentUser.hasVoted) {
+                // If estimates were deleted, clear selection
+                setSelectedCard(null);
+              }
+            }
+          }
         });
 
         // Check for existing userId for this room+user combination

@@ -219,8 +219,8 @@ class RoomService {
      * 7. Registers the user in the session tracking map
      *
      * Multi-Tab Support: If a userId is provided (from localStorage), the method will reconnect to
-     * that existing user instead of creating a duplicate. This allows multiple browser tabs to share
-     * the same user identity.
+     * that existing user instead of creating a duplicate. This allows multiple browser tabs to
+     * share the same user identity.
      *
      * Reconnection Feature: If a user disconnects (tab close, network loss) and rejoins within the
      * grace period, they will reconnect to their existing session, preserving their vote and user
