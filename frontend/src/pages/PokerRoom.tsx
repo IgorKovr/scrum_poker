@@ -319,11 +319,11 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({
     if (!userId || !roomId) return;
 
     setSelectedCard(value);
-    
+
     // Store selection in localStorage for cross-tab sync
     const voteKey = `scrumPokerVote_${roomId}_${userName}`;
     localStorage.setItem(voteKey, value);
-    
+
     wsService.send({
       type: MessageType.VOTE,
       payload: {

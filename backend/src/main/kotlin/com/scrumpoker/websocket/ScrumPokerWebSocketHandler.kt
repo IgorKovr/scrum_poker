@@ -201,7 +201,8 @@ class ScrumPokerWebSocketHandler(
             // Create user and add to room via business logic (may throw exception if limits
             // exceeded)
             // Pass existing userId if provided (for multi-tab support)
-            val user = roomService.joinRoom(joinRequest.name, joinRequest.roomId, joinRequest.userId)
+            val user =
+                    roomService.joinRoom(joinRequest.name, joinRequest.roomId, joinRequest.userId)
 
             // Register session for message delivery
             sessions[user.id] = session

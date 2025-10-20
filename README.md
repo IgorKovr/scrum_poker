@@ -249,12 +249,14 @@ The application includes a robust reconnection system that handles temporary dis
 ### What Happens When You Switch Tabs or Minimize the Browser?
 
 **Backend (Grace Period):**
+
 - When you disconnect, you're marked as "disconnected" but **kept in the room for 5 minutes**
 - Your vote and session state are **preserved**
 - Other users don't see you in the user list (you appear offline)
 - If you reconnect within 5 minutes, you **seamlessly rejoin** with your vote intact
 
 **Frontend (Auto-Reconnect):**
+
 - **Page Visibility API** detects when you return to the tab
 - Automatic reconnection attempt when tab becomes visible
 - **Reconnecting banner** shows during reconnection
@@ -265,11 +267,12 @@ The application includes a robust reconnection system that handles temporary dis
 ✅ **No interruptions** when switching tabs during meetings  
 ✅ **Vote preserved** during brief network issues  
 ✅ **Seamless experience** - reconnection happens automatically  
-✅ **Works for:** Tab switching, browser minimize, computer sleep, mobile app switching  
+✅ **Works for:** Tab switching, browser minimize, computer sleep, mobile app switching
 
 ### Technical Implementation
 
 **Backend (Kotlin/Spring Boot):**
+
 - User model includes `disconnectedAt` timestamp field
 - `leaveRoom()` marks users as disconnected instead of removing them
 - Scheduled task runs every minute to clean up users past grace period (5 min)
@@ -277,6 +280,7 @@ The application includes a robust reconnection system that handles temporary dis
 - `getRoomState()` filters out disconnected users from client view
 
 **Frontend (React/TypeScript):**
+
 - Page Visibility API listener on `visibilitychange` event
 - localStorage stores room context (`roomId`, `userName`)
 - Connection status banner with spinner during reconnection

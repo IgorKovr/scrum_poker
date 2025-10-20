@@ -40,9 +40,7 @@ import org.springframework.stereotype.Component
  * The application automatically scans for components in the com.scrumpoker package and sets up all
  * necessary beans for dependency injection.
  */
-@SpringBootApplication 
-@EnableScheduling
-class ScrumPokerApplication
+@SpringBootApplication @EnableScheduling class ScrumPokerApplication
 
 /**
  * Main function - Application entry point
