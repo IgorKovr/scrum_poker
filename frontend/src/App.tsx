@@ -22,7 +22,7 @@
  * the poker room without first providing their name.
  */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Navigate,
   Route,
@@ -63,12 +63,28 @@ function ProtectedRoomRoute({ userName, userId, setUserId }: ProtectedRoomRouteP
  * Manages global state and routing for the entire Scrum Poker application.
  * Uses React hooks for state management and React Router for navigation.
  *
+ * State Persistence:
+ * - User name is persisted in localStorage to maintain identity across tabs
+ * - Allows seamless navigation between tabs without re-entering name
+ *
  * @returns {JSX.Element} The complete application with routing and layout
  */
 function App() {
   // Global state for user information
-  const [userName, setUserName] = useState<string>(""); // User's display name entered on the welcome screen
+  // Initialize from localStorage if available
+  const [userName, setUserName] = useState<string>(() => {
+    return localStorage.getItem("scrumPokerUserName") || "";
+  });
   const [userId, setUserId] = useState<string>(""); // Unique ID assigned by backend when joining a room
+
+  // Persist userName to localStorage whenever it changes
+  useEffect(() => {
+    if (userName) {
+      localStorage.setItem("scrumPokerUserName", userName);
+    } else {
+      localStorage.removeItem("scrumPokerUserName");
+    }
+  }, [userName]);
 
   return (
     <Router>

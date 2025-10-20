@@ -17,7 +17,7 @@
  * - Join Room: Enter name → Click Join → Enter room name → Navigate to room
  */
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -138,6 +138,7 @@ export const NameEntry: React.FC<NameEntryProps> = ({ onNameSubmit }) => {
     handleSubmit: handleNameSubmit,
     formState: { errors: nameErrors },
     watch,
+    setValue,
   } = useForm<NameFormData>();
 
   // React Hook Form for join room modal
@@ -157,6 +158,22 @@ export const NameEntry: React.FC<NameEntryProps> = ({ onNameSubmit }) => {
 
   // Get room ID from location state (if redirected from a direct room link)
   const redirectRoomId = (location.state as { roomId?: string })?.roomId;
+
+  // Check for existing user session and auto-join if applicable
+  useEffect(() => {
+    const existingUserName = localStorage.getItem("scrumPokerUserName");
+    
+    if (existingUserName) {
+      // Pre-fill the name field
+      setValue("name", existingUserName);
+      
+      // If there's a room to join, auto-join immediately
+      if (redirectRoomId) {
+        onNameSubmit(existingUserName);
+        navigate(`/room/${redirectRoomId}`);
+      }
+    }
+  }, [redirectRoomId, onNameSubmit, navigate, setValue]);
 
   /**
    * Handles creating a new room
@@ -218,6 +235,42 @@ export const NameEntry: React.FC<NameEntryProps> = ({ onNameSubmit }) => {
 
           {/* Name input form */}
           <div className="mt-8 space-y-6">
+            {/* Show existing user indicator if logged in */}
+            {watchedName && watchedName === localStorage.getItem("scrumPokerUserName") && (
+              <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg p-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center">
+                    <svg
+                      className="w-5 h-5 text-green-600 dark:text-green-400 mr-2"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                    <span className="text-sm text-green-800 dark:text-green-300">
+                      Logged in as <span className="font-semibold">{watchedName}</span>
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      localStorage.removeItem("scrumPokerUserName");
+                      setValue("name", "");
+                    }}
+                    className="text-xs text-green-700 dark:text-green-400 hover:text-green-900 dark:hover:text-green-200 underline"
+                  >
+                    Change user
+                  </button>
+                </div>
+              </div>
+            )}
+
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-dark-text mb-2">
                 Your Name
