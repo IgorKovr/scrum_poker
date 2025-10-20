@@ -162,11 +162,11 @@ export const NameEntry: React.FC<NameEntryProps> = ({ onNameSubmit }) => {
   // Check for existing user session and auto-join if applicable
   useEffect(() => {
     const existingUserName = localStorage.getItem("scrumPokerUserName");
-    
+
     if (existingUserName) {
       // Pre-fill the name field
       setValue("name", existingUserName);
-      
+
       // If there's a room to join, auto-join immediately
       if (redirectRoomId) {
         onNameSubmit(existingUserName);
@@ -236,40 +236,42 @@ export const NameEntry: React.FC<NameEntryProps> = ({ onNameSubmit }) => {
           {/* Name input form */}
           <div className="mt-8 space-y-6">
             {/* Show existing user indicator if logged in */}
-            {watchedName && watchedName === localStorage.getItem("scrumPokerUserName") && (
-              <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg p-3">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center">
-                    <svg
-                      className="w-5 h-5 text-green-600 dark:text-green-400 mr-2"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
+            {watchedName &&
+              watchedName === localStorage.getItem("scrumPokerUserName") && (
+                <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg p-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      <svg
+                        className="w-5 h-5 text-green-600 dark:text-green-400 mr-2"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                      <span className="text-sm text-green-800 dark:text-green-300">
+                        Logged in as{" "}
+                        <span className="font-semibold">{watchedName}</span>
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        localStorage.removeItem("scrumPokerUserName");
+                        setValue("name", "");
+                      }}
+                      className="text-xs text-green-700 dark:text-green-400 hover:text-green-900 dark:hover:text-green-200 underline"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
-                    <span className="text-sm text-green-800 dark:text-green-300">
-                      Logged in as <span className="font-semibold">{watchedName}</span>
-                    </span>
+                      Change user
+                    </button>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      localStorage.removeItem("scrumPokerUserName");
-                      setValue("name", "");
-                    }}
-                    className="text-xs text-green-700 dark:text-green-400 hover:text-green-900 dark:hover:text-green-200 underline"
-                  >
-                    Change user
-                  </button>
                 </div>
-              </div>
-            )}
+              )}
 
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-dark-text mb-2">

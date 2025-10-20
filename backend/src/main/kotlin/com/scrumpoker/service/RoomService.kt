@@ -210,12 +210,17 @@ class RoomService {
      * Adds a new user to a poker room or reconnects a disconnected user
      *
      * This method handles the complete process of user registration with reconnection support:
-     * 1. Checks if a disconnected user with same name exists in the room (within grace period)
-     * 2. If found, reconnects the user (clears disconnectedAt, preserves state)
-     * 3. Otherwise, creates a new User with generated UUID
-     * 4. Gets or creates the specified room
-     * 5. Adds the user to the room's participant list
-     * 6. Registers the user in the session tracking map
+     * 1. If userId provided, checks if user exists and reconnects (multi-tab support)
+     * 2. Otherwise, checks if a disconnected user with same name exists (within grace period)
+     * 3. If found, reconnects the user (clears disconnectedAt, preserves state)
+     * 4. Otherwise, creates a new User with generated UUID
+     * 5. Gets or creates the specified room
+     * 6. Adds the user to the room's participant list
+     * 7. Registers the user in the session tracking map
+     *
+     * Multi-Tab Support: If a userId is provided (from localStorage), the method will reconnect to
+     * that existing user instead of creating a duplicate. This allows multiple browser tabs to share
+     * the same user identity.
      *
      * Reconnection Feature: If a user disconnects (tab close, network loss) and rejoins within the
      * grace period, they will reconnect to their existing session, preserving their vote and user
@@ -223,14 +228,33 @@ class RoomService {
      *
      * @param name The display name chosen by the user
      * @param roomId The ID of the room to join
+     * @param existingUserId Optional user ID from a previous session (for multi-tab support)
      * @return The created or reconnected User object with ID
      * @throws IllegalStateException if system limits are exceeded
      */
-    fun joinRoom(name: String, roomId: String): User {
+    fun joinRoom(name: String, roomId: String, existingUserId: String? = null): User {
         // Get existing room or create new one atomically
         val room = rooms.computeIfAbsent(roomId) { Room(it) }
 
-        // Check if there's a disconnected user with the same name in this room
+        // PRIORITY 1: Check if connecting with an existing userId (multi-tab support)
+        if (existingUserId != null) {
+            val existingUser = room.users.find { it.id == existingUserId }
+            if (existingUser != null && existingUser.name == name) {
+                // Reconnect to existing user (multi-tab scenario)
+                existingUser.disconnectedAt = null // Clear disconnection if any
+
+                logger.info(
+                        "🔄 User '{}' reconnected to room '{}' from another tab (User ID: {})",
+                        name,
+                        roomId,
+                        existingUserId
+                )
+
+                return existingUser
+            }
+        }
+
+        // PRIORITY 2: Check if there's a disconnected user with the same name in this room
         val disconnectedUser = room.users.find { it.name == name && it.disconnectedAt != null }
 
         if (disconnectedUser != null) {

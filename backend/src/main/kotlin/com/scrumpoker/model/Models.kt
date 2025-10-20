@@ -97,13 +97,17 @@ data class Room(
  *
  * @property name The display name the user wants to use
  * @property roomId The ID of the room the user wants to join
+ * @property userId Optional existing user ID for rejoining (enables multi-tab support)
  */
 data class JoinRoomRequest(
         /** Display name chosen by the user */
         val name: String,
 
         /** ID of the room to join */
-        val roomId: String
+        val roomId: String,
+
+        /** Optional existing user ID for reconnecting from another tab */
+        val userId: String? = null
 )
 
 /**

@@ -51,12 +51,14 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({
     const handleVisibilityChange = () => {
       if (document.visibilityState === "visible") {
         console.log("[PokerRoom] Tab became visible");
-        
+
         // Check if we're disconnected
         if (!wsService.isConnected()) {
-          console.log("[PokerRoom] Detected disconnection, attempting to reconnect...");
+          console.log(
+            "[PokerRoom] Detected disconnection, attempting to reconnect..."
+          );
           setShowReconnectingBanner(true);
-          
+
           // Attempt to reconnect after a short delay
           setTimeout(() => {
             handleRetryConnection();
@@ -115,6 +117,9 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({
         wsService.on(MessageType.JOIN, (payload) => {
           if (payload.userId) {
             setUserId(payload.userId);
+            // Store userId in localStorage with room key for tab sharing
+            const storageKey = `scrumPokerUserId_${roomId}_${userName}`;
+            localStorage.setItem(storageKey, payload.userId);
           }
         });
 
@@ -122,12 +127,17 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({
           setRoomState(payload);
         });
 
-        // Join the room
+        // Check for existing userId for this room+user combination
+        const storageKey = `scrumPokerUserId_${roomId}_${userName}`;
+        const existingUserId = localStorage.getItem(storageKey);
+
+        // Join the room (reuse userId if available)
         wsService.send({
           type: MessageType.JOIN,
           payload: {
             name: userName,
             roomId: roomId || "default-room",
+            userId: existingUserId || undefined, // Include existing userId if available
           },
         });
       } catch (error) {
@@ -474,12 +484,12 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({
 
         <div className="text-center">
           <div className="mb-4">
-            <span className="text-sm text-gray-500 dark:text-dark-text-secondary">
+            {/* <span className="text-sm text-gray-500 dark:text-dark-text-secondary">
               Room Name
-            </span>
+            </span> */}
             <div className="flex items-center justify-center gap-3 mt-2">
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-dark-text font-mono">
-                {roomId}
+              <h1 className="text-sm text-gray-500 dark:text-dark-text font-mono">
+                Room name - {roomId}
               </h1>
               <button
                 onClick={handleCopyRoomLink}
@@ -522,16 +532,17 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({
                 )}
               </button>
             </div>
-            <p className="text-xs text-gray-500 dark:text-dark-text-secondary mt-2">
+            <p className="text-sm text-gray-500 dark:text-dark-text-secondary mt-2">
               Share this link with your team
             </p>
+            <div></div>
+            <h2> ... </h2>
           </div>
           <h2 className="text-2xl font-semibold text-gray-800 dark:text-dark-text mb-2">
             Provide an effort estimate - choose one of the cards
           </h2>
           <p className="text-sm text-gray-600 dark:text-dark-text-secondary">
-            Each team member should estimate the complexity of the task (user
-            story) to be completed.
+            Each team member estimates the complexity of the task (user story).
           </p>
         </div>
 
