@@ -33,10 +33,10 @@ package com.scrumpoker.model
  * - Immutable: id, name, roomId (these don't change after creation)
  * - Mutable: estimate, hasVoted, disconnectedAt (these change during the estimation process)
  *
- * Grace Period Feature:
- * When a user disconnects (closes tab, switches browser, etc.), they are marked with disconnectedAt
- * timestamp instead of being immediately removed. This allows them to reconnect within a grace period
- * (default 5 minutes) and resume their session without losing their vote or room state.
+ * Grace Period Feature: When a user disconnects (closes tab, switches browser, etc.), they are
+ * marked with disconnectedAt timestamp instead of being immediately removed. This allows them to
+ * reconnect within a grace period (default 5 minutes) and resume their session without losing their
+ * vote or room state.
  *
  * @property id Unique identifier for the user (UUID)
  * @property name Display name chosen by the user
@@ -201,29 +201,29 @@ data class UserState(
  * communication protocol between client and server.
  */
 enum class MessageType {
-    /** Client request to join a poker room */
-    JOIN,
+        /** Client request to join a poker room */
+        JOIN,
 
-    /** Client submits their story point estimate */
-    VOTE,
+        /** Client submits their story point estimate */
+        VOTE,
 
-    /** Request to reveal all user estimates */
-    SHOW_ESTIMATES,
+        /** Request to reveal all user estimates */
+        SHOW_ESTIMATES,
 
-    /** Request to hide all user estimates */
-    HIDE_ESTIMATES,
+        /** Request to hide all user estimates */
+        HIDE_ESTIMATES,
 
-    /** Request to delete all estimates and reset voting */
-    DELETE_ESTIMATES,
+        /** Request to delete all estimates and reset voting */
+        DELETE_ESTIMATES,
 
-    /** Server broadcast of updated room state */
-    ROOM_UPDATE,
+        /** Server broadcast of updated room state */
+        ROOM_UPDATE,
 
-    /** Notification that a user has left the room */
-    USER_LEFT,
+        /** Notification that a user has left the room */
+        USER_LEFT,
 
-    /** Server error message to client */
-    ERROR
+        /** Server error message to client */
+        ERROR
 }
 
 /**

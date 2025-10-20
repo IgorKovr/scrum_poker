@@ -85,7 +85,7 @@ class RoomService {
     private val MAX_ROOMS = 1000 // Maximum number of concurrent rooms
     private val MAX_USERS_PER_ROOM = 50 // Maximum users per room
     private val MAX_TOTAL_USERS = 5000 // Maximum total users across all rooms
-    
+
     // Grace period for disconnected users (5 minutes in milliseconds)
     private val DISCONNECT_GRACE_PERIOD_MS = 5 * 60 * 1000L
 
@@ -113,27 +113,28 @@ class RoomService {
 
     /**
      * Scheduled task to clean up users who exceeded grace period
-     * 
-     * Runs every minute to check for users who have been disconnected for longer
-     * than the grace period and permanently removes them from the system.
+     *
+     * Runs every minute to check for users who have been disconnected for longer than the grace
+     * period and permanently removes them from the system.
      */
     @Scheduled(fixedRate = 60000) // Run every 60 seconds
     fun cleanupDisconnectedUsers() {
         val currentTime = System.currentTimeMillis()
         var cleanedUsers = 0
-        
+
         // Find users who have been disconnected longer than grace period
-        val expiredUsers = userSessions.values.filter { user ->
-            user.disconnectedAt != null && 
-            (currentTime - user.disconnectedAt!!) > DISCONNECT_GRACE_PERIOD_MS
-        }
-        
+        val expiredUsers =
+                userSessions.values.filter { user ->
+                    user.disconnectedAt != null &&
+                            (currentTime - user.disconnectedAt!!) > DISCONNECT_GRACE_PERIOD_MS
+                }
+
         // Permanently remove expired users
         expiredUsers.forEach { user ->
             permanentlyRemoveUser(user.id)
             cleanedUsers++
         }
-        
+
         if (cleanedUsers > 0) {
             logger.info("🧹 Grace period cleanup: removed {} expired users", cleanedUsers)
         }
@@ -216,10 +217,9 @@ class RoomService {
      * 5. Adds the user to the room's participant list
      * 6. Registers the user in the session tracking map
      *
-     * Reconnection Feature:
-     * If a user disconnects (tab close, network loss) and rejoins within the grace period,
-     * they will reconnect to their existing session, preserving their vote and user ID.
-     * This provides a seamless experience for temporary disconnections.
+     * Reconnection Feature: If a user disconnects (tab close, network loss) and rejoins within the
+     * grace period, they will reconnect to their existing session, preserving their vote and user
+     * ID. This provides a seamless experience for temporary disconnections.
      *
      * @param name The display name chosen by the user
      * @param roomId The ID of the room to join
@@ -229,26 +229,24 @@ class RoomService {
     fun joinRoom(name: String, roomId: String): User {
         // Get existing room or create new one atomically
         val room = rooms.computeIfAbsent(roomId) { Room(it) }
-        
+
         // Check if there's a disconnected user with the same name in this room
-        val disconnectedUser = room.users.find { 
-            it.name == name && it.disconnectedAt != null 
-        }
-        
+        val disconnectedUser = room.users.find { it.name == name && it.disconnectedAt != null }
+
         if (disconnectedUser != null) {
             // User is reconnecting within grace period - restore their session
             disconnectedUser.disconnectedAt = null
-            
+
             logger.info(
-                "🔄 User '{}' reconnected to room '{}' (User ID: {}) - Vote preserved",
-                name,
-                roomId,
-                disconnectedUser.id
+                    "🔄 User '{}' reconnected to room '{}' (User ID: {}) - Vote preserved",
+                    name,
+                    roomId,
+                    disconnectedUser.id
             )
-            
+
             return disconnectedUser
         }
-        
+
         // Check system limits to prevent memory exhaustion (only for new users)
         if (rooms.size >= MAX_ROOMS) {
             logger.error(
@@ -319,9 +317,9 @@ class RoomService {
      * 3. Keeps them in room for grace period (5 minutes)
      * 4. User can reconnect within grace period without losing state
      *
-     * This prevents users from being kicked out when switching tabs, minimizing browser,
-     * or brief network interruptions. A scheduled task will clean up users who remain
-     * disconnected beyond the grace period.
+     * This prevents users from being kicked out when switching tabs, minimizing browser, or brief
+     * network interruptions. A scheduled task will clean up users who remain disconnected beyond
+     * the grace period.
      *
      * @param userId The unique ID of the user who disconnected
      */
@@ -330,27 +328,30 @@ class RoomService {
         userSessions[userId]?.let { user ->
             // Mark user as disconnected with current timestamp
             user.disconnectedAt = System.currentTimeMillis()
-            
+
             // Log the disconnection with grace period info
             logger.info(
-                "⏸️ User '{}' disconnected from room '{}' (User ID: {}) - Grace period: {} minutes",
-                user.name,
-                user.roomId,
-                userId,
-                DISCONNECT_GRACE_PERIOD_MS / 60000
+                    "⏸️ User '{}' disconnected from room '{}' (User ID: {}) - Grace period: {} minutes",
+                    user.name,
+                    user.roomId,
+                    userId,
+                    DISCONNECT_GRACE_PERIOD_MS / 60000
             )
         }
                 ?: run {
                     // User not found - this could indicate a memory leak or race condition
-                    logger.warn("⚠️ Attempted to mark non-existent user as disconnected: {}", userId)
+                    logger.warn(
+                            "⚠️ Attempted to mark non-existent user as disconnected: {}",
+                            userId
+                    )
                 }
     }
-    
+
     /**
      * Completely removes a user from the system (called after grace period expires)
      *
-     * This is the final cleanup that happens when a user has been disconnected for
-     * longer than the grace period. It removes them from all data structures.
+     * This is the final cleanup that happens when a user has been disconnected for longer than the
+     * grace period. It removes them from all data structures.
      *
      * @param userId The unique ID of the user to remove permanently
      */
@@ -358,10 +359,10 @@ class RoomService {
         userSessions[userId]?.let { user ->
             // Log permanent removal
             logger.info(
-                "👋 User '{}' permanently removed from room '{}' after grace period (User ID: {})",
-                user.name,
-                user.roomId,
-                userId
+                    "👋 User '{}' permanently removed from room '{}' after grace period (User ID: {})",
+                    user.name,
+                    user.roomId,
+                    userId
             )
 
             // Remove user from their room's participant list
@@ -504,9 +505,8 @@ class RoomService {
      * - Estimates are only included when showEstimates is true
      * - Disconnected users are filtered out (not shown to clients)
      *
-     * The disconnected user filtering ensures clients only see active participants,
-     * while the backend keeps disconnected users in memory during the grace period
-     * for seamless reconnection.
+     * The disconnected user filtering ensures clients only see active participants, while the
+     * backend keeps disconnected users in memory during the grace period for seamless reconnection.
      *
      * @param roomId The ID of the room to get state for
      * @return RoomStateUpdate with current room state, or null if room doesn't exist
@@ -524,7 +524,9 @@ class RoomService {
                                                 id = user.id,
                                                 name = user.name,
                                                 hasVoted = user.hasVoted,
-                                                estimate = if (room.showEstimates) user.estimate else null
+                                                estimate =
+                                                        if (room.showEstimates) user.estimate
+                                                        else null
                                         )
                                     },
                     showEstimates = room.showEstimates
