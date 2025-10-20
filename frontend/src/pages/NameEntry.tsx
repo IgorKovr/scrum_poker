@@ -19,7 +19,7 @@
 
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 /**
  * Props interface for the NameEntry component
@@ -73,11 +73,15 @@ export const NameEntry: React.FC<NameEntryProps> = ({ onNameSubmit }) => {
     reset: resetJoinForm,
   } = useForm<JoinRoomFormData>();
 
-  // React Router navigation
+  // React Router navigation and location
   const navigate = useNavigate();
+  const location = useLocation();
 
   // Watch the name field to enable/disable buttons
   const watchedName = watch("name");
+
+  // Get room ID from location state (if redirected from a direct room link)
+  const redirectRoomId = (location.state as { roomId?: string })?.roomId;
 
   /**
    * Handles creating a new room
@@ -86,6 +90,16 @@ export const NameEntry: React.FC<NameEntryProps> = ({ onNameSubmit }) => {
     onNameSubmit(data.name);
     const roomCode = generateRoomCode();
     navigate(`/room/${roomCode}`);
+  };
+
+  /**
+   * Handles auto-joining when redirected from a direct room link
+   */
+  const handleAutoJoin = (data: NameFormData) => {
+    if (redirectRoomId) {
+      onNameSubmit(data.name);
+      navigate(`/room/${redirectRoomId}`);
+    }
   };
 
   /**
@@ -121,7 +135,9 @@ export const NameEntry: React.FC<NameEntryProps> = ({ onNameSubmit }) => {
               Scrum Poker
             </h1>
             <p className="text-lg text-gray-600 dark:text-dark-text-secondary">
-              Start or join a planning session
+              {redirectRoomId
+                ? `Join Room ${redirectRoomId}`
+                : "Start or join a planning session"}
             </p>
           </div>
 
@@ -152,49 +168,84 @@ export const NameEntry: React.FC<NameEntryProps> = ({ onNameSubmit }) => {
 
             {/* Action buttons */}
             <div className="space-y-3">
-              {/* Create Room button */}
-              <button
-                onClick={handleNameSubmit(handleCreateRoom)}
-                disabled={!watchedName}
-                className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-dark-bg focus:ring-blue-500 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <svg
-                  className="w-5 h-5 mr-2"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 4v16m8-8H4"
-                  />
-                </svg>
-                Create New Room
-              </button>
+              {redirectRoomId ? (
+                /* Auto-join button when redirected from a room link */
+                <>
+                  <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg p-3 mb-3">
+                    <p className="text-sm text-blue-800 dark:text-blue-300 text-center">
+                      You've been invited to room{" "}
+                      <span className="font-mono font-bold">{redirectRoomId}</span>
+                    </p>
+                  </div>
+                  <button
+                    onClick={handleNameSubmit(handleAutoJoin)}
+                    disabled={!watchedName}
+                    className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-dark-bg focus:ring-blue-500 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <svg
+                      className="w-5 h-5 mr-2"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
+                      />
+                    </svg>
+                    Join Room
+                  </button>
+                </>
+              ) : (
+                /* Normal create/join buttons */
+                <>
+                  {/* Create Room button */}
+                  <button
+                    onClick={handleNameSubmit(handleCreateRoom)}
+                    disabled={!watchedName}
+                    className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-dark-bg focus:ring-blue-500 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <svg
+                      className="w-5 h-5 mr-2"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 4v16m8-8H4"
+                      />
+                    </svg>
+                    Create New Room
+                  </button>
 
-              {/* Join Room button */}
-              <button
-                onClick={handleNameSubmit(handleJoinRoomClick)}
-                disabled={!watchedName}
-                className="group relative w-full flex justify-center py-3 px-4 border border-gray-300 dark:border-dark-border text-sm font-medium rounded-md text-gray-700 dark:text-dark-text bg-white dark:bg-dark-surface hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-dark-bg focus:ring-blue-500 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <svg
-                  className="w-5 h-5 mr-2"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                  />
-                </svg>
-                Join Existing Room
-              </button>
+                  {/* Join Room button */}
+                  <button
+                    onClick={handleNameSubmit(handleJoinRoomClick)}
+                    disabled={!watchedName}
+                    className="group relative w-full flex justify-center py-3 px-4 border border-gray-300 dark:border-dark-border text-sm font-medium rounded-md text-gray-700 dark:text-dark-text bg-white dark:bg-dark-surface hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-dark-bg focus:ring-blue-500 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <svg
+                      className="w-5 h-5 mr-2"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                      />
+                    </svg>
+                    Join Existing Room
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>

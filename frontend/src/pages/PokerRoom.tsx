@@ -33,6 +33,7 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({
   const [autoRetryEnabled, setAutoRetryEnabled] = useState(true);
   const [retryCountdown, setRetryCountdown] = useState(0);
   const [totalRetryAttempts, setTotalRetryAttempts] = useState(0);
+  const [showCopiedNotification, setShowCopiedNotification] = useState(false);
 
   useEffect(() => {
     const connectWebSocket = async () => {
@@ -157,6 +158,20 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({
     // Reset total retry attempts on manual retry
     setTotalRetryAttempts(0);
     handleRetryConnection();
+  };
+
+  /**
+   * Copies the room URL to clipboard
+   */
+  const handleCopyRoomLink = async () => {
+    try {
+      const roomUrl = window.location.href;
+      await navigator.clipboard.writeText(roomUrl);
+      setShowCopiedNotification(true);
+      setTimeout(() => setShowCopiedNotification(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy:", err);
+    }
   };
 
   // Auto-retry functionality
@@ -412,11 +427,53 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({
             <span className="text-sm text-gray-500 dark:text-dark-text-secondary">
               Room Code
             </span>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-dark-text font-mono">
-              {roomId}
-            </h1>
-            <p className="text-xs text-gray-500 dark:text-dark-text-secondary mt-1">
-              Share this code with your team
+            <div className="flex items-center justify-center gap-3 mt-2">
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-dark-text font-mono">
+                {roomId}
+              </h1>
+              <button
+                onClick={handleCopyRoomLink}
+                className="relative group p-2 rounded-lg bg-blue-100 dark:bg-blue-900/30 hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors duration-200"
+                title="Copy room link"
+              >
+                {showCopiedNotification ? (
+                  <svg
+                    className="w-5 h-5 text-green-600 dark:text-green-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    className="w-5 h-5 text-blue-600 dark:text-blue-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
+                    />
+                  </svg>
+                )}
+                {showCopiedNotification && (
+                  <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-xs py-1 px-2 rounded whitespace-nowrap">
+                    Copied!
+                  </span>
+                )}
+              </button>
+            </div>
+            <p className="text-xs text-gray-500 dark:text-dark-text-secondary mt-2">
+              Share this link with your team
             </p>
           </div>
           <h2 className="text-2xl font-semibold text-gray-800 dark:text-dark-text mb-2">

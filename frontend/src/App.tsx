@@ -28,9 +28,34 @@ import {
   Route,
   BrowserRouter as Router,
   Routes,
+  useParams,
 } from "react-router-dom";
 import { NameEntry } from "./pages/NameEntry";
 import { PokerRoom } from "./pages/PokerRoom";
+
+/**
+ * Protected Room Route Component
+ * 
+ * Handles the logic for accessing a room:
+ * - If user has a name, shows the room
+ * - If no name, redirects to home with the room ID in state
+ */
+interface ProtectedRoomRouteProps {
+  userName: string;
+  userId: string;
+  setUserId: (id: string) => void;
+}
+
+function ProtectedRoomRoute({ userName, userId, setUserId }: ProtectedRoomRouteProps) {
+  const { roomId } = useParams<{ roomId: string }>();
+
+  if (userName) {
+    return <PokerRoom userName={userName} userId={userId} setUserId={setUserId} />;
+  }
+
+  // Redirect to home with room ID in state so user can join after entering name
+  return <Navigate to="/" state={{ roomId }} replace />;
+}
 
 /**
  * Main Application Component
@@ -61,17 +86,11 @@ function App() {
           <Route
             path="/room/:roomId"
             element={
-              userName ? (
-                // User has provided name - show poker room
-                <PokerRoom
-                  userName={userName}
-                  userId={userId}
-                  setUserId={setUserId}
-                />
-              ) : (
-                // User hasn't provided name - redirect to home
-                <Navigate to="/" replace />
-              )
+              <ProtectedRoomRoute
+                userName={userName}
+                userId={userId}
+                setUserId={setUserId}
+              />
             }
           />
         </Routes>
