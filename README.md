@@ -7,8 +7,8 @@ A real-time collaborative estimation tool for distributed software teams using t
 ## 🚀 Features
 
 - Real-time WebSocket communication
-- **Room-based sessions** - Create rooms with unique 6-digit codes
-- **Easy room sharing** - Share room codes with your team for quick access
+- **Room-based sessions** - Create rooms with unique animal names (e.g., "happy-panda")
+- **Easy room sharing** - Share room links with your team for quick access
 - Multiple concurrent rooms
 - Fibonacci sequence cards (0.5, 1, 2, 3, 5, 8, 13, 20, 40)
 - Show/Hide estimates functionality
@@ -221,15 +221,17 @@ npm run dev
 
 1. Enter your name on the welcome screen
 2. Click "Create New Room"
-3. A unique 6-digit room code will be generated (e.g., "524601")
-4. Share this code with your team members
+3. A unique room name will be generated (e.g., "happy-panda")
+4. Share the room link with your team members
 
 ### Joining an Existing Room
 
 1. Enter your name on the welcome screen
 2. Click "Join Existing Room"
-3. Enter the 6-digit room code shared by your team
+3. Enter the room name shared by your team (e.g., "happy-panda")
 4. Click "Join"
+
+**Or** simply click a shared room link - you'll be prompted to enter your name and join automatically!
 
 ### During the Session
 

@@ -425,7 +425,7 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({
         <div className="text-center">
           <div className="mb-4">
             <span className="text-sm text-gray-500 dark:text-dark-text-secondary">
-              Room Code
+              Room Name
             </span>
             <div className="flex items-center justify-center gap-3 mt-2">
               <h1 className="text-3xl font-bold text-gray-900 dark:text-dark-text font-mono">

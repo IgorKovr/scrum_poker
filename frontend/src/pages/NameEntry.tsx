@@ -2,19 +2,19 @@
  * NameEntry.tsx - Landing Page with Room Management
  *
  * This component provides the initial landing page where users can:
- * 1. Create a new room with a unique 6-digit code
- * 2. Join an existing room by entering its code
+ * 1. Create a new room with a unique animal name
+ * 2. Join an existing room by entering its name
  *
  * Key Features:
  * 1. Two primary actions: Create Room and Join Room
  * 2. Form validation using React Hook Form
  * 3. Modal dialog for joining existing rooms
- * 4. Automatic 6-digit room code generation
+ * 4. Automatic animal name generation (e.g., "happy-panda")
  * 5. Clean, intuitive user interface
  *
  * User Flows:
  * - Create Room: Enter name → Click Create → Navigate to new room
- * - Join Room: Enter name → Click Join → Enter room code → Navigate to room
+ * - Join Room: Enter name → Click Join → Enter room name → Navigate to room
  */
 
 import React, { useState } from "react";
@@ -38,16 +38,35 @@ interface NameFormData {
 }
 
 interface JoinRoomFormData {
-  /** The room code to join */
+  /** The room name to join */
   roomCode: string;
 }
 
 /**
- * Generates a unique 6-digit room code
- * @returns A string containing 6 random digits
+ * Lists of adjectives and animals for generating room names
+ */
+const adjectives = [
+  "happy", "brave", "clever", "gentle", "swift", "mighty", "calm", "bright",
+  "wise", "jolly", "proud", "fierce", "noble", "quiet", "wild", "bold",
+  "quick", "strong", "agile", "graceful", "loyal", "keen", "cheerful", "daring",
+  "eager", "fearless", "friendly", "generous", "honest", "kind", "lively", "merry"
+];
+
+const animals = [
+  "panda", "tiger", "lion", "elephant", "giraffe", "zebra", "koala", "kangaroo",
+  "dolphin", "whale", "eagle", "hawk", "owl", "penguin", "fox", "wolf",
+  "bear", "deer", "rabbit", "otter", "seal", "turtle", "falcon", "raven",
+  "leopard", "cheetah", "jaguar", "lynx", "bison", "moose", "badger", "raccoon"
+];
+
+/**
+ * Generates a unique room name using adjective-animal combination
+ * @returns A string like "happy-panda" or "brave-tiger"
  */
 const generateRoomCode = (): string => {
-  return Math.floor(100000 + Math.random() * 900000).toString();
+  const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+  const animal = animals[Math.floor(Math.random() * animals.length)];
+  return `${adjective}-${animal}`;
 };
 
 /**
@@ -265,19 +284,18 @@ export const NameEntry: React.FC<NameEntryProps> = ({ onNameSubmit }) => {
                       </h3>
                       <div className="mt-4">
                         <label className="block text-sm font-medium text-gray-700 dark:text-dark-text-secondary mb-2">
-                          Enter 6-digit room code
+                          Enter room name
                         </label>
                         <input
                           {...registerJoin("roomCode", {
-                            required: "Room code is required",
+                            required: "Room name is required",
                             pattern: {
-                              value: /^\d{6}$/,
-                              message: "Room code must be exactly 6 digits",
+                              value: /^[a-z]+-[a-z]+$/,
+                              message: "Room name must be in format: word-word (e.g., happy-panda)",
                             },
                           })}
                           type="text"
-                          placeholder="123456"
-                          maxLength={6}
+                          placeholder="happy-panda"
                           className="appearance-none relative block w-full px-3 py-3 border border-gray-300 dark:border-dark-border placeholder-gray-500 dark:placeholder-dark-text-secondary text-gray-900 dark:text-dark-text bg-white dark:bg-dark-surface rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 text-center text-lg font-mono transition-colors duration-200"
                         />
                         {joinErrors.roomCode && (
