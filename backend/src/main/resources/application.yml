@@ -1,10 +1,10 @@
 server:
-  port: 8080
-  
+  port: ${PORT:8080}
+
 spring:
   application:
     name: scrum-poker-backend
-    
+
 logging:
   level:
-    com.scrumpoker: DEBUG 
+    com.scrumpoker: DEBUG

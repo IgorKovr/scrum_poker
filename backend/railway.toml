@@ -6,5 +6,4 @@ buildCommand = "./gradlew build -x test"
 startCommand = "java -jar build/libs/scrum-poker-backend-0.0.1-SNAPSHOT.jar"
 
 [variables]
-JAVA_OPTS = "-Xmx512m -Xms256m"
-PORT = "8080" 
+JAVA_OPTS = "-Xmx512m -Xms256m" 
