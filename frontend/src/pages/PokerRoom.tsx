@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { PokerCard } from "../components/PokerCard";
 import { UserTable } from "../components/UserTable";
@@ -315,24 +315,66 @@ export const PokerRoom: React.FC<PokerRoomProps> = ({
     }
   }, [isConnected, roomState]);
 
-  const handleCardSelect = (value: string) => {
-    if (!userId || !roomId) return;
+  const handleCardSelect = useCallback(
+    (value: string) => {
+      if (!userId || !roomId) return;
 
-    setSelectedCard(value);
+      setSelectedCard(value);
 
-    // Store selection in localStorage for cross-tab sync
-    const voteKey = `scrumPokerVote_${roomId}_${userName}`;
-    localStorage.setItem(voteKey, value);
+      // Store selection in localStorage for cross-tab sync
+      const voteKey = `scrumPokerVote_${roomId}_${userName}`;
+      localStorage.setItem(voteKey, value);
 
-    wsService.send({
-      type: MessageType.VOTE,
-      payload: {
-        userId,
-        roomId,
-        estimate: value,
-      },
-    });
-  };
+      wsService.send({
+        type: MessageType.VOTE,
+        payload: {
+          userId,
+          roomId,
+          estimate: value,
+        },
+      });
+    },
+    [userId, roomId, userName]
+  );
+
+  // Keyboard support for card selection (1, 2, 3, 5, 8)
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      // Only handle if we're connected and in a room
+      if (!userId || !roomId || !isConnected) return;
+
+      // Don't handle if user is typing in an input/textarea
+      const target = event.target as HTMLElement;
+      if (
+        target.tagName === "INPUT" ||
+        target.tagName === "TEXTAREA" ||
+        target.isContentEditable
+      ) {
+        return;
+      }
+
+      // Map of valid keys to card values
+      const validKeys: { [key: string]: string } = {
+        "1": "1",
+        "2": "2",
+        "3": "3",
+        "5": "5",
+        "8": "8",
+      };
+
+      // Check if the pressed key is one of our valid card numbers
+      if (validKeys[event.key]) {
+        event.preventDefault(); // Prevent default browser behavior
+        handleCardSelect(validKeys[event.key]);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [userId, roomId, isConnected, handleCardSelect]);
 
   const handleShowEstimates = () => {
     if (!roomId) return;

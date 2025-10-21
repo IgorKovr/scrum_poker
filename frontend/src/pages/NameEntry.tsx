@@ -203,6 +203,19 @@ export const NameEntry: React.FC<NameEntryProps> = ({ onNameSubmit }) => {
   };
 
   /**
+   * Handles Enter key press - creates room or joins based on context
+   */
+  const handleEnterKeySubmit = (data: NameFormData) => {
+    if (redirectRoomId) {
+      // If invited to a room, Enter key joins the room
+      handleAutoJoin(data);
+    } else {
+      // If no room invite, Enter key creates a new room
+      handleCreateRoom(data);
+    }
+  };
+
+  /**
    * Handles joining an existing room
    */
   const handleJoinRoom = (data: JoinRoomFormData) => {
@@ -273,28 +286,30 @@ export const NameEntry: React.FC<NameEntryProps> = ({ onNameSubmit }) => {
                 </div>
               )}
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-dark-text mb-2">
-                Your Name
-              </label>
-              <input
-                {...registerName("name", {
-                  required: "Name is required",
-                  minLength: {
-                    value: 1,
-                    message: "Name must be at least 1 character",
-                  },
-                })}
-                type="text"
-                placeholder="Enter your display name"
-                className="appearance-none relative block w-full px-3 py-3 border border-gray-300 dark:border-dark-border placeholder-gray-500 dark:placeholder-dark-text-secondary text-gray-900 dark:text-dark-text bg-white dark:bg-dark-surface rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm transition-colors duration-200"
-              />
-              {nameErrors.name && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">
-                  {nameErrors.name.message}
-                </p>
-              )}
-            </div>
+            <form onSubmit={handleNameSubmit(handleEnterKeySubmit)}>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-dark-text mb-2">
+                  Your Name
+                </label>
+                <input
+                  {...registerName("name", {
+                    required: "Name is required",
+                    minLength: {
+                      value: 1,
+                      message: "Name must be at least 1 character",
+                    },
+                  })}
+                  type="text"
+                  placeholder="Enter your display name"
+                  className="appearance-none relative block w-full px-3 py-3 border border-gray-300 dark:border-dark-border placeholder-gray-500 dark:placeholder-dark-text-secondary text-gray-900 dark:text-dark-text bg-white dark:bg-dark-surface rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm transition-colors duration-200"
+                />
+                {nameErrors.name && (
+                  <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                    {nameErrors.name.message}
+                  </p>
+                )}
+              </div>
+            </form>
 
             {/* Action buttons */}
             <div className="space-y-3">
