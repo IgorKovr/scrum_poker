@@ -4,3 +4,4 @@ cmd = "./gradlew build -x test"
 [start]
 cmd = "java -jar build/libs/scrum-poker-backend-0.0.1-SNAPSHOT.jar"
 
+
